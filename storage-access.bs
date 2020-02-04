@@ -1,0 +1,30 @@
+<pre class="metadata">
+Title: The Storage Access API
+Shortname: storage-access
+Repository: privacycg/storage-access
+URL: https://privacycg.github.io/storage-access/
+Editor: John Wilander, w3cid 89478, Apple Inc. https://apple.com/, wilander@apple.com
+Abstract: TODO
+Status Text: This specification is intended to be merged into the HTML Living Standard. It is neither a WHATWG Living Standard nor a W3C standard.
+Text Macro: LICENSE <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0 International License</a>
+Group: privacycg
+Status: CG-DRAFT
+Level: None
+</pre>
+
+<section class="non-normative">
+<h2 id="intro">Introduction</h2>
+
+<em>This section is non-normative.</em>
+
+TODO
+</section>
+
+<h2 id="infra">Infrastructure</h2>
+
+This specification depends on the Infra standard. [[!INFRA]]
+
+<h2 id="acknowledgements" class="no-num">Acknowledgements</h2>
+
+Many thanks to
+for their feedback on this proposal.

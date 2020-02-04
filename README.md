@@ -1,33 +1,13 @@
-# Example Privacy CG explainer and spec source files
-
-This repository contains explainer and spec templates that can be used
-by folks working on proposals in the Privacy CG.
-
-This file is the sample explainer, which begins after this section. The
-sample explainer text itself comes from the
-[TAG](https://w3ctag.github.io/)'s excellent
-[explainer explainer](https://w3ctag.github.io/explainers).
-
-There is also **[sample spec source](deliverable.bs)** (in Bikeshed),
-and a [Makefile](Makefile) that can be used for testing explainer and
-spec changes locally. Don't forget to rename `deliverable.bs` to
-`shortname.bs`!
-
-<!-- When creating a new explainer, delete everything above the following line -->
-# [Title]
+# The Storage Access API
 
 ## Authors:
 
-- [Author 1]
-- [Author 2]
-- [etc.]
+- John Wilander
 
 ## Participate
-- https://github.com/privacycg/deliverable/issues
+- https://github.com/privacycg/storage-access/issues
 
-## Table of Contents [if the explainer is longer than one printed page]
-
-[You can generate a Table of Contents for markdown documents using a tool like [doctoc](https://github.com/thlorenz/doctoc).]
+## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
