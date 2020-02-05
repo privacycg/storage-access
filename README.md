@@ -14,130 +14,175 @@
 
 
 - [Introduction](#introduction)
-- [Goals [or Motivating Use Cases, or Scenarios]](#goals-or-motivating-use-cases-or-scenarios)
+- [Motivating Use Cases](#motivating-use-cases)
 - [Non-goals](#non-goals)
-- [[API 1]](#api-1)
-- [[API 2]](#api-2)
-- [Key scenarios](#key-scenarios)
-  - [Scenario 1](#scenario-1)
-  - [Scenario 2](#scenario-2)
-- [Detailed design discussion](#detailed-design-discussion)
-  - [[Tricky design choice #1]](#tricky-design-choice-1)
-  - [[Tricky design choice 2]](#tricky-design-choice-2)
-- [Considered alternatives](#considered-alternatives)
+- [The API](#the-api)
+  - [hasStorageAccess](#hasstorageaccess)
+  - [requestStorageAccess](#requeststorageaccess)
+- [Key Scenarios](#key-scenarios)
+  - [Recovery Path](#recovery-path)
+  - [Timeout of an Opt In](#timeout-of-an-opt-in)
+- [Detailed Design Discussion](#detailed-design-discussion)
+  - [Automatically Grant Access to Websites Used Often](#automatically-grant-access-to-websites-used-often)
+  - [Automatically Grant Access Upon User Interaction](#automatically-grant-access-upon-user-interaction)
+- [Considered Alternatives](#considered-alternatives)
   - [[Alternative 1]](#alternative-1)
   - [[Alternative 2]](#alternative-2)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
-- [References & acknowledgements](#references--acknowledgements)
+- [References & Acknowledgements](#references--acknowledgements)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Introduction
 
-[The "executive summary" or "abstract".
-Explain in a few sentences what the goals of the project are,
-and a brief overview of how the solution works.
-This should be no more than 1-2 paragraphs.]
+Browsers may block third-party resources from accessing cookies and other storage for privacy and security reasons. The
+most popular reason is cross-site tracking prevention. Such blocking breaks authenticated cross-site embeds such as
+commenting widgets, embedded payment providers, and subscribed video services.
 
-## Goals [or Motivating Use Cases, or Scenarios]
+The Storage Access API provides a means for authenticated cross-site embeds to check their blocking status and request
+access to storage if they are blocked.
 
-[What is the **end-user need** which this project aims to address?]
+## Motivating Use Cases
 
-## Non-goals
+These use cases assume that the third-party is blocked from cookie access and possibly other storage too.
 
-[If there are "adjacent" goals which may appear to be in scope but aren't,
-enumerate them here. This section may be fleshed out as your design progresses and you encounter necessary technical and other trade-offs.]
+### Social Network Commenting Widget
+The user is logged in to Social Network Example with domain name social.example and is now visiting blog.example which
+allows readers to comment on blogposts using their social.example account. The user taps/clicks in the commenting
+widget, a cross-site iframe from social.example, to make a comment. The onclick event handler in the iframe calls the
+Storage Access API to request cookie access needed to authenticate the user cross-site. The user has not commented on
+this blog before and thus gets prompted to allow or disallow storage access, decides to allow storage access, and
+proceeds to comment on the blogpost.
 
-## [API 1]
+### Third-Party Payment Provider
+The user is logged in to Payments Example with domain name payments.example and is now shopping on clothes.example. They
+decide to check out and pick Payments Example as their preferred way of paying. The Payments Example option is served
+through a cross-site iframe from payments.example that calls the Storage Access API upon the tap/click to pick it as
+payment option. The user has used Payments Example previously on this shopping site and thus already been prompted for
+storage access. Therefore, the user is not prompted again, the iframe is automatically granted storage access, and
+the user proceeds to fulfill the payment.
 
-[For each related element of the proposed solution - be it an additional JS method, a new object, a new element, a new concept etc., create a section which briefly describes it.]
+### Subscribed Video Service
+The user is logged in to Online Videos Example with domain name videos.example and is paying for an ad-free video
+experience. Now they are on games.example and want to watch a video of an exciting game play. The video is served in a
+cross-site iframe from videos.example and the iframe calls the Storage Access API upon the tap/click on its play button.
+The user has used Online Videos previously on this gaming site and thus is not prompted, the iframe is automatically
+granted storage access, and the user proceeds to watch the video.
+
+## Non-Goals
+
+The Storage Access API is not intended to grant arbitrary third-parties cookie access. It is only intended to grant
+cookie access to third parties that the user actively uses as first party too, i.e. websites the user recognizes and
+uses.
+
+The Storage Access API can be used for many more things than authenticated embeds, for instance single sign-on, 
+cross-site subscription services, and federated logins. However, those are not the primary goals of this API and thus,
+requirements that are serving those use cases but not the authenticated embed use case might not be met by the
+Storage Access API. That said, the Storage Access API is not in conflict with single sign-on, cross-site subscription
+services, and federated logins.
+
+## The API
+
+The Storage Access API lives under the document object since it controls document.cookie and the scope of the storage
+access may be tied to the scope of the document.
+
+### hasStorageAccess
 
 ```js
-// Provide example code - not IDL - demonstrating the design of the feature.
-
-// If this API can be used on its own to address a user need,
-// link it back to one of the scenarios in the goals section.
-
-// If you need to show how to get the feature set up
-// (initialized, or using permissions, etc.), include that too.
+var promise = document.hasStorageAccess();
+promise.then(
+  function (hasAccess) {
+    // Boolean hasAccess says whether the document has access or not.
+  },
+  function (reason) {
+    // Promise was rejected for some reason.
+  }
+);
 ```
 
-[Where necessary, provide links to longer explanations of the relevant pre-existing concepts and API.
-If there is no suitable external documentation, you might like to provide supplementary information as an appendix in this document, and provide an internal link where appropriate.]
+### requestStorageAccess
 
-[If this is already specced, link to the relevant section of the spec.]
-
-[If spec work is in progress, link to the PR or draft of the spec.]
-
-## [API 2]
-
-[etc.]
+```html
+<script>
+function makeRequestWithUserGesture() {
+  var promise = document.requestStorageAccess();
+  promise.then(
+    function () {
+      // Storage access was granted.
+    },
+    function () {
+      // Storage access was denied.
+    }
+  );
+}
+</script>
+<button onclick="makeRequestWithUserGesture()">Play video</button>
+```
 
 ## Key scenarios
 
-[If there are a suite of interacting APIs, show how they work together to solve the key scenarios described.]
+### The User Is Not Yet Logged In To the Embedee
 
-### Scenario 1
+In the case of the user not being logged in to the embeddee, there it should be possible for the iframe to make use of
+the user gesture that was required to call document.requestStorageAccess() to also do a popup to enable the user to log
+in.
 
-[Description of the end-user scenario]
+### The User Opts Out
 
-```js
-// Sample code demonstrating how to use these APIs to address that scenario.
-```
+In the case of the user being prompted for storage access and explicitly opts out, the requesting iframe should not be
+able to prompt again or do a popup without receiving another user gesture.
 
-### Scenario 2
+## Detailed Design Discussion
 
-[etc.]
+### Recovery Path
 
-## Detailed design discussion
+If the user explicitly opts out when prompted for storage access, they may find themselves in a situation they don't
+like or didn't expect, such as no ability to comment on a blogpost or ads in a video feed from a service they pay for to
+be ad-free. In short, there needs to be a recovery path.
 
-### [Tricky design choice #1]
+One way of dealing with this is to allow at least two prompts per embed. If the user explicitly opts out twice, it's a
+done deal.
 
-[Talk through the tradeoffs in coming to the specific design point you want to make.]
+Another way of dealing with this is to offer affordances to reset choices in browser settings.
 
-```js
-// Illustrated with example code.
-```
+### Timeout of an Opt In
 
-[This may be an open question,
-in which case you should link to any active discussion threads.]
+If the user explicitly grants storage access to an embedee, the question is for how long that grant should last before a
+new prompt is shown? Options include 1) as long as the user keeps re-engaging with the embedee on an
+hourly/daily/weekly/monthly basis, 2) with a static timeout of e.g. 30 days, or 3) only for the lifetime of the embedded
+document.
 
-### [Tricky design choice 2]
+## Considered Alternatives
 
-[etc.]
+There are some possible alternatives.
 
-## Considered alternatives
+### Automatically Grant Access to Websites Used Often
 
-[This should include as many alternatives as you can,
-from high level architectural decisions down to alternative naming choices.]
+Instead of requiring an explicit API call, the browser could keep track of which websites the user engages with a lot,
+possibly even know which websites the user is logged in to, and grant storage access to those websites automatically.
 
-### [Alternative 1]
+However, it may be undesirable to allow global cross-site authentication by a third party based on activity on a
+first-party website. In fact, such blanket cross-site authentication/identification is often what blocking of
+third-party cookies and storage is trying to avoid.
 
-[Describe an alternative which was considered,
-and why you decided against it.]
+### Automatically Grant Access Upon User Interaction
 
-### [Alternative 2]
+Instead of requiring an explicit API call, the browser could grant storage access to embedded third-party iframes upon
+user interaction with the iframe. This allows for blocking of third-party cookies in all passive scenarios such as
+pure page loads and scrolling.
 
-[etc.]
+However, such behavior may incentivize third-parties to render iframes solely for the purposes of getting cookie access,
+for instance through invisible overlay iframes à la Clickjacking or through iframes that look like first-party content.
 
 ## Stakeholder Feedback / Opposition
 
-[Implementors and other stakeholders may already have publicly stated positions on this work. If you can, list them here with links to evidence as appropriate.]
+- Safari : Shipping
+- Firefox : Shipping
+- Edge : Positive
+- Chrome : No public signal
 
-- [Implementor A] : Positive
-- [Stakeholder B] : No signals
-- [Implementor C] : Negative
+## References & Acknowledgements
 
-[If appropriate, explain the reasons given by other implementors for their concerns.]
-
-## References & acknowledgements
-
-[Your design will change and be informed by many people; acknowledge them in an ongoing way! It helps build community and, as we only get by through the contributions of many, is only fair.]
-
-[Unless you have a specific reason not to, these should be in alphabetical order.]
-
-Many thanks for valuable feedback and advice from:
-
-- [Person 1]
-- [Person 2]
-- [etc.]
+Several people have provided valuable feedback already in the
+[WHATWG HTML issue](https://github.com/whatwg/html/issues/3338) filed on Jan 10, 2018. We're thankful for all that
+engagement.
