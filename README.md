@@ -1,5 +1,8 @@
 # The Storage Access API
 
+A [Work Item](https://privacycg.github.io/charter.html#work-items) of
+the [Privacy Community Group](https://privacycg.github.io/).
+
 ## Authors:
 
 - John Wilander
