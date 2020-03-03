@@ -18,19 +18,19 @@ the [Privacy Community Group](https://privacycg.github.io/).
 
 - [Introduction](#introduction)
 - [Motivating Use Cases](#motivating-use-cases)
-- [Non-goals](#non-goals)
+- [Non-Goals](#non-goals)
 - [The API](#the-api)
   - [hasStorageAccess](#hasstorageaccess)
   - [requestStorageAccess](#requeststorageaccess)
 - [Key Scenarios](#key-scenarios)
+  - [The User Is Not Yet Logged In To the Embedee](#the-user-is-not-yet-logged-in-to-the-embedee)
+  - [The User Opts Out](#the-user-opts-out)
+- [Detailed Design Discussion](#detailed-design-discussion)
   - [Recovery Path](#recovery-path)
   - [Timeout of an Opt In](#timeout-of-an-opt-in)
-- [Detailed Design Discussion](#detailed-design-discussion)
+- [Considered Alternatives](#considered-alternatives)
   - [Automatically Grant Access to Websites Used Often](#automatically-grant-access-to-websites-used-often)
   - [Automatically Grant Access Upon User Interaction](#automatically-grant-access-upon-user-interaction)
-- [Considered Alternatives](#considered-alternatives)
-  - [[Alternative 1]](#alternative-1)
-  - [[Alternative 2]](#alternative-2)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
 - [References & Acknowledgements](#references--acknowledgements)
 
@@ -84,6 +84,11 @@ requirements that are serving those use cases but not the authenticated embed us
 Storage Access API. That said, the Storage Access API is not in conflict with single sign-on, cross-site subscription
 services, and federated logins.
 
+The Storage Access API is not a gateway into a legacy or quirks mode with which third-parties request permission to
+get back to a state similar to before e.g. tracking prevention features. Concretely, granted storage access should
+not be interpreted as an "allow cross-site tracking mode" or "make old things work mode." The API is opt-in and is
+intended for modern scenarios that are created under the assumption of no third-party storage access by default.
+
 ## The API
 
 The Storage Access API lives under the document object since it controls document.cookie and the scope of the storage
@@ -122,6 +127,20 @@ function makeRequestWithUserGesture() {
 <button onclick="makeRequestWithUserGesture()">Play video</button>
 ```
 
+### Scope of Storage Access
+
+If an iframe is granted storage access through the API, only that calling iframe and its subresources should have
+access to storage.
+
+The length in time of storage access is up to the browser. It could be for:
+- The lifetime of the frame as long as it's hosting content from the same website.
+- The lifetime of the top page.
+- The lifetime of the browsing session.
+- A certain amount of calendar time such as seven days.
+
+It should be noted that since only the calling iframe gets storage access, it's hard to grant storage access across
+browsing sessions or page loads.
+
 ## Key scenarios
 
 ### The User Is Not Yet Logged In To the Embedee
@@ -155,6 +174,15 @@ new prompt is shown? Options include 1) as long as the user keeps re-engaging wi
 hourly/daily/weekly/monthly basis, 2) with a static timeout of e.g. 30 days, or 3) only for the lifetime of the embedded
 document.
 
+### Compatibility Measure
+
+A compatibility measure that has proven to be effective in the wild (shipping in Safari and Firefox) is to automatically
+open up page-wide storage access for a third-party that opens a popup through ```window.open()``` and receives user
+interaction in that popup.
+
+This page-wide scope is a good example of a legacy mode of sorts which is not the intention of the Storage Access API,
+as explained in [Non-Goals](#non-goals).
+
 ## Considered Alternatives
 
 There are some possible alternatives.
@@ -181,7 +209,8 @@ for instance through invisible overlay iframes à la Clickjacking or through ifr
 
 - Safari : Shipping
 - Firefox : Shipping
-- Edge : Positive
+- Edge : Implementing
+- Brave : Positive
 - Chrome : No public signal
 
 ## References & Acknowledgements
