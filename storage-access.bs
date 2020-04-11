@@ -4,27 +4,111 @@ Shortname: storage-access
 Repository: privacycg/storage-access
 URL: https://privacycg.github.io/storage-access/
 Editor: John Wilander, w3cid 89478, Apple Inc. https://apple.com/, wilander@apple.com
-Abstract: TODO
-Status Text: This specification is intended to be merged into the HTML Living Standard. It is neither a WHATWG Living Standard nor a W3C standard.
+Abstract: The Storage Access API enables content in iframes to request access to cookies.
+Status Text: This specification is intended to be merged into the HTML Living Standard. It is neither a WHATWG Living Standard nor is it on the standards track at W3C.
 Text Macro: LICENSE <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0 International License</a>
 Group: privacycg
 Status: CG-DRAFT
 Level: None
+Markup Shorthands: markdown yes, css no
+Complain About: accidental-2119 true
 </pre>
+
+<pre class=link-defaults>
+spec:webidl; type:dfn; text:resolve
+</pre>
+
+<style>
+.XXX {
+    color: #E50000;
+    background: white;
+    border: solid red;
+}
+.XXX {
+    margin: 1.5em 0;
+    padding: 0.5em 1em;
+}
+</style>
 
 <section class="non-normative">
 <h2 id="intro">Introduction</h2>
 
 <em>This section is non-normative.</em>
 
-TODO
+ISSUE: Write this section.
 </section>
 
 <h2 id="infra">Infrastructure</h2>
 
-This specification depends on the Infra standard. [[!INFRA]]
+This specification defines several additions to the HTML standard, and depends on the Infra standard. [[!INFRA]] [[!HTML]]
+
+<h2 id="the-storage-access-api">The Storage Access API</h2>
+
+Each {{Document}} has an associated <dfn export for=Document id=storage-access-flag>has storage access flag</dfn>, initially unset.
+
+<pre class="idl">
+partial interface Document {
+  Promise&lt;boolean> hasStorageAccess();
+  Promise&lt;void> requestStorageAccess();
+};
+</pre>
+
+When invoked, |document|.<dfn export method for=Document><code>hasStorageAccess()</code></dfn> must run these steps:
+
+1. Let |p| be [=a new promise=].
+1. If |document|'s [=has storage access flag=] is set, [=resolve=] |p| with true and abort these steps.
+1. If the |document|'s [=active sandboxing flag set=] has its [=sandboxed origin browsing context flag=] set, [=resolve=] |p| with false and abort these steps.
+1. If |document|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| with true and abort these steps.
+1. If |document|'s <a for=Document>browsing context</a> is [=same origin=] with its [=top-level browsing context=], [=resolve=] |p| with true and abort these steps.
+1. <span class=XXX>Finish this algorithm.</span>
+1. [=If aborted=], return |p|.
+
+<div class=issue>
+<p>Complete this algorithm.
+<p>See its <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/hasStorageAccess">MDN page</a>, <a href="https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp#L80">WebKit implementation</a>, and <a href="https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15558">Gecko implementation</a>.
+</ul>
+</div>
+
+When invoked, |document|.<dfn export method for=Document><code>requestStorageAccess()</code></dfn> must run these steps:
+
+1. Let |p| be [=a new promise=].
+1. If |document|'s [=has storage access flag=] is set, [=resolve=] |p| and abort these steps.
+1. If the |document|'s [=active sandboxing flag set=] has its [=sandboxed origin browsing context flag=] set, [=reject=] |p| and abort these steps.
+1. If |document|'s [=has storage access flag=] is unset, [=reject=] |p| and abort these steps.
+1. If |document|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| and abort these steps.
+1. If |document|'s <a for=Document>browsing context</a> is [=same origin=] with its [=top-level browsing context=], [=resolve=] |p| and abort these steps.
+1. If the |document|'s {{Window}} object has [=transient activation=] and the |document|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| and abort these steps.
+1. If |document|'s <a for=Document>browsing context</a>'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p| and abort these steps.
+1. If the algorithm is invoked when the |document|'s {{Window}} object does not have [=transient activation=], [=reject=] |p| and abort these steps.
+1. <span class=XXX>Finish this algorithm.</span>
+1. [=If aborted=], return |p|.
+
+<div class=issue>
+<p>Complete this algorithm.
+<p>See its <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess">MDN page</a>, <a href="https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp#L123">WebKit implementation</a>, and <a href="https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15629">Gecko implementation</a>.
+</ul>
+</div>
+
+<h3 id="cookies">Changes to {{Document/cookie}}</h3>
+
+ISSUE: Write this section.
+
+ISSUE(4): Should this API affect client-side storage other than cookies?
+
+<h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
+
+A [=sandboxing flag set=] has a <dfn export>sandbox storage access by user activation flag</dfn>. This flag prevents content from requesting storage access.
+
+To the [=parse a sandboxing directive=] algorithm, add the following under step 3:
+
+<ul>
+<li>The [=sandbox storage access by user activation flag=], unless <var ignore>tokens</var> contains the <dfn export attr-value for=iframe/sandbox>allow-storage-access-by-user-activation</dfn> keyword.
+</ul>
+
+ISSUE(10): Provide mechanism for nested iframes to request storage access
+
+ISSUE(12): What about Feature Policy?
 
 <h2 id="acknowledgements" class="no-num">Acknowledgements</h2>
 
-Many thanks to
-for their feedback on this proposal.
+ISSUE: Write this section.
