@@ -4,7 +4,7 @@ Shortname: storage-access
 Repository: privacycg/storage-access
 URL: https://privacycg.github.io/storage-access/
 Editor: John Wilander, w3cid 89478, Apple Inc. https://apple.com/, wilander@apple.com
-Abstract: The Storage Access API enables content in iframes to request access to cookies.
+Abstract: The Storage Access API enables content in iframes to request access to website data (such as cookies).
 Status Text: This specification is intended to be merged into the HTML Living Standard. It is neither a WHATWG Living Standard nor is it on the standards track at W3C.
 Text Macro: LICENSE <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0 International License</a>
 Group: privacycg
