@@ -16,6 +16,9 @@ Complain About: accidental-2119 true
 
 <pre class=link-defaults>
 spec:webidl; type:dfn; text:resolve
+spec:html; type:dfn; for:/; text:browsing context
+spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/multipage/history.html#session-history
+spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
 </pre>
 
 <style>
@@ -88,6 +91,10 @@ When invoked, |document|.<dfn export method for=Document><code>requestStorageAcc
 <p>See its <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess">MDN page</a>, <a href="https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp#L123">WebKit implementation</a>, and <a href="https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15629">Gecko implementation</a>.
 </ul>
 </div>
+
+<h3 id="navigation">Changes to navigation</h3>
+
+When the [=current entry=] of a [=browsing context=]'s [=session history=] changes, the [=has storage access flag=] of the {{Document}} of the old [=current entry=] is unset.
 
 <h3 id="cookies">Changes to {{Document/cookie}}</h3>
 
