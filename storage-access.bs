@@ -21,15 +21,27 @@ spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/mult
 spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
 </pre>
 
+<pre class=biblio>
+{
+    "STORAGE-ACCESS-INTRO": {
+        "authors": ["John Wilander"],
+        "date": "February 2018",
+        "href": "https://webkit.org/blog/8124/introducing-storage-access-api/",
+        "publisher": "WebKit",
+        "rawDate": "2018-02-21",
+        "status": "Blog post",
+        "title": "Introducing Storage Access API"
+    }
+}
+</pre>
+
 <style>
 .XXX {
     color: #E50000;
-    background: white;
-    border: solid red;
+    font-weight: bold;
 }
-.XXX {
-    margin: 1.5em 0;
-    padding: 0.5em 1em;
+.XXX::before {
+    content: "TODO: ";
 }
 </style>
 
@@ -38,7 +50,10 @@ spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multip
 
 <em>This section is non-normative.</em>
 
-ISSUE: Write this section.
+Browsers sometimes block access to client-side storage mechanisms in third-party contexts. This can break authenticated embeds such as commenting widgets, which often rely on cookies for authentication.
+
+The Storage Access API enables cross-origin iframes to request and be granted access to their client-side storage, so that authenticated embeds can work in such browsers. [[STORAGE-ACCESS-INTRO]]
+
 </section>
 
 <h2 id="infra">Infrastructure</h2>
@@ -81,10 +96,12 @@ When invoked, |document|.<dfn export method for=Document><code>requestStorageAcc
 1. If |document|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| and abort these steps.
 1. If |document|'s <a for=Document>browsing context</a> is [=same origin=] with its [=top-level browsing context=], [=resolve=] |p| and abort these steps.
 1. If the |document|'s {{Window}} object has [=transient activation=] and the |document|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| and abort these steps.
-1. If |document|'s <a for=Document>browsing context</a>'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p| and abort these steps.
+1. <span class=XXX>Remove this step when [privacycg/storage-access#10](https://github.com/privacycg/storage-access/issues/10) is resolved.</span> If |document|'s <a for=Document>browsing context</a>'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p| and abort these steps.
 1. If the algorithm is invoked when the |document|'s {{Window}} object does not have [=transient activation=], [=reject=] |p| and abort these steps.
 1. <span class=XXX>Finish this algorithm.</span>
 1. [=If aborted=], return |p|.
+
+ISSUE(10): Provide mechanism for nested iframes to request storage access
 
 <div class=issue>
 <p>Complete this algorithm.
@@ -96,11 +113,15 @@ When invoked, |document|.<dfn export method for=Document><code>requestStorageAcc
 
 When the [=current entry=] of a [=browsing context=]'s [=session history=] changes, the [=has storage access flag=] of the {{Document}} of the old [=current entry=] is unset.
 
-<h3 id="cookies">Changes to {{Document/cookie}}</h3>
+ISSUE: Finish this section.
 
-ISSUE: Write this section.
+<h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
 ISSUE(4): Should this API affect client-side storage other than cookies?
+
+<h4 id="cookies">Cookies</h4>
+
+ISSUE: Write this section.
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
@@ -112,10 +133,53 @@ To the [=parse a sandboxing directive=] algorithm, add the following under step 
 <li>The [=sandbox storage access by user activation flag=], unless <var ignore>tokens</var> contains the <dfn export attr-value for=iframe/sandbox>allow-storage-access-by-user-activation</dfn> keyword.
 </ul>
 
-ISSUE(10): Provide mechanism for nested iframes to request storage access
-
 ISSUE(12): What about Feature Policy?
+
+<h2 id="privacy">Privacy considerations</h2>
+
+ISSUE: Write this section.
+
+<figure id=example-prompt>
+<img src=images/storage-access-prompt.png
+     alt="A modal dialog box which states 'Do you want to allow “video.example” to use cookies and website data while browsing “news.example”? This will allow “video.example” to track your activity.' and which has two buttons, “Don’t Allow” and “Allow”.">
+<figcaption>An example prompt which could be shown to the user when a site calls `document.`{{Document/requestStorageAccess()}}.</figcaption>
+</figure>
+
+<h2 id="security">Security considerations</h2>
+
+ISSUE: Write this section.
 
 <h2 id="acknowledgements" class="no-num">Acknowledgements</h2>
 
-ISSUE: Write this section.
+Many thanks to
+Anne van Kesteren,
+Ben Kelly,
+Brad Girardeau,
+Brad Hill,
+Brandon Maslen,
+Chris Mills,
+Dave Longley,
+Domenic Denicola,
+Ehsan Akhgari,
+Jack Frankland,
+James Coleman,
+James Hartig,
+Jeffrey Yasskin,
+Kushal Dave,
+Luís Rudge,
+Maciej Stachowiak,
+Matias Woloski,
+Mike O'Neill,
+Mike West,
+Pete Snyder,
+Rob Stone,
+Stefan Leyhane,
+Steven Englehardt,
+Theresa O'Connor,
+Travis Leithead,
+Yan Zhu,
+Zach Edwards,
+and everyone who commented on [whatwg/html#3338](https://github.com/whatwg/html/issues/3338), [privacycg/proposals#2](https://github.com/privacycg/proposals/issues/2), and [privacycg/storage-access/issues](https://github.com/privacycg/storage-access/issues)
+for their feedback on this proposal.
+
+Thanks to the [WebKit Open Source Project](https://webkit.org/) for allowing us to use the [Storage Access API Prompt](#example-prompt) image, which was [originally published on webkit.org](https://webkit.org/blog/8311/intelligent-tracking-prevention-2-0/).
