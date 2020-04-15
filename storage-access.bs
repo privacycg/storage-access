@@ -45,14 +45,24 @@ spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multip
 }
 </style>
 
+ISSUE: don't use the terms "first party" and "third party"
+
+ISSUE: use the [=top-level origin=] concept from [[!HTML]].
+
+ISSUE: [check for unique origin or opaque origin?](https://github.com/privacycg/storage-access/pull/24#discussion_r408779042)
+
 <section class="non-normative">
 <h2 id="intro">Introduction</h2>
 
 <em>This section is non-normative.</em>
 
-User Agents sometimes block access to client-side storage mechanisms in third-party contexts. This can break authenticated embeds such as commenting widgets, which often rely on cookies for authentication.
+User Agents sometimes block access to client-side storage mechanisms in third party contexts. This can break authenticated embeds such as commenting widgets, which often rely on cookies for authentication.
 
-The Storage Access API enables cross-origin <{iframe}>s to request and be granted access to their client-side storage, so that authenticated embeds can work in such User Agents. [[STORAGE-ACCESS-INTRO]]
+The Storage Access API enables cross origin <{iframe}>s to request and be granted access to their client-side storage, so that authenticated embeds can work in such User Agents. [[STORAGE-ACCESS-INTRO]]
+
+ISSUE: [cross origin or cross site?](https://github.com/privacycg/storage-access/pull/24#discussion_r408771982)
+
+ISSUE: give other examples beyond authenticated embeds
 
 </section>
 
@@ -71,7 +81,7 @@ partial interface Document {
 };
 </pre>
 
-This specification defines two methods on {{Document}}: {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}}. The {{Document/hasStorageAccess()}} method returns a {{Promise}} that resolves with a {{boolean}} indicating whether the document has access to its first-party storage. The {{Document/requestStorageAccess()}} method returns a {{Promise}} that resolves when the document has been granted access to its first-party storage, and rejects otherwise.
+This specification defines two methods on {{Document}}: {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}}. The {{Document/hasStorageAccess()}} method returns a {{Promise}} that resolves with a {{boolean}} indicating whether the document has access to its first party storage. The {{Document/requestStorageAccess()}} method returns a {{Promise}} that resolves when the document has been granted access to its first party storage, and rejects otherwise.
 
 Each {{Document}} has an associated <dfn export for=Document id=has-storage-access-flag>has storage access flag</dfn>, initially unset.
 
@@ -84,13 +94,13 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 <!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15512 -->
 
 1. Let |p| be [=a new promise=].
-1. If |doc|'s [=was expressly denied storage access flag=] is set, [=resolve=] |p| with false and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L85 -->
-1. If |doc|'s [=active sandboxing flag set=] has its [=sandboxed origin browsing context flag=] set, [=resolve=] |p| with false and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L90 --> <!-- Gecko's Document.cpp#l15526 -->
-1. If |doc|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| with true and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L95 --> <!-- Gecko's Document.cpp#l15531 -->
+1. If |doc|'s [=was expressly denied storage access flag=] is set, [=resolve=] |p| with false and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L85 -->
+1. If |doc|'s [=active sandboxing flag set=] has its [=sandboxed origin browsing context flag=] set, [=resolve=] |p| with false and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L90 --> <!-- Gecko's Document.cpp#l15526 -->
+1. If |doc|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L95 --> <!-- Gecko's Document.cpp#l15531 -->
 1. Let |topDoc| be the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
-1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p| with true and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L102 --> <!-- Gecko's Document.cpp#l15541 -->
-1. Resolve |p| with the result of running [=determine if a document has storage access=] with |doc| and |topDoc| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L115 --> <!-- Gecko's Document.cpp#l15548 -->
-1. [=If aborted=], return |p|.
+1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L102 --> <!-- Gecko's Document.cpp#l15541 -->
+1. Resolve |p| with the result of running [=determine if a document has storage access=] with |doc| and |topDoc|. <!-- WebKit's DocumentStorageAccess.cpp#L115 --> <!-- Gecko's Document.cpp#l15548 -->
+1. Return |p|.
 
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
 
@@ -99,40 +109,41 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 <!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15629 -->
 
 1. Let |p| be [=a new promise=].
-1. If |doc|'s [=was expressly denied storage access flag=] is set, [=reject=] |p| and abort these steps.
-1. If |doc|'s [=has storage access flag=] is set, [=resolve=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L128 --> <!-- Gecko's Document.cpp#l15604 -->
-1. If the |doc|'s [=active sandboxing flag set=] has its [=sandboxed origin browsing context flag=] set, [=reject=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
-1. If |doc|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L138 --> <!-- Gecko's Document.cpp#l15632 -->
+1. If |doc|'s [=was expressly denied storage access flag=] is set, [=reject=] |p| and return |p|.
+1. If |doc|'s [=has storage access flag=] is set, [=resolve=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L128 --> <!-- Gecko's Document.cpp#l15604 -->
+1. If the |doc|'s [=active sandboxing flag set=] has its [=sandboxed origin browsing context flag=] set, [=reject=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
+1. If |doc|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L138 --> <!-- Gecko's Document.cpp#l15632 -->
 1. Let |topDoc| be the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
-1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L146 --> <!-- Gecko's Document.cpp#l15604 --> <!-- Gecko's Document.cpp#l15657 -->
-1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L152 --> <!-- Gecko's Document.cpp#l15667 -->
-1. If |doc|'s <a for=Document>browsing context</a>'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
-1. If the algorithm is invoked when |doc|'s {{Window}} object does not have [=transient activation=], [=reject=] |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L163 --> <!-- Gecko's Document.cpp#l15680 -->
-1. [=Determine the storage access policy=] with |doc|, |topDoc|, and |p| and abort these steps. <!-- WebKit's DocumentStorageAccess.cpp#L177 --> <!-- Gecko's Document.cpp#l15685 -->
-1. Set |doc|'s [=has storage access flag=], [=resolve=] |p|, and abort these steps. <!-- Gecko's Document.cpp#l15805 -->
-1. [=If aborted=], return |p|.
+1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L146 --> <!-- Gecko's Document.cpp#l15604 --> <!-- Gecko's Document.cpp#l15657 -->
+1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L152 --> <!-- Gecko's Document.cpp#l15667 -->
+1. If |doc|'s <a for=Document>browsing context</a>'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
+1. If the algorithm is invoked when |doc|'s {{Window}} object does not have [=transient activation=], [=reject=] |p| and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L163 --> <!-- Gecko's Document.cpp#l15680 -->
+1. [=Determine the storage access policy=] with |doc|, |topDoc|, and |p|, and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L177 --> <!-- Gecko's Document.cpp#l15685 -->
+1. Set |doc|'s [=has storage access flag=], [=resolve=] |p|, and return |p|. <!-- Gecko's Document.cpp#l15805 -->
 
 ISSUE(10): Remove step 9 if we determine that nested <{iframe}>s should be able to request storage access.
 
+ISSUE: [rewrite to not block the main thread.](https://github.com/privacycg/storage-access/pull/24#discussion_r408780546)
+
 <h4 id="ua-policy">User Agent storage access policies</h4>
 
-Different User Agents have different policies around whether or not third-party <{iframe}>'s may access data placed into client-side storage mechanisms when the <{iframe}>'s {{Document}}'s <a for=Document>origin</a> was loaded in a first-party context. User Agents check these policies when client-side storage is accessed (see [[#storage]]) as well as by {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}}.
+Different User Agents have different policies around whether or not third party <{iframe}>'s may access data placed into client-side storage mechanisms when the <{iframe}>'s {{Document}}'s <a for=Document>origin</a> was loaded in a first party context. User Agents check these policies when client-side storage is accessed (see [[#storage]]) as well as by {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}}.
 
 When required to <dfn type="abstract-op">determine if a document has storage access</dfn> with {{Document|Documents}} |doc| and |topDoc|, run these steps:
 
 1. Assert: |topDoc| is the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
 1. If |doc|'s [=has storage access flag=] is set, return true.
-1. Let |has storage access| (a {{boolean}}) be the result of running a UA-defined set of steps to determine if |doc| has storage access when it is loaded in a third-party context on |topDoc|.
+1. Let |has storage access| (a {{boolean}}) be the result of running a UA-defined set of steps to determine if |doc| has storage access when it is loaded in a third party context on |topDoc|.
 1. If |has storage access| is true, set |doc|'s [=has storage access flag=].
 1. Return |has storage access|.
 
 When required to <dfn type="abstract-op">determine the storage access policy</dfn> for {{Document|Documents}} |doc| and |topDoc| with {{Promise}} |p|, run these steps:
 
 1. Assert: |topDoc| is the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
-1. Let |should implicitly grant| and |should implicitly deny| (both {{boolean|booleans}}) be the result of running a UA-defined set of steps to determine if |doc|'s request for storage access on |topDoc| should be granted or denied without prompting the user.
-1. If |should implicitly grant| is true, [=resolve=] |p| and abort these steps.
-1. If |should implicitly deny| is true, [=reject=] |p| and abort these steps.
-1. Ask the user if they would like to grant |doc| access to its storage when it is loaded in a third-party context on |topDoc|, and wait for an answer. Let |user expression of permission| (a {{boolean}}) be the result.
+1. Let |implicitly granted| and |implicitly denied| (both {{boolean|booleans}}) be the result of running a UA-defined set of steps to determine if |doc|'s request for storage access on |topDoc| should be granted or denied without prompting the user.
+1. If |implicitly granted| is true, [=resolve=] |p| and return.
+1. If |implicitly denied| is true, [=reject=] |p| and return.
+1. Ask the user if they would like to grant |doc| access to its storage when it is loaded in a third party context on |topDoc|, and wait for an answer. Let |user expression of permission| (a {{boolean}}) be the result.
 
     Note: if |user expression of permission| is false, the user **expressly chose** to deny |doc| access to its storage.
 1. If |user expression of permission| is true, [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L191 -->
@@ -142,11 +153,13 @@ When required to <dfn type="abstract-op">determine the storage access policy</df
     1. Set |doc|'s [=was expressly denied storage access flag=].
     1. [=Reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L194 --> <!-- Gecko's Document.cpp#l15805 -->
 
+ISSUE: [since this is UA-defined, does it make sense to follow-up separately with a user prompt?](https://github.com/privacycg/storage-access/pull/24#discussion_r408784492)
+
 <h3 id="navigation">Changes to navigation</h3>
 
 Before changing the [=current entry=] of a [=session history=], unset the [=has storage access flag=] of the old [=current entry=]'s {{Document}}, if it has one.
 
-ISSUE: Finish this section.
+ISSUE(3): What this section should look like ultimately hinges on this issue.
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
