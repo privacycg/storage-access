@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 2891b22e, updated Thu Mar 26 15:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="a764b9415f740d225686048c0ba13535d6a7f24f" name="document-revision">
+  <meta content="c1225ad022d38a97b1523e823cb9c6eec263d877" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1480,7 +1480,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"></p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-14">14 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-15">15 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1554,11 +1554,16 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    </ol>
   </nav>
   <main>
+   <p class="issue" id="issue-092ab0ec"><a class="self-link" href="#issue-092ab0ec"></a> don’t use the terms "first party" and "third party"</p>
+   <p class="issue" id="issue-abeca561"><a class="self-link" href="#issue-abeca561"></a> use the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin" id="ref-for-top-level-origin">top-level origin</a> concept from <a data-link-type="biblio" href="#biblio-html">[HTML]</a>.</p>
+   <p class="issue" id="issue-a668f049"><a class="self-link" href="#issue-a668f049"></a> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408779042">check for unique origin or opaque origin?</a></p>
    <section class="non-normative">
     <h2 class="heading settled" data-level="1" id="intro"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#intro"></a></h2>
     <p><em>This section is non-normative.</em></p>
-    <p>User Agents sometimes block access to client-side storage mechanisms in third-party contexts. This can break authenticated embeds such as commenting widgets, which often rely on cookies for authentication.</p>
-    <p>The Storage Access API enables cross-origin <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element">iframe</a></code>s to request and be granted access to their client-side storage, so that authenticated embeds can work in such User Agents. <a data-link-type="biblio" href="#biblio-storage-access-intro">[STORAGE-ACCESS-INTRO]</a></p>
+    <p>User Agents sometimes block access to client-side storage mechanisms in third party contexts. This can break authenticated embeds such as commenting widgets, which often rely on cookies for authentication.</p>
+    <p>The Storage Access API enables cross origin <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element">iframe</a></code>s to request and be granted access to their client-side storage, so that authenticated embeds can work in such User Agents. <a data-link-type="biblio" href="#biblio-storage-access-intro">[STORAGE-ACCESS-INTRO]</a></p>
+    <p class="issue" id="issue-f1562ab4"><a class="self-link" href="#issue-f1562ab4"></a> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408771982">cross origin or cross site?</a></p>
+    <p class="issue" id="issue-1aebf08e"><a class="self-link" href="#issue-1aebf08e"></a> give other examples beyond authenticated embeds</p>
    </section>
    <h2 class="heading settled" data-level="2" id="infra"><span class="secno">2. </span><span class="content">Infrastructure</span><a class="self-link" href="#infra"></a></h2>
    <p>This specification defines several additions to the HTML standard, and depends on the Infra standard. <a data-link-type="biblio" href="#biblio-infra">[INFRA]</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a></p>
@@ -1569,7 +1574,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
   <c- b>Promise</c->&lt;<c- b>void</c->> <a class="idl-code" data-link-type="method" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess"><c- g>requestStorageAccess</c-></a>();
 };
 </pre>
-   <p>This specification defines two methods on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>: <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess①">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess①">requestStorageAccess()</a></code>. The <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess②">hasStorageAccess()</a></code> method returns a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code> that resolves with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①">boolean</a></code> indicating whether the document has access to its first-party storage. The <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess②">requestStorageAccess()</a></code> method returns a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise①">Promise</a></code> that resolves when the document has been granted access to its first-party storage, and rejects otherwise.</p>
+   <p>This specification defines two methods on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code>: <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess①">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess①">requestStorageAccess()</a></code>. The <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess②">hasStorageAccess()</a></code> method returns a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code> that resolves with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean①">boolean</a></code> indicating whether the document has access to its first party storage. The <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess②">requestStorageAccess()</a></code> method returns a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise①">Promise</a></code> that resolves when the document has been granted access to its first party storage, and rejects otherwise.</p>
    <p>Each <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> has an associated <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-export id="has-storage-access-flag">has storage access flag</dfn>, initially unset.</p>
    <p>Each <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code> has an associated <dfn class="dfn-paneled" data-dfn-for="Document" data-dfn-type="dfn" data-export id="was-expressly-denied-storage-access-flag">was expressly denied storage access flag</dfn>, initially unset.</p>
    <p>When invoked on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> <var>doc</var>, the <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="method" data-export id="dom-document-hasstorageaccess"><code>hasStorageAccess()</code></dfn> method must run these steps:</p>
@@ -1577,52 +1582,51 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Let <var>p</var> be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag">was expressly denied storage access flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>p</var> with false and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag">was expressly denied storage access flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>p</var> with false and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> has its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag" id="ref-for-sandboxed-origin-browsing-context-flag">sandboxed origin browsing context flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①">resolve</a> <var>p</var> with false and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> has its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag" id="ref-for-sandboxed-origin-browsing-context-flag">sandboxed origin browsing context flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①">resolve</a> <var>p</var> with false and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve②">resolve</a> <var>p</var> with true and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve②">resolve</a> <var>p</var> with true and return <var>p</var>.</p>
     <li data-md>
      <p>Let <var>topDoc</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a>.</p>
     <li data-md>
-     <p>If <var>doc</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>topDoc</var>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve③">resolve</a> <var>p</var> with true and abort these steps.</p>
+     <p>If <var>doc</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>topDoc</var>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve③">resolve</a> <var>p</var> with true and return <var>p</var>.</p>
     <li data-md>
-     <p>Resolve <var>p</var> with the result of running <a data-link-type="dfn" href="#determine-if-a-document-has-storage-access" id="ref-for-determine-if-a-document-has-storage-access">determine if a document has storage access</a> with <var>doc</var> and <var>topDoc</var> and abort these steps.</p>
+     <p>Resolve <var>p</var> with the result of running <a data-link-type="dfn" href="#determine-if-a-document-has-storage-access" id="ref-for-determine-if-a-document-has-storage-access">determine if a document has storage access</a> with <var>doc</var> and <var>topDoc</var>.</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#if-aborted" id="ref-for-if-aborted">If aborted</a>, return <var>p</var>.</p>
+     <p>Return <var>p</var>.</p>
    </ol>
    <p>When invoked on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code> <var>doc</var>, the <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="method" data-export id="dom-document-requeststorageaccess"><code>requestStorageAccess()</code></dfn> method must run these steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>p</var> be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise①">a new promise</a>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag①">was expressly denied storage access flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject">reject</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag①">was expressly denied storage access flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject">reject</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag">has storage access flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve④">resolve</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag">has storage access flag</a> is set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve④">resolve</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p>If the <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set①">active sandboxing flag set</a> has its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag" id="ref-for-sandboxed-origin-browsing-context-flag①">sandboxed origin browsing context flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> <var>p</var> and abort these steps.</p>
+     <p>If the <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set①">active sandboxing flag set</a> has its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#sandboxed-origin-browsing-context-flag" id="ref-for-sandboxed-origin-browsing-context-flag①">sandboxed origin browsing context flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑤">resolve</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑤">resolve</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
      <p>Let <var>topDoc</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing context</a>.</p>
     <li data-md>
-     <p>If <var>doc</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin①">same origin</a> with <var>topDoc</var>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑥">resolve</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>doc</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin①">same origin</a> with <var>topDoc</var>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑥">resolve</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set②">active sandboxing flag set</a> has its <a data-link-type="dfn" href="#sandbox-storage-access-by-user-activation-flag" id="ref-for-sandbox-storage-access-by-user-activation-flag">sandbox storage access by user activation flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject②">reject</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set②">active sandboxing flag set</a> has its <a data-link-type="dfn" href="#sandbox-storage-access-by-user-activation-flag" id="ref-for-sandbox-storage-access-by-user-activation-flag">sandbox storage access by user activation flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject②">reject</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc④">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#opener-browsing-context" id="ref-for-opener-browsing-context">opener browsing context</a> is not its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject③">reject</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc④">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#opener-browsing-context" id="ref-for-opener-browsing-context">opener browsing context</a> is not its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject③">reject</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p>If the algorithm is invoked when <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> object does not have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject④">reject</a> <var>p</var> and abort these steps.</p>
+     <p>If the algorithm is invoked when <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> object does not have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject④">reject</a> <var>p</var> and return <var>p</var>.</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="#determine-the-storage-access-policy" id="ref-for-determine-the-storage-access-policy">Determine the storage access policy</a> with <var>doc</var>, <var>topDoc</var>, and <var>p</var> and abort these steps.</p>
+     <p><a data-link-type="dfn" href="#determine-the-storage-access-policy" id="ref-for-determine-the-storage-access-policy">Determine the storage access policy</a> with <var>doc</var>, <var>topDoc</var>, and <var>p</var>, and return <var>p</var>.</p>
     <li data-md>
-     <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag①">has storage access flag</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑦">resolve</a> <var>p</var>, and abort these steps.</p>
-    <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#if-aborted" id="ref-for-if-aborted①">If aborted</a>, return <var>p</var>.</p>
+     <p>Set <var>doc</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag①">has storage access flag</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑦">resolve</a> <var>p</var>, and return <var>p</var>.</p>
    </ol>
    <p class="issue" id="issue-dab76aba"><a class="self-link" href="#issue-dab76aba"></a> Remove step 9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element①">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
+   <p class="issue" id="issue-a1e99cc7"><a class="self-link" href="#issue-a1e99cc7"></a> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408780546">rewrite to not block the main thread.</a></p>
    <h4 class="heading settled" data-level="3.1.1" id="ua-policy"><span class="secno">3.1.1. </span><span class="content">User Agent storage access policies</span><a class="self-link" href="#ua-policy"></a></h4>
-   <p>Different User Agents have different policies around whether or not third-party <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element②">iframe</a></code>'s may access data placed into client-side storage mechanisms when the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element③">iframe</a></code>'s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code>'s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-origin" id="ref-for-concept-document-origin">origin</a> was loaded in a first-party context. User Agents check these policies when client-side storage is accessed (see <a href="#storage">§ 3.3 Changes to various client-side storage mechanisms</a>) as well as by <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code>.</p>
+   <p>Different User Agents have different policies around whether or not third party <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element②">iframe</a></code>'s may access data placed into client-side storage mechanisms when the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element③">iframe</a></code>'s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦">Document</a></code>'s <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-document-origin" id="ref-for-concept-document-origin">origin</a> was loaded in a first party context. User Agents check these policies when client-side storage is accessed (see <a href="#storage">§ 3.3 Changes to various client-side storage mechanisms</a>) as well as by <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code>.</p>
    <p>When required to <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-if-a-document-has-storage-access" type="abstract-op">determine if a document has storage access</dfn> with <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Documents</a></code> <var>doc</var> and <var>topDoc</var>, run these steps:</p>
    <ol>
     <li data-md>
@@ -1630,7 +1634,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag②">has storage access flag</a> is set, return true.</p>
     <li data-md>
-     <p>Let <var>has storage access</var> (a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②">boolean</a></code>) be the result of running a UA-defined set of steps to determine if <var>doc</var> has storage access when it is loaded in a third-party context on <var>topDoc</var>.</p>
+     <p>Let <var>has storage access</var> (a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean②">boolean</a></code>) be the result of running a UA-defined set of steps to determine if <var>doc</var> has storage access when it is loaded in a third party context on <var>topDoc</var>.</p>
     <li data-md>
      <p>If <var>has storage access</var> is true, set <var>doc</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag③">has storage access flag</a>.</p>
     <li data-md>
@@ -1641,13 +1645,13 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p class="assertion">Assert: <var>topDoc</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document③">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc⑥">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level browsing context</a>.</p>
     <li data-md>
-     <p>Let <var>should implicitly grant</var> and <var>should implicitly deny</var> (both <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean③">booleans</a></code>) be the result of running a UA-defined set of steps to determine if <var>doc</var>’s request for storage access on <var>topDoc</var> should be granted or denied without prompting the user.</p>
+     <p>Let <var>implicitly granted</var> and <var>implicitly denied</var> (both <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean③">booleans</a></code>) be the result of running a UA-defined set of steps to determine if <var>doc</var>’s request for storage access on <var>topDoc</var> should be granted or denied without prompting the user.</p>
     <li data-md>
-     <p>If <var>should implicitly grant</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑧">resolve</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>implicitly granted</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑧">resolve</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>If <var>should implicitly deny</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑤">reject</a> <var>p</var> and abort these steps.</p>
+     <p>If <var>implicitly denied</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑤">reject</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>Ask the user if they would like to grant <var>doc</var> access to its storage when it is loaded in a third-party context on <var>topDoc</var>, and wait for an answer. Let <var>user expression of permission</var> (a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean④">boolean</a></code>) be the result.</p>
+     <p>Ask the user if they would like to grant <var>doc</var> access to its storage when it is loaded in a third party context on <var>topDoc</var>, and wait for an answer. Let <var>user expression of permission</var> (a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-boolean" id="ref-for-idl-boolean④">boolean</a></code>) be the result.</p>
      <p class="note" role="note"><span>Note:</span> if <var>user expression of permission</var> is false, the user <strong>expressly chose</strong> to deny <var>doc</var> access to its storage.</p>
     <li data-md>
      <p>If <var>user expression of permission</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑨">resolve</a> <var>p</var>.</p>
@@ -1664,9 +1668,10 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑥">Reject</a> <var>p</var>.</p>
      </ol>
    </ol>
+   <p class="issue" id="issue-65ce4cf9"><a class="self-link" href="#issue-65ce4cf9"></a> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408784492">since this is UA-defined, does it make sense to follow-up separately with a user prompt?</a></p>
    <h3 class="heading settled" data-level="3.2" id="navigation"><span class="secno">3.2. </span><span class="content">Changes to navigation</span><a class="self-link" href="#navigation"></a></h3>
    <p>Before changing the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#current-entry" id="ref-for-current-entry">current entry</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#session-history" id="ref-for-session-history">session history</a>, unset the <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag⑤">has storage access flag</a> of the old <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#current-entry" id="ref-for-current-entry①">current entry</a>'s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code>, if it has one.</p>
-   <p class="issue" id="issue-91b7518d"><a class="self-link" href="#issue-91b7518d"></a> Finish this section.</p>
+   <p class="issue" id="issue-d63174c9"><a class="self-link" href="#issue-d63174c9"></a> What this section should look like ultimately hinges on this issue. <a href="https://github.com/privacycg/storage-access/issues/3">&lt;https://github.com/privacycg/storage-access/issues/3></a></p>
    <h3 class="heading settled" data-level="3.3" id="storage"><span class="secno">3.3. </span><span class="content">Changes to various client-side storage mechanisms</span><a class="self-link" href="#storage"></a></h3>
    <p class="issue" id="issue-82f734f9"><a class="self-link" href="#issue-82f734f9"></a> Write this section. For each kind of client-side storage affected, modify them to invoke <a data-link-type="dfn" href="#determine-if-a-document-has-storage-access" id="ref-for-determine-if-a-document-has-storage-access①">determine if a document has storage access</a> &amp; modify their behavior based on the result.</p>
    <p class="issue" id="issue-924f0e5d"><a class="self-link" href="#issue-924f0e5d"></a> Should this API affect client-side storage other than cookies? <a href="https://github.com/privacycg/storage-access/issues/4">&lt;https://github.com/privacycg/storage-access/issues/4></a></p>
@@ -1981,17 +1986,17 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-top-level-browsing-context⑤">3.1.1. User Agent storage access policies</a> <a href="#ref-for-top-level-browsing-context⑥">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-top-level-origin">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin">https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-top-level-origin">Unnumbered Section</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-transient-activation">
    <a href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation">https://html.spec.whatwg.org/multipage/interaction.html#transient-activation</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-transient-activation">3.1. Changes to Document</a>
     <li><a href="#ref-for-transient-activation①">3.1.1. User Agent storage access policies</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-if-aborted">
-   <a href="https://infra.spec.whatwg.org/#if-aborted">https://infra.spec.whatwg.org/#if-aborted</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-if-aborted">3.1. Changes to Document</a> <a href="#ref-for-if-aborted①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-promise">
@@ -2053,12 +2058,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-sandboxing-flag-set" style="color:initial">sandboxing flag set</span>
      <li><span class="dfn-paneled" id="term-for-session-history" style="color:initial">session history</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
+     <li><span class="dfn-paneled" id="term-for-top-level-origin" style="color:initial">top-level origin</span>
      <li><span class="dfn-paneled" id="term-for-transient-activation" style="color:initial">transient activation</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-if-aborted" style="color:initial">if aborted</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -2098,8 +2099,15 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> don’t use the terms "first party" and "third party"<a href="#issue-092ab0ec"> ↵ </a></div>
+   <div class="issue"> use the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin">top-level origin</a> concept from <a data-link-type="biblio" href="#biblio-html">[HTML]</a>.<a href="#issue-abeca561"> ↵ </a></div>
+   <div class="issue"> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408779042">check for unique origin or opaque origin?</a><a href="#issue-a668f049"> ↵ </a></div>
+   <div class="issue"> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408771982">cross origin or cross site?</a><a href="#issue-f1562ab4"> ↵ </a></div>
+   <div class="issue"> give other examples beyond authenticated embeds<a href="#issue-1aebf08e"> ↵ </a></div>
    <div class="issue"> Remove step 9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-dab76aba"> ↵ </a></div>
-   <div class="issue"> Finish this section.<a href="#issue-91b7518d"> ↵ </a></div>
+   <div class="issue"> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408780546">rewrite to not block the main thread.</a><a href="#issue-a1e99cc7"> ↵ </a></div>
+   <div class="issue"> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408784492">since this is UA-defined, does it make sense to follow-up separately with a user prompt?</a><a href="#issue-65ce4cf9"> ↵ </a></div>
+   <div class="issue"> What this section should look like ultimately hinges on this issue. <a href="https://github.com/privacycg/storage-access/issues/3">&lt;https://github.com/privacycg/storage-access/issues/3></a><a href="#issue-d63174c9"> ↵ </a></div>
    <div class="issue"> Write this section. For each kind of client-side storage affected, modify them to invoke <a data-link-type="dfn" href="#determine-if-a-document-has-storage-access">determine if a document has storage access</a> &amp; modify their behavior based on the result.<a href="#issue-82f734f9"> ↵ </a></div>
    <div class="issue"> Should this API affect client-side storage other than cookies? <a href="https://github.com/privacycg/storage-access/issues/4">&lt;https://github.com/privacycg/storage-access/issues/4></a><a href="#issue-924f0e5d"> ↵ </a></div>
    <div class="issue"> Write this section.<a href="#issue-089b92ec"> ↵ </a></div>
