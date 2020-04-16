@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 2891b22e, updated Thu Mar 26 15:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="c94752f0a351e10a9a7c797f95dd8a84541552c0" name="document-revision">
+  <meta content="5ee5e735bdca92367a495dfc02fdb11e9f4cf670" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1705,24 +1705,23 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>implicitly denied</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑤">reject</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>Ask the user if they would like to grant <var>doc</var> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑥">first party data</a> when it is a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party⑥">third party</a> on <var>topDoc</var>, and wait for an answer. Let <var>user expression of permission</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">boolean</a>) be the result.</p>
-     <p class="note" role="note"><span>Note:</span> if <var>user expression of permission</var> is false, the user <strong>expressly chose</strong> to deny <var>doc</var> access to its storage.</p>
+     <p>Ask the user if they would like to grant <var>doc</var> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑥">first party data</a> when it is a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party⑥">third party</a> on <var>topDoc</var>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
     <li data-md>
-     <p>If <var>user expression of permission</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑨">resolve</a> <var>p</var>.</p>
+     <p>If <var>expressly granted</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑨">resolve</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>If <var>user expression of permission</var> is false, let <var>w</var> be <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object and run these steps:</p>
+     <p>Let <var>flag set</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-flag-set" id="ref-for-obtain-the-storage-access-flag-set③">obtaining the storage access flag set</a> of <var>doc</var>.</p>
+    <li data-md>
+     <p>Unset <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag④">has storage access flag</a>.</p>
+    <li data-md>
+     <p>If <var>expressly denied</var> is true, run these steps:</p>
      <ol>
       <li data-md>
-       <p>If <var>w</var> has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation①">transient activation</a> and <var>user expression of permission</var> is false, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#consume-user-activation" id="ref-for-consume-user-activation">consume user activation</a> with <var>w</var>.</p>
-      <li data-md>
-       <p>Let <var>flag set</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-flag-set" id="ref-for-obtain-the-storage-access-flag-set③">obtaining the storage access flag set</a> of <var>doc</var>.</p>
-      <li data-md>
-       <p>Unset <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag④">has storage access flag</a>.</p>
+       <p>If <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation①">transient activation</a>, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#consume-user-activation" id="ref-for-consume-user-activation">consume user activation</a> with it.</p>
       <li data-md>
        <p>Set <var>flag set</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag②">was expressly denied storage access flag</a>.</p>
-      <li data-md>
-       <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑥">Reject</a> <var>p</var>.</p>
      </ol>
+    <li data-md>
+     <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑥">Reject</a> <var>p</var> and return.</p>
    </ol>
    <p class="issue" id="issue-65ce4cf9"><a class="self-link" href="#issue-65ce4cf9"></a> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408784492">since this is UA-defined, does it make sense to follow-up separately with a user prompt?</a></p>
    <h3 class="heading settled" data-level="3.3" id="navigation"><span class="secno">3.3. </span><span class="content">Changes to navigation</span><a class="self-link" href="#navigation"></a></h3>
