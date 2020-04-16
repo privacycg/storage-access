@@ -179,16 +179,14 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for {{Docum
 1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running a UA-defined set of steps to determine if |doc|'s request for storage access on |topDoc| should be granted or denied without prompting the user.
 1. If |implicitly granted| is true, [=resolve=] |p| and return.
 1. If |implicitly denied| is true, [=reject=] |p| and return.
-1. Ask the user if they would like to grant |doc| access to its [=first party data=] when it is a [=third party=] on |topDoc|, and wait for an answer. Let |user expression of permission| (a [=boolean=]) be the result.
-
-    Note: if |user expression of permission| is false, the user **expressly chose** to deny |doc| access to its storage.
-1. If |user expression of permission| is true, [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L191 -->
-1. If |user expression of permission| is false, let |w| be |doc|'s {{Window}} object and run these steps:
-    1. If |w| has [=transient activation=] and |user expression of permission| is false, [=consume user activation=] with |w|. <!-- WebKit's DocumentStorageAccess.cpp#L181 -->
-    1. Let |flag set| be the result of [=obtain the storage access flag set|obtaining the storage access flag set=] of |doc|.
-    1. Unset |flag set|'s [=has storage access flag=].
+1. Ask the user if they would like to grant |doc| access to its [=first party data=] when it is a [=third party=] on |topDoc|, and wait for an answer. Let |expressly granted| and |expressly denied| (both [=booleans=]) be the result.
+1. If |expressly granted| is true, [=resolve=] |p| and return. <!-- WebKit's DocumentStorageAccess.cpp#L191 -->
+1. Let |flag set| be the result of [=obtain the storage access flag set|obtaining the storage access flag set=] of |doc|.
+1. Unset |flag set|'s [=has storage access flag=].
+1. If |expressly denied| is true, run these steps:
+    1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it. <!-- WebKit's DocumentStorageAccess.cpp#L181 -->
     1. Set |flag set|'s [=was expressly denied storage access flag=].
-    1. [=Reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L194 --> <!-- Gecko's Document.cpp#l15805 -->
+1. [=Reject=] |p| and return. <!-- WebKit's DocumentStorageAccess.cpp#L194 --> <!-- Gecko's Document.cpp#l15805 -->
 
 ISSUE: [since this is UA-defined, does it make sense to follow-up separately with a user prompt?](https://github.com/privacycg/storage-access/pull/24#discussion_r408784492)
 
