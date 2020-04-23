@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 2891b22e, updated Thu Mar 26 15:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="5ee5e735bdca92367a495dfc02fdb11e9f4cf670" name="document-revision">
+  <meta content="498e0d1c7e69a2afa0ced1e5f96caf01c112b9b8" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1480,7 +1480,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"></p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-16">16 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-23">23 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1576,27 +1576,27 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <h3 class="heading settled" data-level="3.1" id="ua-state"><span class="secno">3.1. </span><span class="content">User Agent state related to storage access</span><a class="self-link" href="#ua-state"></a></h3>
    <p>Each User Agent maintains a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-map">storage access map</dfn>, an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">ordered map</a> whose keys are <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key">partitioned storage keys</a> and whose values are <a data-link-type="dfn" href="#storage-access-flag-set" id="ref-for-storage-access-flag-set">storage access flag sets</a>.</p>
    <p class="issue" id="issue-308d22de"><a class="self-link" href="#issue-308d22de"></a> What’s the lifetime of the <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map">storage access map</a> and of its entries?</p>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair">pair</a> consisting of a top-level domain and a domain, both <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain">registrable domains</a>.</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair">pair</a> consisting of a top-level site and a site, both <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">sites</a>.</p>
    <p class="issue" id="issue-bf438984"><a class="self-link" href="#issue-bf438984"></a> Replace this <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key①">partitioned storage key</a> concept with whatever Anne comes up with for <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.</p>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-flag-set">storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for <var>domain</var> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party①">third party</a> on <var>top-level domain</var>:</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-flag-set">storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for <var>site</var> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party①">third party</a> on <var>top-level site</var>:</p>
    <dl>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="has-storage-access-flag">has storage access flag</dfn>
     <dd data-md>
-     <p>When set, this flag indicates <var>domain</var> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data②">first party data</a> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party②">third party</a> on <var>top-level domain</var>.</p>
+     <p>When set, this flag indicates <var>site</var> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data②">first party data</a> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party②">third party</a> on <var>top-level site</var>.</p>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="was-expressly-denied-storage-access-flag">was expressly denied storage access flag</dfn>
     <dd data-md>
-     <p>When set, this flag indicates that the user expressly denied <var>domain</var> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data③">first party data</a> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party③">third party</a> on <var>top-level domain</var>.</p>
+     <p>When set, this flag indicates that the user expressly denied <var>site</var> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data③">first party data</a> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party③">third party</a> on <var>top-level site</var>.</p>
    </dl>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="obtain-the-storage-access-flag-set" type="abstract-op">obtain the storage access flag set</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> <var>doc</var>, run the following steps:</p>
    <ol>
     <li data-md>
      <p>Let <var>settings</var> be <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>.</p>
     <li data-md>
-     <p>Let <var>domain</var> be the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain①">registrable domain</a> of <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a>.</p>
+     <p>Let <var>site</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site" id="ref-for-obtain-a-site">obtaining a site</a> from <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin①">origin</a>.</p>
     <li data-md>
-     <p>Let <var>top-level domain</var> be the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#host-registrable-domain" id="ref-for-host-registrable-domain②">registrable domain</a> of <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin" id="ref-for-top-level-origin①">top-level origin</a>.</p>
+     <p>Let <var>top-level site</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site" id="ref-for-obtain-a-site①">obtaining a site</a> from <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin" id="ref-for-top-level-origin①">top-level origin</a>.</p>
     <li data-md>
-     <p>Let <var>key</var> be the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair①">pair</a> <var>top-level domain</var>/<var>domain</var>.</p>
+     <p>Let <var>key</var> be the <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair①">pair</a> <var>top-level site</var>/<var>site</var>.</p>
     <li data-md>
      <p>Let <var>flags</var> be null.</p>
     <li data-md>
@@ -2025,6 +2025,12 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-the-iframe-element④">3.2. Changes to Document</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-obtain-a-site">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site">https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-obtain-a-site">3.1. User Agent state related to storage access</a> <a href="#ref-for-obtain-a-site①">(2)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-opaque">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque</a><b>Referenced in:</b>
    <ul>
@@ -2079,6 +2085,12 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/history.html#session-history">https://html.spec.whatwg.org/multipage/history.html#session-history</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-session-history">3.3. Changes to navigation</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-site">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#site">https://html.spec.whatwg.org/multipage/origin.html#site</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-site">3.1. User Agent state related to storage access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-starting-a-new-parallel-queue">
@@ -2138,12 +2150,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-map-set">3.1. User Agent state related to storage access</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-host-registrable-domain">
-   <a href="https://url.spec.whatwg.org/#host-registrable-domain">https://url.spec.whatwg.org/#host-registrable-domain</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-host-registrable-domain">3.1. User Agent state related to storage access</a> <a href="#ref-for-host-registrable-domain①">(2)</a> <a href="#ref-for-host-registrable-domain②">(3)</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-idl-promise">
    <a href="https://heycam.github.io/webidl/#idl-promise">https://heycam.github.io/webidl/#idl-promise</a><b>Referenced in:</b>
    <ul>
@@ -2196,6 +2202,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-current-entry" style="color:initial">current entry</span>
      <li><span class="dfn-paneled" id="term-for-enqueue-the-following-steps" style="color:initial">enqueue the following steps</span>
      <li><span class="dfn-paneled" id="term-for-the-iframe-element" style="color:initial">iframe</span>
+     <li><span class="dfn-paneled" id="term-for-obtain-a-site" style="color:initial">obtain a site</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque" style="color:initial">opaque origin</span>
      <li><span class="dfn-paneled" id="term-for-opener-browsing-context" style="color:initial">opener browsing context</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin" style="color:initial">origin</span>
@@ -2205,6 +2212,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-same-site" style="color:initial">same site</span>
      <li><span class="dfn-paneled" id="term-for-sandboxing-flag-set" style="color:initial">sandboxing flag set</span>
      <li><span class="dfn-paneled" id="term-for-session-history" style="color:initial">session history</span>
+     <li><span class="dfn-paneled" id="term-for-site" style="color:initial">site</span>
      <li><span class="dfn-paneled" id="term-for-starting-a-new-parallel-queue" style="color:initial">starting a new parallel queue</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-top-level-origin" style="color:initial">top-level origin</span>
@@ -2218,11 +2226,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-ordered-map" style="color:initial">ordered map</span>
      <li><span class="dfn-paneled" id="term-for-pair" style="color:initial">pair</span>
      <li><span class="dfn-paneled" id="term-for-map-set" style="color:initial">set</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[URL]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="term-for-host-registrable-domain" style="color:initial">registrable domain</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WebIDL]</a> defines the following terms:
@@ -2247,8 +2250,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-storage">[STORAGE]
    <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
-   <dt id="biblio-url">[URL]
-   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-webidl">[WebIDL]
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
