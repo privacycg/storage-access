@@ -86,25 +86,25 @@ Each User Agent maintains a <dfn>storage access map</dfn>, an [=ordered map=] wh
 
 ISSUE: What's the lifetime of the [=storage access map=] and of its entries?
 
-A <dfn>partitioned storage key</dfn> is a [=pair=] consisting of a top-level domain and a domain, both [=registrable domains=].
+A <dfn>partitioned storage key</dfn> is a [=pair=] consisting of a top-level site and a site, both [=sites=].
 
 ISSUE: Replace this [=partitioned storage key=] concept with whatever Anne comes up with for [[!STORAGE]].
 
-A <dfn>storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for |domain| when it's a [=third party=] on |top-level domain|:
+A <dfn>storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for |site| when it's a [=third party=] on |top-level site|:
 
 : The <dfn for="storage access flag set" id=has-storage-access-flag>has storage access flag</dfn>
-:: When set, this flag indicates |domain| has access to its [=first party data=] when it's a [=third party=] on |top-level domain|.
+:: When set, this flag indicates |site| has access to its [=first party data=] when it's a [=third party=] on |top-level site|.
 : The <dfn for="storage access flag set" id=was-expressly-denied-storage-access-flag>was expressly denied storage access flag</dfn>
-:: When set, this flag indicates that the user expressly denied |domain| access to its [=first party data=] when it's a [=third party=] on |top-level domain|.
+:: When set, this flag indicates that the user expressly denied |site| access to its [=first party data=] when it's a [=third party=] on |top-level site|.
 
 To <dfn type="abstract-op">obtain the storage access flag set</dfn> for a {{Document}} |doc|, run the following steps:
 
 1. Let |settings| be |doc|'s [=relevant settings object=].
-1. Let |domain| be the [=registrable domain=] of |settings|' <a for="environment settings object">origin</a>.
-1. Let |top-level domain| be the [=registrable domain=] of |settings|' [=top-level origin=].
-1. Let |key| be the [=pair=] |top-level domain|/|domain|.
+1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' <a for="environment settings object">origin</a>.
+1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
+1. Let |key| be the [=pair=] |top-level site|/|site|.
 1. Let |flags| be null.
-1. If the [=storage access map=][|key|] [=exists=], set |flags| to [=storage access map=][|key|].
+1. If [=storage access map=][|key|] [=exists=], set |flags| to [=storage access map=][|key|].
 1. If |flags| is null, run these steps:
     1. Set |flags| to be a new [=storage access flag set=].
     1. [=Set=] [=storage access map=][|key|] to |flags|.
