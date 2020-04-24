@@ -148,7 +148,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Let |flag set| be the result of [=obtain the storage access flag set|obtaining the storage access flag set=] of |doc|.
     1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=reject=] |p|.
     1. If |flag set|'s [=has storage access flag=] is set, [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L128 --> <!-- Gecko's Document.cpp#l15604 -->
-    1. If |doc|'s [=Documen/origin=] is an [=opaque origin=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
+    1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
     1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L138 --> <!-- Gecko's Document.cpp#l15632 -->
     1. Let |topDoc| be the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
     1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L146 --> <!-- Gecko's Document.cpp#l15604 --> <!-- Gecko's Document.cpp#l15657 -->
