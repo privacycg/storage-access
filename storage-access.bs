@@ -64,7 +64,7 @@ This specification depends on the Infra standard. [[!INFRA]]
 
 <h2 id="the-storage-access-api">The Storage Access API</h2>
 
-A {{Document}} is said to be <dfn>first party</dfn> when the <a for="environment settings object">origin</a> and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another. Otherwise, it is said to be <dfn>third party</dfn>.
+A {{Document}} is said to be <dfn>first party</dfn> when the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another. Otherwise, it is said to be <dfn>third party</dfn>.
 
 The <dfn>first party data</dfn> of a {{Document}} is the client-side storage it would normally have access to if it were [=first party=].
 
@@ -100,7 +100,7 @@ A <dfn>storage access flag set</dfn> is a set of zero or more of the following f
 To <dfn type="abstract-op">obtain the storage access flag set</dfn> for a {{Document}} |doc|, run the following steps:
 
 1. Let |settings| be |doc|'s [=relevant settings object=].
-1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' <a for="environment settings object">origin</a>.
+1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
 1. Let |key| be the [=pair=] |top-level site|/|site|.
 1. Let |flags| be null.
@@ -128,9 +128,9 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Let |p| be [=a new promise=].
 1. Let |flag set| be the result of [=obtain the storage access flag set|obtaining the storage access flag set=] of |doc|.
 1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=resolve=] |p| with false and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L85 -->
-1. If |doc|'s <a for=Document>origin</a> is an [=opaque origin=], [=resolve=] |p| with false and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L90 --> <!-- Gecko's Document.cpp#l15526 -->
-1. If |doc|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L95 --> <!-- Gecko's Document.cpp#l15531 -->
-1. Let |topDoc| be the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
+1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=resolve=] |p| with false and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L90 --> <!-- Gecko's Document.cpp#l15526 -->
+1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L95 --> <!-- Gecko's Document.cpp#l15531 -->
+1. Let |topDoc| be the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
 1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L102 --> <!-- Gecko's Document.cpp#l15541 -->
 1. Resolve |p| with the result of running [=determine if a document has storage access=] with |doc| and |topDoc|. <!-- WebKit's DocumentStorageAccess.cpp#L115 --> <!-- Gecko's Document.cpp#l15548 -->
 1. Return |p|.
@@ -147,12 +147,12 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Let |flag set| be the result of [=obtain the storage access flag set|obtaining the storage access flag set=] of |doc|.
     1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=reject=] |p|.
     1. If |flag set|'s [=has storage access flag=] is set, [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L128 --> <!-- Gecko's Document.cpp#l15604 -->
-    1. If |doc|'s <a for=Document>origin</a> is an [=opaque origin=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
-    1. If |doc|'s <a for=Document>browsing context</a> is a [=top-level browsing context=], [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L138 --> <!-- Gecko's Document.cpp#l15632 -->
-    1. Let |topDoc| be the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
+    1. If |doc|'s [=Documen/origin=] is an [=opaque origin=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
+    1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L138 --> <!-- Gecko's Document.cpp#l15632 -->
+    1. Let |topDoc| be the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
     1. If |doc| is [=same origin=] with |topDoc|, [=resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L146 --> <!-- Gecko's Document.cpp#l15604 --> <!-- Gecko's Document.cpp#l15657 -->
     1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L152 --> <!-- Gecko's Document.cpp#l15667 -->
-    1. If |doc|'s <a for=Document>browsing context</a>'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
+    1. If |doc|'s [=Document/browsing context=]'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
     1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L163 --> <!-- Gecko's Document.cpp#l15680 -->
     1. [=Determine the storage access policy=] with |doc|, |topDoc|, and |p|. <!-- WebKit's DocumentStorageAccess.cpp#L177 --> <!-- Gecko's Document.cpp#l15685 -->
     1. Set |flag set|'s [=has storage access flag=], [=resolve=] |p|. <!-- Gecko's Document.cpp#l15805 -->
@@ -166,7 +166,7 @@ Different User Agents have different policies around whether or not [=third part
 
 To <dfn type="abstract-op">determine if a document has storage access</dfn> with {{Document|Documents}} |doc| and |topDoc|, run these steps:
 
-1. Assert: |topDoc| is the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
+1. Assert: |topDoc| is the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
 1. Let |flag set| be the result of [=obtain the storage access flag set|obtaining the storage access flag set=] of |doc|.
 1. If |flag set|'s [=has storage access flag=] is set, return true.
 1. Let |has storage access| (a [=boolean=]) be the result of running a UA-defined set of steps to determine if |doc| (a [=third party=] in |topDoc|) has access to its [=first party data=].
@@ -175,7 +175,7 @@ To <dfn type="abstract-op">determine if a document has storage access</dfn> with
 
 To <dfn type="abstract-op">determine the storage access policy</dfn> for {{Document|Documents}} |doc| and |topDoc| with {{Promise}} |p|, run these steps:
 
-1. Assert: |topDoc| is the [=active document=] of |doc|'s <a for=Document>browsing context</a>'s [=top-level browsing context=].
+1. Assert: |topDoc| is the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
 1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running a UA-defined set of steps to determine if |doc|'s request for storage access on |topDoc| should be granted or denied without prompting the user.
 1. If |implicitly granted| is true, [=resolve=] |p| and return.
 1. If |implicitly denied| is true, [=reject=] |p| and return.
