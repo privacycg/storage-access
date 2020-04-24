@@ -87,6 +87,8 @@ Each User Agent maintains a <dfn>storage access map</dfn>, an [=ordered map=] wh
 
 ISSUE: What's the lifetime of the [=storage access map=] and of its entries?
 
+ISSUE(28): Tie the [=storage access map=] to agent clusters.
+
 A <dfn>partitioned storage key</dfn> is a [=pair=] consisting of a top-level site and a site, both [=sites=].
 
 ISSUE: Replace this [=partitioned storage key=] concept with whatever Anne comes up with for [[!STORAGE]].
@@ -136,6 +138,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Resolve |p| with the result of running [=determine if a document has storage access=] with |doc| and |topDoc|. <!-- WebKit's DocumentStorageAccess.cpp#L115 --> <!-- Gecko's Document.cpp#l15548 -->
 1. Return |p|.
 
+ISSUE: Shouldn't step 7 be [=same site=]?
+
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess -->
@@ -158,6 +162,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. [=Determine the storage access policy=] with |doc|, |topDoc|, and |p|. <!-- WebKit's DocumentStorageAccess.cpp#L177 --> <!-- Gecko's Document.cpp#l15685 -->
     1. Set |flag set|'s [=has storage access flag=], [=resolve=] |p|. <!-- Gecko's Document.cpp#l15805 -->
 1. Return |p|.
+
+ISSUE: Shouldn't step 3.7 be [=same site=]?
 
 ISSUE(10): Remove step 3.9 if we determine that nested <{iframe}>s should be able to request storage access.
 
