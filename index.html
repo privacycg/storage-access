@@ -1222,9 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 2891b22e, updated Thu Mar 26 15:21:43 2020 -0700" name="generator">
+  <meta content="Bikeshed version a33f8714, updated Thu Apr 23 16:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="498e0d1c7e69a2afa0ced1e5f96caf01c112b9b8" name="document-revision">
+  <meta content="2380106834bb2455ebf8d02c94166505e36a34f9" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1480,7 +1480,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"></p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-23">23 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-24">24 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1488,8 +1488,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <dt>Issue Tracking:
      <dd><a href="https://github.com/privacycg/storage-access/issues/">GitHub</a>
      <dd><a href="#issues-index">Inline In Spec</a>
-     <dt class="editor">Editor:
+     <dt class="editor">Editors:
      <dd class="editor p-author h-card vcard" data-editor-id="89478"><a class="p-name fn u-email email" href="mailto:wilander@apple.com">John Wilander</a> (<a class="p-org org" href="https://apple.com/">Apple Inc.</a>)
+     <dd class="editor p-author h-card vcard" data-editor-id="40614"><a class="p-name fn u-email email" href="mailto:hober@apple.com">Theresa O’Connor</a> (<a class="p-org org" href="https://apple.com">Apple Inc.</a>)
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -1576,6 +1577,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <h3 class="heading settled" data-level="3.1" id="ua-state"><span class="secno">3.1. </span><span class="content">User Agent state related to storage access</span><a class="self-link" href="#ua-state"></a></h3>
    <p>Each User Agent maintains a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-map">storage access map</dfn>, an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">ordered map</a> whose keys are <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key">partitioned storage keys</a> and whose values are <a data-link-type="dfn" href="#storage-access-flag-set" id="ref-for-storage-access-flag-set">storage access flag sets</a>.</p>
    <p class="issue" id="issue-308d22de"><a class="self-link" href="#issue-308d22de"></a> What’s the lifetime of the <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map">storage access map</a> and of its entries?</p>
+   <p class="issue" id="issue-e9bb7e96"><a class="self-link" href="#issue-e9bb7e96"></a> Tie the <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map①">storage access map</a> to agent clusters. <a href="https://github.com/privacycg/storage-access/issues/28">&lt;https://github.com/privacycg/storage-access/issues/28></a></p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#pair" id="ref-for-pair">pair</a> consisting of a top-level site and a site, both <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">sites</a>.</p>
    <p class="issue" id="issue-bf438984"><a class="self-link" href="#issue-bf438984"></a> Replace this <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key①">partitioned storage key</a> concept with whatever Anne comes up with for <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.</p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-flag-set">storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for <var>site</var> when it’s a <a data-link-type="dfn" href="#third-party" id="ref-for-third-party①">third party</a> on <var>top-level site</var>:</p>
@@ -1600,14 +1602,14 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Let <var>flags</var> be null.</p>
     <li data-md>
-     <p>If the <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map①">storage access map</a>[<var>key</var>] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists">exists</a>, set <var>flags</var> to <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map②">storage access map</a>[<var>key</var>].</p>
+     <p>If <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map②">storage access map</a>[<var>key</var>] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists">exists</a>, set <var>flags</var> to <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map③">storage access map</a>[<var>key</var>].</p>
     <li data-md>
      <p>If <var>flags</var> is null, run these steps:</p>
      <ol>
       <li data-md>
        <p>Set <var>flags</var> to be a new <a data-link-type="dfn" href="#storage-access-flag-set" id="ref-for-storage-access-flag-set①">storage access flag set</a>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set">Set</a> <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map③">storage access map</a>[<var>key</var>] to <var>flags</var>.</p>
+       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set">Set</a> <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map④">storage access map</a>[<var>key</var>] to <var>flags</var>.</p>
      </ol>
     <li data-md>
      <p>Return <var>flags</var>.</p>
@@ -1631,7 +1633,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve②">resolve</a> <var>p</var> with true and return <var>p</var>.</p>
     <li data-md>
-     <p>Let <var>topDoc</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a>.</p>
+     <p>Let <var>topDoc</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a>.</p>
     <li data-md>
      <p>If <var>doc</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin">same origin</a> with <var>topDoc</var>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve③">resolve</a> <var>p</var> with true and return <var>p</var>.</p>
     <li data-md>
@@ -1639,6 +1641,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Return <var>p</var>.</p>
    </ol>
+   <p class="issue" id="issue-9416e44b"><a class="self-link" href="#issue-9416e44b"></a> Shouldn’t step 7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site①">same site</a>?</p>
    <p>When invoked on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code> <var>doc</var>, the <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="method" data-export id="dom-document-requeststorageaccess"><code>requestStorageAccess()</code></dfn> method must run these steps:</p>
    <ol>
     <li data-md>
@@ -1659,13 +1662,13 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
       <li data-md>
        <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑤">resolve</a> <var>p</var>.</p>
       <li data-md>
-       <p>Let <var>topDoc</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing context</a>.</p>
+       <p>Let <var>topDoc</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing context</a>.</p>
       <li data-md>
        <p>If <var>doc</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-origin" id="ref-for-same-origin①">same origin</a> with <var>topDoc</var>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑥">resolve</a> <var>p</var>.</p>
       <li data-md>
        <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> has its <a data-link-type="dfn" href="#sandbox-storage-access-by-user-activation-flag" id="ref-for-sandbox-storage-access-by-user-activation-flag">sandbox storage access by user activation flag</a> set, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject②">reject</a> <var>p</var>.</p>
       <li data-md>
-       <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc④">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#opener-browsing-context" id="ref-for-opener-browsing-context">opener browsing context</a> is not its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject③">reject</a> <var>p</var>.</p>
+       <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc④">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#opener-browsing-context" id="ref-for-opener-browsing-context">opener browsing context</a> is not its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject③">reject</a> <var>p</var>.</p>
       <li data-md>
        <p>If this algorithm was invoked when <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> object did not have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject④">reject</a> <var>p</var>.</p>
       <li data-md>
@@ -1676,13 +1679,14 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Return <var>p</var>.</p>
    </ol>
+   <p class="issue" id="issue-18c86ea4"><a class="self-link" href="#issue-18c86ea4"></a> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site②">same site</a>?</p>
    <p class="issue" id="issue-41e7fe80"><a class="self-link" href="#issue-41e7fe80"></a> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element④">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h4 class="heading settled" data-level="3.2.1" id="ua-policy"><span class="secno">3.2.1. </span><span class="content">User Agent storage access policies</span><a class="self-link" href="#ua-policy"></a></h4>
    <p>Different User Agents have different policies around whether or not <a data-link-type="dfn" href="#third-party" id="ref-for-third-party④">third parties</a> may access their <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data④">first party data</a>. User Agents check and/or modify these policies when client-side storage is accessed (see <a href="#storage">§ 3.4 Changes to various client-side storage mechanisms</a>) as well as when <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code> are called.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-if-a-document-has-storage-access" type="abstract-op">determine if a document has storage access</dfn> with <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Documents</a></code> <var>doc</var> and <var>topDoc</var>, run these steps:</p>
    <ol>
     <li data-md>
-     <p class="assertion">Assert: <var>topDoc</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document②">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc⑤">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing context</a>.</p>
+     <p class="assertion">Assert: <var>topDoc</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document②">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc⑤">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing context</a>.</p>
     <li data-md>
      <p>Let <var>flag set</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-flag-set" id="ref-for-obtain-the-storage-access-flag-set②">obtaining the storage access flag set</a> of <var>doc</var>.</p>
     <li data-md>
@@ -1697,7 +1701,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-the-storage-access-policy" type="abstract-op">determine the storage access policy</dfn> for <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Documents</a></code> <var>doc</var> and <var>topDoc</var> with <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code> <var>p</var>, run these steps:</p>
    <ol>
     <li data-md>
-     <p class="assertion">Assert: <var>topDoc</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document③">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc⑥">browsing context</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level browsing context</a>.</p>
+     <p class="assertion">Assert: <var>topDoc</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document③">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc⑥">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level browsing context</a>.</p>
     <li data-md>
      <p>Let <var>implicitly granted</var> and <var>implicitly denied</var> (each a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a>) be the result of running a UA-defined set of steps to determine if <var>doc</var>’s request for storage access on <var>topDoc</var> should be granted or denied without prompting the user.</p>
     <li data-md>
@@ -1759,11 +1763,13 @@ Anne van Kesteren,
 Ben Kelly,
 Brad Girardeau,
 Brad Hill,
+Brady Eidson,
 Brandon Maslen,
 Chris Mills,
 Dave Longley,
 Domenic Denicola,
 Ehsan Akhgari,
+Geoffrey Garen,
 Jack Frankland,
 James Coleman,
 James Hartig,
@@ -2073,6 +2079,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/origin.html#same-site">https://html.spec.whatwg.org/multipage/origin.html#same-site</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-same-site">3. The Storage Access API</a>
+    <li><a href="#ref-for-same-site①">3.2. Changes to Document</a> <a href="#ref-for-same-site②">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-sandboxing-flag-set">
@@ -2268,7 +2275,10 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> What’s the lifetime of the <a data-link-type="dfn" href="#storage-access-map">storage access map</a> and of its entries?<a href="#issue-308d22de"> ↵ </a></div>
+   <div class="issue"> Tie the <a data-link-type="dfn" href="#storage-access-map">storage access map</a> to agent clusters. <a href="https://github.com/privacycg/storage-access/issues/28">&lt;https://github.com/privacycg/storage-access/issues/28></a><a href="#issue-e9bb7e96"> ↵ </a></div>
    <div class="issue"> Replace this <a data-link-type="dfn" href="#partitioned-storage-key">partitioned storage key</a> concept with whatever Anne comes up with for <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.<a href="#issue-bf438984"> ↵ </a></div>
+   <div class="issue"> Shouldn’t step 7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-9416e44b"> ↵ </a></div>
+   <div class="issue"> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-18c86ea4"> ↵ </a></div>
    <div class="issue"> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-41e7fe80"> ↵ </a></div>
    <div class="issue"> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408784492">since this is UA-defined, does it make sense to follow-up separately with a user prompt?</a><a href="#issue-65ce4cf9"> ↵ </a></div>
    <div class="issue"> What this section should look like ultimately hinges on <a href="https://github.com/privacycg/storage-access/issues/3">&lt;https://github.com/privacycg/storage-access/issues/3></a><a href="#issue-0b5538d9"> ↵ </a></div>
@@ -2304,7 +2314,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside class="dfn-panel" data-for="storage-access-map">
    <b><a href="#storage-access-map">#storage-access-map</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-storage-access-map">3.1. User Agent state related to storage access</a> <a href="#ref-for-storage-access-map①">(2)</a> <a href="#ref-for-storage-access-map②">(3)</a> <a href="#ref-for-storage-access-map③">(4)</a>
+    <li><a href="#ref-for-storage-access-map">3.1. User Agent state related to storage access</a> <a href="#ref-for-storage-access-map①">(2)</a> <a href="#ref-for-storage-access-map②">(3)</a> <a href="#ref-for-storage-access-map③">(4)</a> <a href="#ref-for-storage-access-map④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="partitioned-storage-key">
