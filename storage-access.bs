@@ -110,11 +110,11 @@ To <dfn type="abstract-op">obtain the storage access map</dfn> for a [=top-level
 1. Let |agent cluster| be the result of [=obtain a browsing context agent cluster|obtaining a browsing context agent cluster=] given |context|'s <a href="https://html.spec.whatwg.org/multipage/browsers.html#tlbc-group">group</a> and |key|
 1. Return |agent cluster|'s [=agent cluster/storage access map=].
 
-A <dfn>partitioned storage key</dfn> is a [=pair=] of [=sites=], <dfn for="partitioned storage key">top-level site</dfn>/<dfn for="partitioned storage key">embedded site</dfn>.
+A <dfn>partitioned storage key</dfn> is a [=tuple=] of [=sites=], (<dfn for="partitioned storage key">top-level site</dfn>, <dfn for="partitioned storage key">embedded site</dfn>).
 
 <div class=example>
 
-`("https", "news.example")/("https", "social.example")` is a [=partitioned storage key=] whose top-level site is `("https", "news.example")` and whose embedded site is `("https", "social.example")`.
+`(("https", "news.example"), ("https", "social.example"))` is a [=partitioned storage key=] whose top-level site is `("https", "news.example")` and whose embedded site is `("https", "social.example")`.
 
 </div>
 
@@ -125,7 +125,7 @@ To <dfn type="abstract-op">generate a partitioned storage key</dfn> for a {{Docu
 1. Let |settings| be |doc|'s [=relevant settings object=].
 1. Let |embedded site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
-1. Return the [=partitioned storage key=] |top-level site|/|embedded site|.
+1. Return the [=partitioned storage key=] (|top-level site|, |embedded site|).
 
 ISSUE(10): This algorithm intentionally fails for top frames and for nested <{iframe}>s.
 
