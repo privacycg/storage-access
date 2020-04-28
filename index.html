@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version a33f8714, updated Thu Apr 23 16:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="8017b9458e71521729a56892a07335ad0411ce41" name="document-revision">
+  <meta content="df740a3120bd042d3efa5c14d3f8884f4da10539" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1593,14 +1593,12 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a>, set <var>doc</var> to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document②">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
     <li data-md>
-     <p>Let <var>agent cluster</var> be <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-agent" id="ref-for-relevant-agent">relevant agent</a>'s <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters②">agent cluster</a>.</p>
-    <li data-md>
-     <p>Return <var>agent cluster</var>’s <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map①">storage access map</a>.</p>
+     <p>Return the <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map①">storage access map</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-agent" id="ref-for-relevant-agent">relevant agent</a>'s <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters②">agent cluster</a>.</p>
    </ol>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site①">sites</a>, (<dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-top-level-site">top-level site</dfn>, <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-embedded-site">embedded site</dfn>).</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> consisting of a <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-top-level-site">top-level site</dfn> and an <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-embedded-site">embedded site</dfn> (both <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site①">sites</a>).</p>
    <div class="example" id="example-2fc6d38b">
     <a class="self-link" href="#example-2fc6d38b"></a> 
-    <p><code>(("https", "news.example"), ("https", "social.example"))</code> is a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key①">partitioned storage key</a> whose top-level site is <code>("https", "news.example")</code> and whose embedded site is <code>("https", "social.example")</code>.</p>
+    <p><code>(("https", "news.example"), ("https", "social.example"))</code> is a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key①">partitioned storage key</a> whose <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site">top-level site</a> is <code>("https", "news.example")</code> and whose <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site">embedded site</a> is <code>("https", "social.example")</code>.</p>
    </div>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="generate-a-partitioned-storage-key" type="abstract-op">generate a partitioned storage key</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> <var>doc</var>, run the following steps:</p>
    <ol>
@@ -1717,7 +1715,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
       <li data-md>
        <p>If this algorithm was invoked when <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window">Window</a></code> object did not have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑤">reject</a> <var>p</var>.</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="#determine-the-storage-access-policy" id="ref-for-determine-the-storage-access-policy">Determine the storage access policy</a> with <var>key</var>, <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object, and <var>p</var>.</p>
+       <p><a data-link-type="dfn" href="#determine-the-storage-access-policy" id="ref-for-determine-the-storage-access-policy">Determine the storage access policy</a> with <var>key</var>, <var>doc</var>, and <var>p</var>.</p>
       <li data-md>
        <p>Set <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag①">has storage access flag</a>.</p>
       <li data-md>
@@ -1741,7 +1739,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag②">has storage access flag</a> is set, return true.</p>
     <li data-md>
-     <p>Let <var>has storage access</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a>) be the result of running a UA-defined set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site">embedded site</a> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑤">first party data</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site">top-level site</a>.</p>
+     <p>Let <var>has storage access</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site①">embedded site</a> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑤">first party data</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site①">top-level site</a>.</p>
     <li data-md>
      <p>If <var>has storage access</var> is true, set <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag③">has storage access flag</a>.</p>
     <li data-md>
@@ -1749,20 +1747,21 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Return <var>has storage access</var>.</p>
    </ol>
-   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-the-storage-access-policy" type="abstract-op">determine the storage access policy</dfn> for <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key⑥">partitioned storage key</a> <var>key</var> with <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window②">Window</a></code> <var>w</var> and <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code> <var>p</var>, run these steps:</p>
+   <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-the-storage-access-policy" type="abstract-op">determine the storage access policy</dfn> for <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key⑥">partitioned storage key</a> <var>key</var> with <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Document</a></code> <var>doc</var> and <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise">Promise</a></code> <var>p</var>, run these steps:</p>
    <ol>
     <li data-md>
-     <p>Let <var>implicitly granted</var> and <var>implicitly denied</var> (each a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a>) be the result of running a UA-defined set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site①">embedded site</a>'s request for storage access on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site①">top-level site</a> should be granted or denied without prompting the user.</p>
+     <p>Let <var>implicitly granted</var> and <var>implicitly denied</var> (each a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined①">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site②">embedded site</a>'s request for storage access on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site②">top-level site</a> should be granted or denied without prompting the user.</p>
     <li data-md>
      <p>If <var>implicitly granted</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①⓪">resolve</a> <var>p</var> and return.</p>
     <li data-md>
      <p>If <var>implicitly denied</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑥">reject</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site②">embedded site</a> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑥">first party data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site②">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
+     <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site③">embedded site</a> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑥">first party data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site③">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
+     <p class="note" role="note"><span>Note:</span> While <var>expressly granted</var> and <var>expressly denied</var> cannot both be true, they <em>can</em> both be false: users can dismiss the prompt without choosing to allow or deny the request. This is interpreted as a denial.</p>
     <li data-md>
      <p>If <var>expressly granted</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①①">resolve</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map③">obtaining the storage access map</a> for <var>w</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc" id="ref-for-window-bc">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑨">top-level browsing context</a>.</p>
+     <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map③">obtaining the storage access map</a> for <var>doc</var>.</p>
     <li data-md>
      <p>Let <var>flag set</var> be the result of <a data-link-type="dfn" href="#obtain-a-storage-access-flag-set" id="ref-for-obtain-a-storage-access-flag-set③">obtaining the storage access flag set</a> with <var>key</var> from <var>map</var>.</p>
     <li data-md>
@@ -1771,7 +1770,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>If <var>expressly denied</var> is true, run these steps:</p>
      <ol>
       <li data-md>
-       <p>If <var>w</var> has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation①">transient activation</a>, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#consume-user-activation" id="ref-for-consume-user-activation">consume user activation</a> with it.</p>
+       <p>If <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation①">transient activation</a>, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#consume-user-activation" id="ref-for-consume-user-activation">consume user activation</a> with it.</p>
       <li data-md>
        <p>Set <var>flag set</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag②">was expressly denied storage access flag</a>.</p>
      </ol>
@@ -1785,9 +1784,9 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p>Before changing the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#current-entry" id="ref-for-current-entry">current entry</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#session-history" id="ref-for-session-history">session history</a>, run the following steps:</p>
    <ol>
     <li data-md>
-     <p>Let <var>doc</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#current-entry" id="ref-for-current-entry①">current entry</a>'s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①①">Document</a></code>.</p>
+     <p>Let <var>doc</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#current-entry" id="ref-for-current-entry①">current entry</a>'s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①②">Document</a></code>.</p>
     <li data-md>
-     <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map④">obtaining the storage access map</a> for <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①⓪">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①⓪">top-level browsing context</a>.</p>
+     <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map④">obtaining the storage access map</a> for <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①⓪">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑨">top-level browsing context</a>.</p>
     <li data-md>
      <p>Let <var>key</var> be the result of <a data-link-type="dfn" href="#generate-a-partitioned-storage-key" id="ref-for-generate-a-partitioned-storage-key③">generating a partitioned storage key</a> from <var>doc</var>.</p>
     <li data-md>
@@ -2036,8 +2035,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-document">3. The Storage Access API</a> <a href="#ref-for-document①">(2)</a> <a href="#ref-for-document②">(3)</a> <a href="#ref-for-document③">(4)</a>
     <li><a href="#ref-for-document④">3.1. User Agent state related to storage access</a> <a href="#ref-for-document⑤">(2)</a>
     <li><a href="#ref-for-document⑥">3.2. Changes to Document</a> <a href="#ref-for-document⑦">(2)</a> <a href="#ref-for-document⑧">(3)</a> <a href="#ref-for-document⑨">(4)</a>
-    <li><a href="#ref-for-document①⓪">3.2.1. User Agent storage access policies</a>
-    <li><a href="#ref-for-document①①">3.3. Changes to navigation</a>
+    <li><a href="#ref-for-document①⓪">3.2.1. User Agent storage access policies</a> <a href="#ref-for-document①①">(2)</a>
+    <li><a href="#ref-for-document①②">3.3. Changes to navigation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-document-origin">
@@ -2055,8 +2054,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside class="dfn-panel" data-for="term-for-window">
    <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-window">3.2. Changes to Document</a> <a href="#ref-for-window①">(2)</a>
-    <li><a href="#ref-for-window②">3.2.1. User Agent storage access policies</a>
+    <li><a href="#ref-for-window">3.2. Changes to Document</a>
+    <li><a href="#ref-for-window①">3.2.1. User Agent storage access policies</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-active-document">
@@ -2073,10 +2072,13 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-active-sandboxing-flag-set">3.2. Changes to Document</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-window-bc">
-   <a href="https://html.spec.whatwg.org/multipage/window-object.html#window-bc">https://html.spec.whatwg.org/multipage/window-object.html#window-bc</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-document-bc">
+   <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc">https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-window-bc">3.2.1. User Agent storage access policies</a>
+    <li><a href="#ref-for-concept-document-bc">3. The Storage Access API</a>
+    <li><a href="#ref-for-concept-document-bc①">3.1. User Agent state related to storage access</a> <a href="#ref-for-concept-document-bc②">(2)</a> <a href="#ref-for-concept-document-bc③">(3)</a> <a href="#ref-for-concept-document-bc④">(4)</a>
+    <li><a href="#ref-for-concept-document-bc⑤">3.2. Changes to Document</a> <a href="#ref-for-concept-document-bc⑥">(2)</a> <a href="#ref-for-concept-document-bc⑦">(3)</a> <a href="#ref-for-concept-document-bc⑧">(4)</a> <a href="#ref-for-concept-document-bc⑨">(5)</a>
+    <li><a href="#ref-for-concept-document-bc①⓪">3.3. Changes to navigation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-consume-user-activation">
@@ -2208,8 +2210,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-top-level-browsing-context">3. The Storage Access API</a>
     <li><a href="#ref-for-top-level-browsing-context①">3.1. User Agent state related to storage access</a> <a href="#ref-for-top-level-browsing-context②">(2)</a> <a href="#ref-for-top-level-browsing-context③">(3)</a>
     <li><a href="#ref-for-top-level-browsing-context④">3.2. Changes to Document</a> <a href="#ref-for-top-level-browsing-context⑤">(2)</a> <a href="#ref-for-top-level-browsing-context⑥">(3)</a> <a href="#ref-for-top-level-browsing-context⑦">(4)</a> <a href="#ref-for-top-level-browsing-context⑧">(5)</a>
-    <li><a href="#ref-for-top-level-browsing-context⑨">3.2.1. User Agent storage access policies</a>
-    <li><a href="#ref-for-top-level-browsing-context①⓪">3.3. Changes to navigation</a>
+    <li><a href="#ref-for-top-level-browsing-context⑨">3.3. Changes to navigation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-top-level-origin">
@@ -2242,6 +2243,12 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://infra.spec.whatwg.org/#map-exists">https://infra.spec.whatwg.org/#map-exists</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-map-exists">3.1. User Agent state related to storage access</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-implementation-defined">
+   <a href="https://infra.spec.whatwg.org/#implementation-defined">https://infra.spec.whatwg.org/#implementation-defined</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-implementation-defined">3.2.1. User Agent storage access policies</a> <a href="#ref-for-implementation-defined①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-ordered-map">
@@ -2313,7 +2320,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
      <li><span class="dfn-paneled" id="term-for-active-document" style="color:initial">active document</span>
      <li><span class="dfn-paneled" id="term-for-active-sandboxing-flag-set" style="color:initial">active sandboxing flag set</span>
-     <li><span class="dfn-paneled" id="term-for-window-bc" style="color:initial">browsing context <small>(for Window)</small></span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-bc" style="color:initial">browsing context</span>
      <li><span class="dfn-paneled" id="term-for-consume-user-activation" style="color:initial">consume user activation</span>
      <li><span class="dfn-paneled" id="term-for-dom-document-cookie" style="color:initial">cookie</span>
      <li><span class="dfn-paneled" id="term-for-current-entry" style="color:initial">current entry</span>
@@ -2343,6 +2350,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-boolean" style="color:initial">boolean</span>
      <li><span class="dfn-paneled" id="term-for-map-clone" style="color:initial">clone</span>
      <li><span class="dfn-paneled" id="term-for-map-exists" style="color:initial">exist</span>
+     <li><span class="dfn-paneled" id="term-for-implementation-defined" style="color:initial">implementation-defined</span>
      <li><span class="dfn-paneled" id="term-for-ordered-map" style="color:initial">map</span>
      <li><span class="dfn-paneled" id="term-for-map-set" style="color:initial">set</span>
      <li><span class="dfn-paneled" id="term-for-tuple" style="color:initial">tuple</span>
@@ -2460,13 +2468,15 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside class="dfn-panel" data-for="partitioned-storage-key-top-level-site">
    <b><a href="#partitioned-storage-key-top-level-site">#partitioned-storage-key-top-level-site</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-partitioned-storage-key-top-level-site">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-top-level-site①">(2)</a> <a href="#ref-for-partitioned-storage-key-top-level-site②">(3)</a>
+    <li><a href="#ref-for-partitioned-storage-key-top-level-site">3.1. User Agent state related to storage access</a>
+    <li><a href="#ref-for-partitioned-storage-key-top-level-site①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-top-level-site②">(2)</a> <a href="#ref-for-partitioned-storage-key-top-level-site③">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="partitioned-storage-key-embedded-site">
    <b><a href="#partitioned-storage-key-embedded-site">#partitioned-storage-key-embedded-site</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-partitioned-storage-key-embedded-site">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-embedded-site①">(2)</a> <a href="#ref-for-partitioned-storage-key-embedded-site②">(3)</a>
+    <li><a href="#ref-for-partitioned-storage-key-embedded-site">3.1. User Agent state related to storage access</a>
+    <li><a href="#ref-for-partitioned-storage-key-embedded-site①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-embedded-site②">(2)</a> <a href="#ref-for-partitioned-storage-key-embedded-site③">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="generate-a-partitioned-storage-key">
