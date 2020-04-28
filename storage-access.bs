@@ -17,9 +17,13 @@ Complain About: accidental-2119 true
 
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
-spec:html; type:dfn; text: agent cluster
 spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/multipage/history.html#session-history
 spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
+</pre>
+
+<pre class="anchors">
+urlPrefix: https://tc39.github.io/ecma262/; spec: ECMASCRIPT
+    text: agent cluster; url: #sec-agent-clusters; type: dfn
 </pre>
 
 <pre class=biblio>
