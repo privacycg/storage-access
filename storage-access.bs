@@ -105,9 +105,8 @@ When an [=agent cluster=] is created, its [=agent cluster/storage access map=] i
 
 To <dfn type="abstract-op">obtain the storage access map</dfn> for a [=top-level browsing context=] |context|, run the following steps:
 
-1. Let |origin| be the [=Document/origin=] of |context|'s [=active document=].
-1. Let |key| be the result of [=obtain an agent cluster key|obtaining an agent cluster key=] given |origin|.
-1. Let |agent cluster| be the result of [=obtain a browsing context agent cluster|obtaining a browsing context agent cluster=] given |context|'s <a href="https://html.spec.whatwg.org/multipage/browsers.html#tlbc-group">group</a> and |key|
+1. Let |doc| be |context|'s [=active document=].
+1. Let |agent cluster| be |doc|'s [=relevant agent=]'s [=agent cluster=].
 1. Return |agent cluster|'s [=agent cluster/storage access map=].
 
 A <dfn>partitioned storage key</dfn> is a [=tuple=] of [=sites=], (<dfn for="partitioned storage key">top-level site</dfn>, <dfn for="partitioned storage key">embedded site</dfn>).
