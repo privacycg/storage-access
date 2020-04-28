@@ -101,7 +101,7 @@ ISSUE(2): What is the lifecycle of the [=global storage access map=]? How long d
 
 Each [=agent cluster=] has a <dfn for="agent cluster">storage access map</dfn>.
 
-When an [=agent cluster=] is created, its [=agent cluster/storage access map=] is initialized with a copy of the [=global storage access map=].
+When an [=agent cluster=] is created, its [=agent cluster/storage access map=] is initialized with a [=map/clone=] of the [=global storage access map=].
 
 To <dfn type="abstract-op">obtain the storage access map</dfn> for a {{Document}} |doc|, run the following steps:
 
@@ -144,7 +144,7 @@ To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partit
 
 To <dfn type="abstract-op">save the storage access flag set</dfn> for a [=partitioned storage key=] |key| in a [=/storage access map=] |map|, run the following steps:
 
-1. [=map/Set=] [=global storage access map=][|key|] to a copy of |map|[|key|].
+1. [=map/Set=] [=global storage access map=][|key|] to |map|[|key|].
 
 <h3 id="the-document-object">Changes to {{Document}}</h3>
 
