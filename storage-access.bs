@@ -18,8 +18,6 @@ Complain About: accidental-2119 true
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
 spec:html; type:dfn; text: agent cluster
-spec:html; type:dfn; text: obtain an agent cluster key; url: https://html.spec.whatwg.org/multipage/webappapis.html#obtain-agent-cluster-key
-spec:html; type:dfn; text:obtain a browsing context agent cluster; url: https://html.spec.whatwg.org/multipage/webappapis.html#obtain-browsing-agent-cluster
 spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/multipage/history.html#session-history
 spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
 </pre>
