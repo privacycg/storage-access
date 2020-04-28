@@ -79,17 +79,12 @@ Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to det
 
 <dfn>First party data</dfn> is client-side storage that would be available to a [=site=] were it loaded in a [=first party context=].
 
-To determine if a [=/browsing context=] |bc| is a <dfn>first party context</dfn>, run the following steps:
+A {{Document}} is in a <dfn>first party context</dfn> if it is the [=active document=] of a [=top-level browsing context=]. Otherwise, it is in a [=first party context=] if both of these conditions hold:
 
-1. If |bc| is a [=top-level browsing context=], return true.
-1. If |bc|'s [=parent browsing context=] is not a [=first party context=], return false.
-1. Let |settings| be the [=relevant settings object=] of |bc|'s [=active document=].
-1. If |settings|' [=environment settings object/origin=] and [=top-level origin=] are [=same site=] with one another, return true.
-1. Return false.
+1. the [=active document=] of its [=Document/browsing context=]'s [=parent browsing context=] is in a [=first party context=], and
+1. the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another.
 
-ISSUE: This should be prose, not an algorithm.
-
-A <dfn>third party context</dfn> is a [=/browsing context=] which is not a [=first party context=].
+A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first party context=].
 
 <h3 id="ua-state">User Agent state related to storage access</h3>
 
