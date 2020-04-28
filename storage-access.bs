@@ -105,14 +105,13 @@ When an [=agent cluster=] is created, its [=agent cluster/storage access map=] i
 To <dfn type="abstract-op">obtain the storage access map</dfn> for a {{Document}} |doc|, run the following steps:
 
 1. If |doc|'s [=Document/browsing context=] is not a [=top-level browsing context=], set |doc| to the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
-1. Let |agent cluster| be |doc|'s [=relevant agent=]'s [=agent cluster=].
-1. Return |agent cluster|'s [=agent cluster/storage access map=].
+1. Return the [=agent cluster/storage access map=] of |doc|'s [=relevant agent=]'s [=agent cluster=].
 
-A <dfn>partitioned storage key</dfn> is a [=tuple=] of [=sites=], (<dfn for="partitioned storage key">top-level site</dfn>, <dfn for="partitioned storage key">embedded site</dfn>).
+A <dfn>partitioned storage key</dfn> is a [=tuple=] consisting of a <dfn for="partitioned storage key">top-level site</dfn> and an <dfn for="partitioned storage key">embedded site</dfn> (both [=sites=]).
 
 <div class=example>
 
-`(("https", "news.example"), ("https", "social.example"))` is a [=partitioned storage key=] whose top-level site is `("https", "news.example")` and whose embedded site is `("https", "social.example")`.
+`(("https", "news.example"), ("https", "social.example"))` is a [=partitioned storage key=] whose [=top-level site=] is `("https", "news.example")` and whose [=embedded site=] is `("https", "social.example")`.
 
 </div>
 
