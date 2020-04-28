@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version a33f8714, updated Thu Apr 23 16:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="951601c146085c88fe0156f0d5d58ee893bb2eeb" name="document-revision">
+  <meta content="8017b9458e71521729a56892a07335ad0411ce41" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1568,31 +1568,32 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p>This specification defines a method to query whether or not a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> currently has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data">first party data</a> (<code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess">hasStorageAccess()</a></code>), and a method that can be used to request access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data①">first party data</a> (<code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess">requestStorageAccess()</a></code>).</p>
    <div class="example" id="example-bc797ecf">
     <a class="self-link" href="#example-bc797ecf"></a> 
-    <p>Alex visits <code>https://social.example/</code>. The page sets a cookie. This cookie has been set in a first party context.</p>
+    <p>Alex visits <code>https://social.example/</code>. The page sets a cookie. This cookie has been set in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context">first party context</a>.</p>
     <p>Later on, Alex visits <code>https://video.example/</code>, which has an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element②">iframe</a></code> on it which loads <code>https://social.example/heart-button</code>. In this case, the <code>social.example</code> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> <var>doc</var> is in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context">third party context</a>, and the cookie set previously might or might not be visible from <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie">cookie</a></code>, depending on User Agent storage access policies.</p>
     <p>Script in the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element③">iframe</a></code> can call <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess①">hasStorageAccess()</a></code> to determine if it has access to the cookie. If it does not have access, it can request access by calling <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess①">requestStorageAccess()</a></code>.</p>
    </div>
-   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-data">First party data</dfn> is client-side storage that would be available to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">site</a> were it loaded in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context">first party context</a>.</p>
-   <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-context">first party context</dfn> if it is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>. Otherwise, it is in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context①">first party context</a> if both of these conditions hold:</p>
+   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-data">First party data</dfn> is client-side storage that would be available to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">site</a> were it loaded in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context①">first party context</a>.</p>
+   <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-context">first party context</dfn> if it is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>. Otherwise, it is in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context②">first party context</a> if both of these conditions hold:</p>
    <ol>
     <li data-md>
-     <p>the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context">parent browsing context</a> is in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context②">first party context</a>, and</p>
+     <p>the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context">parent browsing context</a> is in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context③">first party context</a>, and</p>
     <li data-md>
      <p>the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin" id="ref-for-top-level-origin">top-level origin</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with one another.</p>
    </ol>
-   <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="third-party-context">third party context</dfn> if it is not in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context③">first party context</a>.</p>
+   <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="third-party-context">third party context</dfn> if it is not in a <a data-link-type="dfn" href="#first-party-context" id="ref-for-first-party-context④">first party context</a>.</p>
+   <p class="issue" id="issue-b7678c76"><a class="self-link" href="#issue-b7678c76"></a> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element④">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h3 class="heading settled" data-level="3.1" id="ua-state"><span class="secno">3.1. </span><span class="content">User Agent state related to storage access</span><a class="self-link" href="#ua-state"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-map">storage access map</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">map</a> whose keys are <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key">partitioned storage keys</a> and whose values are <a data-link-type="dfn" href="#storage-access-flag-set" id="ref-for-storage-access-flag-set">storage access flag sets</a>.</p>
    <p>User Agents maintain a single <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="global-storage-access-map">global storage access map</dfn>.</p>
    <p class="issue" id="issue-c97088f3"><a class="self-link" href="#issue-c97088f3"></a> What is the lifecycle of the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map">global storage access map</a>? How long do we remember its contents? Firefox and Safari differ here. <a href="https://github.com/privacycg/storage-access/issues/2">&lt;https://github.com/privacycg/storage-access/issues/2></a></p>
-   <p>Each <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#agent-cluster" id="ref-for-agent-cluster">agent cluster</a> has a <dfn class="dfn-paneled" data-dfn-for="agent cluster" data-dfn-type="dfn" data-noexport id="agent-cluster-storage-access-map">storage access map</dfn>.</p>
-   <p>When an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#agent-cluster" id="ref-for-agent-cluster①">agent cluster</a> is created, its <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map">storage access map</a> is initialized with a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-clone" id="ref-for-map-clone">clone</a> of the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map①">global storage access map</a>.</p>
+   <p>Each <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters">agent cluster</a> has a <dfn class="dfn-paneled" data-dfn-for="agent cluster" data-dfn-type="dfn" data-noexport id="agent-cluster-storage-access-map">storage access map</dfn>.</p>
+   <p>When an <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters①">agent cluster</a> is created, its <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map">storage access map</a> is initialized with a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-clone" id="ref-for-map-clone">clone</a> of the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map①">global storage access map</a>.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="obtain-the-storage-access-map" type="abstract-op">obtain the storage access map</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code> <var>doc</var>, run the following steps:</p>
    <ol>
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a>, set <var>doc</var> to the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document②">active document</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>.</p>
     <li data-md>
-     <p>Let <var>agent cluster</var> be <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-agent" id="ref-for-relevant-agent">relevant agent</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#agent-cluster" id="ref-for-agent-cluster②">agent cluster</a>.</p>
+     <p>Let <var>agent cluster</var> be <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-agent" id="ref-for-relevant-agent">relevant agent</a>'s <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters②">agent cluster</a>.</p>
     <li data-md>
      <p>Return <var>agent cluster</var>’s <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map①">storage access map</a>.</p>
    </ol>
@@ -1616,7 +1617,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Return the <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key②">partitioned storage key</a> (<var>top-level site</var>, <var>embedded site</var>).</p>
    </ol>
-   <p class="issue" id="issue-b4f2b681"><a class="self-link" href="#issue-b4f2b681"></a> This algorithm intentionally fails for top frames and for nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element④">iframe</a></code>s. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
+   <p class="issue" id="issue-b4f2b681"><a class="self-link" href="#issue-b4f2b681"></a> This algorithm intentionally fails for top frames and for nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element⑤">iframe</a></code>s. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-flag-set">storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for <var>embedded site</var> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context①">third party context</a> on <var>top-level site</var>:</p>
    <dl>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="has-storage-access-flag">has storage access flag</dfn>
@@ -1728,7 +1729,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>Return <var>p</var>.</p>
    </ol>
    <p class="issue" id="issue-18c86ea4"><a class="self-link" href="#issue-18c86ea4"></a> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site②">same site</a>?</p>
-   <p class="issue" id="issue-41e7fe80"><a class="self-link" href="#issue-41e7fe80"></a> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element⑤">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
+   <p class="issue" id="issue-41e7fe80"><a class="self-link" href="#issue-41e7fe80"></a> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element⑥">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h4 class="heading settled" data-level="3.2.1" id="ua-policy"><span class="secno">3.2.1. </span><span class="content">User Agent storage access policies</span><a class="self-link" href="#ua-policy"></a></h4>
    <p>Different User Agents have different policies around whether or not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site②">sites</a> may access their <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data④">first party data</a> when they’re in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context④">third party context</a>. User Agents check and/or modify these policies when client-side storage is accessed (see <a href="#storage">§ 3.4 Changes to various client-side storage mechanisms</a>) as well as when <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code> are called.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-if-a-site-has-storage-access" type="abstract-op">determine if a site has storage access</dfn> with <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key⑤">partitioned storage key</a> <var>key</var> and <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> <var>doc</var>, run these steps:</p>
@@ -2045,6 +2046,12 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-concept-document-origin">3.2. Changes to Document</a> <a href="#ref-for-concept-document-origin①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-sec-agent-clusters">
+   <a href="https://tc39.github.io/ecma262/#sec-agent-clusters">https://tc39.github.io/ecma262/#sec-agent-clusters</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-sec-agent-clusters">3.1. User Agent state related to storage access</a> <a href="#ref-for-sec-agent-clusters①">(2)</a> <a href="#ref-for-sec-agent-clusters②">(3)</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-window">
    <a href="https://html.spec.whatwg.org/multipage/window-object.html#window">https://html.spec.whatwg.org/multipage/window-object.html#window</a><b>Referenced in:</b>
    <ul>
@@ -2064,12 +2071,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set">https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-active-sandboxing-flag-set">3.2. Changes to Document</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-agent-cluster">
-   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#agent-cluster">https://html.spec.whatwg.org/multipage/infrastructure.html#agent-cluster</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-agent-cluster">3.1. User Agent state related to storage access</a> <a href="#ref-for-agent-cluster①">(2)</a> <a href="#ref-for-agent-cluster②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-window-bc">
@@ -2106,9 +2107,9 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-the-iframe-element">1. Introduction</a> <a href="#ref-for-the-iframe-element①">(2)</a>
-    <li><a href="#ref-for-the-iframe-element②">3. The Storage Access API</a> <a href="#ref-for-the-iframe-element③">(2)</a>
-    <li><a href="#ref-for-the-iframe-element④">3.1. User Agent state related to storage access</a>
-    <li><a href="#ref-for-the-iframe-element⑤">3.2. Changes to Document</a>
+    <li><a href="#ref-for-the-iframe-element②">3. The Storage Access API</a> <a href="#ref-for-the-iframe-element③">(2)</a> <a href="#ref-for-the-iframe-element④">(3)</a>
+    <li><a href="#ref-for-the-iframe-element⑤">3.1. User Agent state related to storage access</a>
+    <li><a href="#ref-for-the-iframe-element⑥">3.2. Changes to Document</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-obtain-a-site">
@@ -2302,12 +2303,16 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-concept-document-origin" style="color:initial">origin</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[ECMASCRIPT]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-sec-agent-clusters" style="color:initial">agent cluster</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-window" style="color:initial">Window</span>
      <li><span class="dfn-paneled" id="term-for-active-document" style="color:initial">active document</span>
      <li><span class="dfn-paneled" id="term-for-active-sandboxing-flag-set" style="color:initial">active sandboxing flag set</span>
-     <li><span class="dfn-paneled" id="term-for-agent-cluster" style="color:initial">agent cluster</span>
      <li><span class="dfn-paneled" id="term-for-window-bc" style="color:initial">browsing context <small>(for Window)</small></span>
      <li><span class="dfn-paneled" id="term-for-consume-user-activation" style="color:initial">consume user activation</span>
      <li><span class="dfn-paneled" id="term-for-dom-document-cookie" style="color:initial">cookie</span>
@@ -2357,6 +2362,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <dl>
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
+   <dt id="biblio-ecmascript">[ECMASCRIPT]
+   <dd><a href="https://tc39.es/ecma262/">ECMAScript Language Specification</a>. URL: <a href="https://tc39.es/ecma262/">https://tc39.es/ecma262/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
@@ -2380,6 +2387,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-b7678c76"> ↵ </a></div>
    <div class="issue"> What is the lifecycle of the <a data-link-type="dfn" href="#global-storage-access-map">global storage access map</a>? How long do we remember its contents? Firefox and Safari differ here. <a href="https://github.com/privacycg/storage-access/issues/2">&lt;https://github.com/privacycg/storage-access/issues/2></a><a href="#issue-c97088f3"> ↵ </a></div>
    <div class="issue"> This algorithm intentionally fails for top frames and for nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-b4f2b681"> ↵ </a></div>
    <div class="issue"> Shouldn’t step 7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-9416e44b"> ↵ </a></div>
@@ -2405,7 +2413,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside class="dfn-panel" data-for="first-party-context">
    <b><a href="#first-party-context">#first-party-context</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-first-party-context">3. The Storage Access API</a> <a href="#ref-for-first-party-context①">(2)</a> <a href="#ref-for-first-party-context②">(3)</a> <a href="#ref-for-first-party-context③">(4)</a>
+    <li><a href="#ref-for-first-party-context">3. The Storage Access API</a> <a href="#ref-for-first-party-context①">(2)</a> <a href="#ref-for-first-party-context②">(3)</a> <a href="#ref-for-first-party-context③">(4)</a> <a href="#ref-for-first-party-context④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="third-party-context">
