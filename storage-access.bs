@@ -100,6 +100,8 @@ User Agents maintain a single <dfn>global storage access map</dfn>.
 
 ISSUE(2): What is the lifecycle of the [=global storage access map=]? How long do we remember its contents? Firefox and Safari differ here.
 
+ISSUE(5): When do we age out entries in the [=global storage access map=]? See also [Scope of Storage Access](https://github.com/privacycg/storage-access#scope-of-storage-access).
+
 Each [=agent cluster=] has a <dfn for="agent cluster">storage access map</dfn>.
 
 When an [=agent cluster=] is created, its [=agent cluster/storage access map=] is initialized with a [=map/clone=] of the [=global storage access map=].
