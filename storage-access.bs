@@ -117,14 +117,11 @@ A <dfn>partitioned storage key</dfn> is a [=tuple=] consisting of a <dfn for="pa
 
 To <dfn type="abstract-op">generate a partitioned storage key</dfn> for a {{Document}} |doc|, run the following steps:
 
-1. If |doc|'s [=Document/browsing context=]'s [=opener browsing context=] is null, return failure.
-1. If |doc|'s [=Document/browsing context=]'s [=opener browsing context=] is not its [=top-level browsing context=], return failure.
 1. Let |settings| be |doc|'s [=relevant settings object=].
-1. Let |embedded site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
+1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
+1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], return the [=partitioned storage key=] (|site|, |site|).
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
-1. Return the [=partitioned storage key=] (|top-level site|, |embedded site|).
-
-ISSUE(10): This algorithm intentionally fails for top frames and for nested <{iframe}>s.
+1. Return the [=partitioned storage key=] (|top-level site|, |site|).
 
 A <dfn>storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for |embedded site| when loaded in a [=third party context=] on |top-level site|:
 
