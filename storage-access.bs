@@ -73,7 +73,7 @@ This specification defines a method to query whether or not a {{Document}} curre
 
 <div class=example>
 
-Alex visits `https://social.example/`. The page sets a cookie. This cookie has been set in a [=first party context=].
+Alex visits `https://social.example/`. The page sets a cookie. This cookie has been set in a [=first-party-site context=].
 
 Later on, Alex visits `https://video.example/`, which has an <{iframe}> on it which loads `https://social.example/heart-button`. In this case, the `social.example` {{Document}} |doc| is in a [=third party context=], and the cookie set previously might or might not be visible from |doc|`.`{{Document/cookie}}, depending on User Agent storage access policies.
 
@@ -81,14 +81,11 @@ Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to det
 
 </div>
 
-<dfn>First party data</dfn> is client-side storage that would be available to a [=site=] were it loaded in a [=first party context=].
+<dfn>First party data</dfn> is client-side storage that would be available to a [=site=] were it loaded in a [=first-party-site context=].
 
-A {{Document}} is in a <dfn>first party context</dfn> if it is the [=active document=] of a [=top-level browsing context=]. Otherwise, it is in a [=first party context=] if both of these conditions hold:
+A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active document=] of a [=top-level browsing context=]. Otherwise, it is in a [=first-party-site context=] if it is an [=active document=] and the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another.
 
-1. the [=active document=] of its [=Document/browsing context=]'s [=parent browsing context=] is in a [=first party context=], and
-1. the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another.
-
-A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first party context=].
+A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first-party-site context=].
 
 ISSUE(10): If we let nested <{iframe}>s use this API, we may have to revisit these definitions.
 
