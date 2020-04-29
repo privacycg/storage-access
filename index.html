@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version a33f8714, updated Thu Apr 23 16:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="df740a3120bd042d3efa5c14d3f8884f4da10539" name="document-revision">
+  <meta content="65884d9908b6c242bd4d7668c5021fbdb00722af" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1586,8 +1586,9 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-map">storage access map</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">map</a> whose keys are <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key">partitioned storage keys</a> and whose values are <a data-link-type="dfn" href="#storage-access-flag-set" id="ref-for-storage-access-flag-set">storage access flag sets</a>.</p>
    <p>User Agents maintain a single <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="global-storage-access-map">global storage access map</dfn>.</p>
    <p class="issue" id="issue-c97088f3"><a class="self-link" href="#issue-c97088f3"></a> What is the lifecycle of the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map">global storage access map</a>? How long do we remember its contents? Firefox and Safari differ here. <a href="https://github.com/privacycg/storage-access/issues/2">&lt;https://github.com/privacycg/storage-access/issues/2></a></p>
+   <p class="issue" id="issue-5b7f617d"><a class="self-link" href="#issue-5b7f617d"></a> When do we age out entries in the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map①">global storage access map</a>? See also <a href="https://github.com/privacycg/storage-access#scope-of-storage-access">Scope of Storage Access</a>. <a href="https://github.com/privacycg/storage-access/issues/5">&lt;https://github.com/privacycg/storage-access/issues/5></a></p>
    <p>Each <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters">agent cluster</a> has a <dfn class="dfn-paneled" data-dfn-for="agent cluster" data-dfn-type="dfn" data-noexport id="agent-cluster-storage-access-map">storage access map</dfn>.</p>
-   <p>When an <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters①">agent cluster</a> is created, its <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map">storage access map</a> is initialized with a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-clone" id="ref-for-map-clone">clone</a> of the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map①">global storage access map</a>.</p>
+   <p>When an <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters①">agent cluster</a> is created, its <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map">storage access map</a> is initialized with a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-clone" id="ref-for-map-clone">clone</a> of the <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map②">global storage access map</a>.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="obtain-the-storage-access-map" type="abstract-op">obtain the storage access map</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document④">Document</a></code> <var>doc</var>, run the following steps:</p>
    <ol>
     <li data-md>
@@ -1641,7 +1642,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="save-the-storage-access-flag-set" type="abstract-op">save the storage access flag set</dfn> for a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key④">partitioned storage key</a> <var>key</var> in a <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map①">storage access map</a> <var>map</var>, run the following steps:</p>
    <ol>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set①">Set</a> <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map②">global storage access map</a>[<var>key</var>] to <var>map</var>[<var>key</var>].</p>
+     <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set①">Set</a> <a data-link-type="dfn" href="#global-storage-access-map" id="ref-for-global-storage-access-map③">global storage access map</a>[<var>key</var>] to <var>map</var>[<var>key</var>].</p>
    </ol>
    <h3 class="heading settled" data-level="3.2" id="the-document-object"><span class="secno">3.2. </span><span class="content">Changes to <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑥">Document</a></code></span><a class="self-link" href="#the-document-object"></a></h3>
 <pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑦"><c- g>Document</c-></a> {
@@ -2397,6 +2398,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <div style="counter-reset:issue">
    <div class="issue"> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-b7678c76"> ↵ </a></div>
    <div class="issue"> What is the lifecycle of the <a data-link-type="dfn" href="#global-storage-access-map">global storage access map</a>? How long do we remember its contents? Firefox and Safari differ here. <a href="https://github.com/privacycg/storage-access/issues/2">&lt;https://github.com/privacycg/storage-access/issues/2></a><a href="#issue-c97088f3"> ↵ </a></div>
+   <div class="issue"> When do we age out entries in the <a data-link-type="dfn" href="#global-storage-access-map">global storage access map</a>? See also <a href="https://github.com/privacycg/storage-access#scope-of-storage-access">Scope of Storage Access</a>. <a href="https://github.com/privacycg/storage-access/issues/5">&lt;https://github.com/privacycg/storage-access/issues/5></a><a href="#issue-5b7f617d"> ↵ </a></div>
    <div class="issue"> This algorithm intentionally fails for top frames and for nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-b4f2b681"> ↵ </a></div>
    <div class="issue"> Shouldn’t step 7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-9416e44b"> ↵ </a></div>
    <div class="issue"> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-18c86ea4"> ↵ </a></div>
@@ -2441,7 +2443,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside class="dfn-panel" data-for="global-storage-access-map">
    <b><a href="#global-storage-access-map">#global-storage-access-map</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-global-storage-access-map">3.1. User Agent state related to storage access</a> <a href="#ref-for-global-storage-access-map①">(2)</a> <a href="#ref-for-global-storage-access-map②">(3)</a>
+    <li><a href="#ref-for-global-storage-access-map">3.1. User Agent state related to storage access</a> <a href="#ref-for-global-storage-access-map①">(2)</a> <a href="#ref-for-global-storage-access-map②">(3)</a> <a href="#ref-for-global-storage-access-map③">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="agent-cluster-storage-access-map">
