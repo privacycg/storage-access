@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version a33f8714, updated Thu Apr 23 16:21:43 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="41a35bc32d1cccd846fd92b5d8c5f734b113d075" name="document-revision">
+  <meta content="8cde662c2ac67f7e0404f0a0da90b0c68c2795d7" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1480,7 +1480,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"></p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-04-29">29 April 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-05-01">1 May 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1749,11 +1749,19 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site③">embedded site</a> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑥">first party data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site③">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
      <p class="note" role="note"><span>Note:</span> While <var>expressly granted</var> and <var>expressly denied</var> cannot both be true, they <em>can</em> both be false: users can dismiss the prompt without choosing to allow or deny the request. This is interpreted as a denial.</p>
     <li data-md>
-     <p>If <var>expressly granted</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①①">resolve</a> <var>p</var> and return.</p>
-    <li data-md>
      <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map③">obtaining the storage access map</a> for <var>doc</var>.</p>
     <li data-md>
      <p>Let <var>flag set</var> be the result of <a data-link-type="dfn" href="#obtain-a-storage-access-flag-set" id="ref-for-obtain-a-storage-access-flag-set③">obtaining the storage access flag set</a> with <var>key</var> from <var>map</var>.</p>
+    <li data-md>
+     <p>If <var>expressly granted</var> is true, run these steps:</p>
+     <ol>
+      <li data-md>
+       <p>Unset <var>flag set</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag②">was expressly denied storage access flag</a>.</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="#save-the-storage-access-flag-set" id="ref-for-save-the-storage-access-flag-set②">Save the storage access flag set</a> for <var>key</var> in <var>map</var>.</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve①①">Resolve</a> <var>p</var> and return.</p>
+     </ol>
     <li data-md>
      <p>Unset <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag④">has storage access flag</a>.</p>
     <li data-md>
@@ -1762,10 +1770,10 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
       <li data-md>
        <p>If <var>doc</var>’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/window-object.html#window" id="ref-for-window①">Window</a></code> object has <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation①">transient activation</a>, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#consume-user-activation" id="ref-for-consume-user-activation">consume user activation</a> with it.</p>
       <li data-md>
-       <p>Set <var>flag set</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag②">was expressly denied storage access flag</a>.</p>
+       <p>Set <var>flag set</var>’s <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag③">was expressly denied storage access flag</a>.</p>
      </ol>
     <li data-md>
-     <p><a data-link-type="dfn" href="#save-the-storage-access-flag-set" id="ref-for-save-the-storage-access-flag-set②">Save the storage access flag set</a> for <var>key</var> in <var>map</var>.</p>
+     <p><a data-link-type="dfn" href="#save-the-storage-access-flag-set" id="ref-for-save-the-storage-access-flag-set③">Save the storage access flag set</a> for <var>key</var> in <var>map</var>.</p>
     <li data-md>
      <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑦">Reject</a> <var>p</var> and return.</p>
    </ol>
@@ -1786,7 +1794,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Unset <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag⑤">has storage access flag</a>.</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="#save-the-storage-access-flag-set" id="ref-for-save-the-storage-access-flag-set③">Save the storage access flag set</a> for <var>key</var> in <var>map</var>.</p>
+     <p><a data-link-type="dfn" href="#save-the-storage-access-flag-set" id="ref-for-save-the-storage-access-flag-set④">Save the storage access flag set</a> for <var>key</var> in <var>map</var>.</p>
    </ol>
    <p class="issue" id="issue-0b5538d9"><a class="self-link" href="#issue-0b5538d9"></a> What this section should look like ultimately hinges on <a href="https://github.com/privacycg/storage-access/issues/3">&lt;https://github.com/privacycg/storage-access/issues/3></a></p>
    <h3 class="heading settled" data-level="3.4" id="storage"><span class="secno">3.4. </span><span class="content">Changes to various client-side storage mechanisms</span><a class="self-link" href="#storage"></a></h3>
@@ -2483,7 +2491,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <b><a href="#was-expressly-denied-storage-access-flag">#was-expressly-denied-storage-access-flag</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-was-expressly-denied-storage-access-flag">3.2. Changes to Document</a> <a href="#ref-for-was-expressly-denied-storage-access-flag①">(2)</a>
-    <li><a href="#ref-for-was-expressly-denied-storage-access-flag②">3.2.1. User Agent storage access policies</a>
+    <li><a href="#ref-for-was-expressly-denied-storage-access-flag②">3.2.1. User Agent storage access policies</a> <a href="#ref-for-was-expressly-denied-storage-access-flag③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="obtain-a-storage-access-flag-set">
@@ -2498,8 +2506,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <b><a href="#save-the-storage-access-flag-set">#save-the-storage-access-flag-set</a></b><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-save-the-storage-access-flag-set">3.2. Changes to Document</a>
-    <li><a href="#ref-for-save-the-storage-access-flag-set①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-save-the-storage-access-flag-set②">(2)</a>
-    <li><a href="#ref-for-save-the-storage-access-flag-set③">3.3. Changes to navigation</a>
+    <li><a href="#ref-for-save-the-storage-access-flag-set①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-save-the-storage-access-flag-set②">(2)</a> <a href="#ref-for-save-the-storage-access-flag-set③">(3)</a>
+    <li><a href="#ref-for-save-the-storage-access-flag-set④">3.3. Changes to navigation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-document-hasstorageaccess">
