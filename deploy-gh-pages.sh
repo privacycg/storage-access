@@ -3,11 +3,11 @@
 # but with some modifications
 set -e # Exit with nonzero exit code if anything fails
 
-SOURCE_BRANCH="master"
+SOURCE_BRANCH="main"
 TARGET_BRANCH="gh-pages"
 
 function doCompile {
-    curl https://api.csswg.org/bikeshed/ -F file=@index.bs > out/index.html
+    curl https://api.csswg.org/bikeshed/ -F file=@storage-access.bs > out/index.html
 }
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
