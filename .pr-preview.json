@@ -1,0 +1,7 @@
+{
+    "src_file": "storage-access.bs",
+    "type": "bikeshed",
+    "params": {
+        "force": 1
+    }
+}

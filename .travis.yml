@@ -1,0 +1,6 @@
+sudo: false
+script: bash ./deploy-gh-pages.sh
+env:
+  global:
+  - ENCRYPTION_LABEL: "189e52c2c347"
+  - COMMIT_AUTHOR_EMAIL: "hober@apple.com"
