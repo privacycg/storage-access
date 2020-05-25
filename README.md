@@ -10,11 +10,9 @@ the [Privacy Community Group](https://privacycg.github.io/).
 ## Participate
 - https://github.com/privacycg/storage-access/issues
 
-## Table of Contents
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
+## Table of Contents
 
 - [Introduction](#introduction)
 - [Motivating Use Cases](#motivating-use-cases)

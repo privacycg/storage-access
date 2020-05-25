@@ -23,4 +23,4 @@ clean:
 	bikeshed spec $< $@
 
 update-explainer-toc: README.md Makefile
-	doctoc $<
+	doctoc README.md --title "## Table of Contents" > /dev/null
