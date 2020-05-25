@@ -14,12 +14,12 @@
 .PHONY: all clean update-explainer-toc
 .SUFFIXES: .bs .html
 
-all: update-explainer-toc index.html
+all: update-explainer-toc storage-access.html
 
 clean:
-	rm -f index.html *~
+	rm -f *.html *~
 
-index.html: storage-access.bs Makefile
+.bs.html: Makefile
 	bikeshed spec $< $@
 
 update-explainer-toc: README.md Makefile
