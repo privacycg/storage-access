@@ -21,4 +21,4 @@ index.html: storage-access.bs Makefile
 	bikeshed spec $< $@
 
 update-explainer-toc: README.md Makefile
-	doctoc README.md --title "## Table of Contents" > /dev/null
+	doctoc $< --title "## Table of Contents" > /dev/null
