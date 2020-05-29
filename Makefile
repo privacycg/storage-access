@@ -18,7 +18,7 @@ clean:
 	rm -f *.html *~
 
 index.html: storage-access.bs Makefile
-	bikeshed spec $< $@
+	bikeshed --die-on=warning spec $< $@
 
 update-explainer-toc: README.md Makefile
 	doctoc $< --title "## Table of Contents" > /dev/null
