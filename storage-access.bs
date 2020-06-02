@@ -26,6 +26,20 @@ urlPrefix: https://tc39.github.io/ecma262/; spec: ECMASCRIPT
     text: agent cluster; url: #sec-agent-clusters; type: dfn
 urlPrefix: https://infra.spec.whatwg.org/; spec: INFRA
     text: implementation-defined; url: #implementation-defined; type: dfn
+urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
+    type: dfn
+        text: current browsing context; url: dfn-current-browsing-context
+        text: WebDriver error; url: dfn-error
+        text: WebDriver error code; url: dfn-error-code
+        text: extension command; url: dfn-extension-commands
+        text: extension command URI template; url: dfn-extension-command-uri-template
+        text: getting a property; url: dfn-getting-properties
+        text: invalid argument; url: dfn-invalid-argument
+        text: local end; url: dfn-local-end
+        text: remote end steps; url: dfn-remote-end-steps
+        text: unknown error; url: dfn-unknown-error
+        text: session; url: dfn-session
+        text: success; url: dfn-success
 </pre>
 
 <pre class=biblio>
@@ -292,6 +306,42 @@ ISSUE: Write this section.
 <h2 id="security">Security considerations</h2>
 
 ISSUE: Write this section.
+
+<h2 id="automation">Automation</h2>
+
+For the purposes of user-agent automation and application testing, this document defines the following [=extension command=] for the [[WebDriver]] specification.
+
+<h3 id="set-storage-access-command">Set Storage Access</h3>
+
+<table>
+    <tbody>
+    <tr>
+        <th>HTTP Method</th>
+        <th>URI Template</th>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/session/{session id}/storageaccess</td>
+    </tr>
+    </tbody>
+</table>
+
+The <dfn export>Set Storage Access</dfn> [=extension command=] modifies the storage access policy for the [=current browsing context=].
+
+The [=remote end steps=] are:
+
+1. If |parameters| is not a JSON [=Object=], return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
+1. Let |blocked| be the result of [=getting a property=] from |parameters| named `blocked`.
+1. If |blocked| is not a [=boolean=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
+1. Let |doc| be the [=current browsing context=]'s [=active document=].
+1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
+1. If |key| is failure, return a [=WebDriver error=] with [=WebDriver error code=] [=unknown error=].
+1. Run the substeps of the first matching condition:
+    - |blocked| is `true`
+        1. Run an [=implementation-defined=] set of steps to ensure that |key|'s [=embedded site=] does not have access to its [=first party data=] on |key|'s [=top-level site=].
+    - |blocked| is `false`
+        1. Run an [=implementation-defined=] set of steps to ensure that |key|'s [=embedded site=] has access to its [=first party data=] on |key|'s [=top-level site=].
+1. Return [=success=] with data `null`.
 
 <h2 id="acknowledgements" class="no-num">Acknowledgements</h2>
 
