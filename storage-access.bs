@@ -37,7 +37,7 @@ urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
         text: invalid argument; url: dfn-invalid-argument
         text: local end; url: dfn-local-end
         text: remote end steps; url: dfn-remote-end-steps
-        text: unknown error; url: dfn-unknown-error
+        text: unsupported operation; url: dfn-unsupported-operation
         text: session; url: dfn-session
         text: success; url: dfn-success
 </pre>
@@ -335,7 +335,7 @@ The [=remote end steps=] are:
 1. If |blocked| is not a [=boolean=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
 1. Let |doc| be the [=current browsing context=]'s [=active document=].
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
-1. If |key| is failure, return a [=WebDriver error=] with [=WebDriver error code=] [=unknown error=].
+1. If |key| is failure, return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
 1. Run the substeps of the first matching condition:
     - |blocked| is `true`
         1. Run an [=implementation-defined=] set of steps to ensure that |key|'s [=embedded site=] does not have access to its [=first party data=] on |key|'s [=top-level site=].
