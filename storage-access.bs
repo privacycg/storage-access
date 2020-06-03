@@ -330,8 +330,7 @@ The <dfn export>Set Storage Access</dfn> [=extension command=] modifies the stor
 
 The [=remote end steps=] are:
 
-1. If |parameters| is not a JSON [=Object=], return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
-1. Let |blocked| be the result of [=getting a property=] from |parameters| named `blocked`.
+1. Let |blocked| be the result of [=getting a property=] from <var ignore>parameters</var> named `blocked`.
 1. If |blocked| is not a [=boolean=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
 1. Let |doc| be the [=current browsing context=]'s [=active document=].
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
