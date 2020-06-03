@@ -327,7 +327,7 @@ For the purposes of user-agent automation and application testing, this document
     </tbody>
 </table>
 
-The <dfn export>Set Storage Access</dfn> [=extension command=] modifies the user agent's storage access policy for a given .
+The <dfn export>Set Storage Access</dfn> [=extension command=] modifies the storage access policy for the [=current browsing context=].
 
 The [=remote end steps=] are:
 
