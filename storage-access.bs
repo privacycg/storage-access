@@ -331,23 +331,29 @@ The <dfn export>Set Storage Access</dfn> [=extension command=] modifies the stor
 
 The [=remote end steps=] are:
 
-
 1. Let |blocked| be the result of [=getting a property=] from |parameters| named `blocked`.
 1. If |blocked| is not a [=boolean=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
 1. Let |origin| be the result of [=getting a property=] from |parameters| named `origin`.
-1. If |origin| is not the [=serialization of an origin=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
-1. If |origin| is an [=opaque origin=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
-1. Let |embedded site| be the result of [=obtain a site|obtaining a site=] from |origin|.
+1. If |origin| is not a single U+002A ASTERISK character (*), then:
+    1. Let |parsedURL| be the the result of running the [=URL parser=] on |origin|.
+    1. If |parsedURL| is failure, then return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
+    1. Set |origin| to |parsedURL|'s [=url/origin=].
 1. If the [=current browsing context=] is not a [=top-level browsing context=] return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
 1. Let |doc| be the [=current browsing context=]'s [=active document=].
 1. Let |settings| be |doc|'s [=relevant settings object=].
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|'s [=environment settings object/origin=].
-1. If |embedded site| is [=same site=] with |top-level site| return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
-1. Run the substeps of the first matching condition:
-    - |blocked| is `true`
-        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| does not have access to its [=first party data=] on |top-level site|.
-    - |blocked| is `false`
-        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| has access to its [=first party data=] on |top-level site|.
+1. If |origin| is a single U+002A ASTERISK character (*), then:
+    1. If |blocked| is `true`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that no site has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+    1. Otherwise, if |blocked| is `false`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that any site has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+1. Otherwise:
+    1. Let |embedded site| be the result of [=obtain a site|obtaining a site=] from |origin|.
+    1. If |embedded site| is [=same site=] with |top-level site| return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
+    1. If |blocked| is `true`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| does not have access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+    1. Otherwise, if |blocked| is `false`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
 1. If the above [=implementation-defined=] step of steps resulted in failure, return a [=WebDriver error=] with [=WebDriver error code=] [=unknown error=].
 1. Return [=success=] with data `null`.
 
