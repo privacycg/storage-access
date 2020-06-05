@@ -26,6 +26,21 @@ urlPrefix: https://tc39.github.io/ecma262/; spec: ECMASCRIPT
     text: agent cluster; url: #sec-agent-clusters; type: dfn
 urlPrefix: https://infra.spec.whatwg.org/; spec: INFRA
     text: implementation-defined; url: #implementation-defined; type: dfn
+urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
+    type: dfn
+        text: current browsing context; url: dfn-current-browsing-context
+        text: WebDriver error; url: dfn-error
+        text: WebDriver error code; url: dfn-error-code
+        text: extension command; url: dfn-extension-commands
+        text: extension command URI template; url: dfn-extension-command-uri-template
+        text: getting a property; url: dfn-getting-properties
+        text: invalid argument; url: dfn-invalid-argument
+        text: local end; url: dfn-local-end
+        text: remote end steps; url: dfn-remote-end-steps
+        text: unknown error; url: dfn-unknown-error
+        text: unsupported operation; url: dfn-unsupported-operation
+        text: session; url: dfn-session
+        text: success; url: dfn-success
 </pre>
 
 <pre class=biblio>
@@ -292,6 +307,55 @@ ISSUE: Write this section.
 <h2 id="security">Security considerations</h2>
 
 ISSUE: Write this section.
+
+<h2 id="automation">Automation</h2>
+
+For the purposes of user-agent automation and application testing, this document defines the following [=extension command=] for the [[WebDriver]] specification.
+
+<h3 id="set-storage-access-command">Set Storage Access</h3>
+
+<table>
+    <tbody>
+    <tr>
+        <th>HTTP Method</th>
+        <th>URI Template</th>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/session/{session id}/storageaccess</td>
+    </tr>
+    </tbody>
+</table>
+
+The <dfn export>Set Storage Access</dfn> [=extension command=] modifies the storage access policy for the [=current browsing context=].
+
+The [=remote end steps=] are:
+
+1. Let |blocked| be the result of [=getting a property=] from |parameters| named `blocked`.
+1. If |blocked| is not a [=boolean=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
+1. Let |origin| be the result of [=getting a property=] from |parameters| named `origin`.
+1. If |origin| is not a single U+002A ASTERISK character (*), then:
+    1. Let |parsedURL| be the the result of running the [=URL parser=] on |origin|.
+    1. If |parsedURL| is failure, then return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
+    1. Set |origin| to |parsedURL|'s [=url/origin=].
+1. If the [=current browsing context=] is not a [=top-level browsing context=] return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
+1. Let |doc| be the [=current browsing context=]'s [=active document=].
+1. Let |settings| be |doc|'s [=relevant settings object=].
+1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|'s [=environment settings object/origin=].
+1. If |origin| is a single U+002A ASTERISK character (*), then:
+    1. If |blocked| is `true`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that no site has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+    1. Otherwise, if |blocked| is `false`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that any site has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+1. Otherwise:
+    1. Let |embedded site| be the result of [=obtain a site|obtaining a site=] from |origin|.
+    1. If |embedded site| is [=same site=] with |top-level site| return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
+    1. If |blocked| is `true`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| does not have access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+    1. Otherwise, if |blocked| is `false`, then:
+        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+1. If the above [=implementation-defined=] step of steps resulted in failure, return a [=WebDriver error=] with [=WebDriver error code=] [=unknown error=].
+1. Return [=success=] with data `null`.
 
 <h2 id="acknowledgements" class="no-num">Acknowledgements</h2>
 
