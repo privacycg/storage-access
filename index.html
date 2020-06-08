@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 19c1873c, updated Thu Jun 4 14:44:17 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="95d35c774f60a5e1c1346ce963434bab7fa49169" name="document-revision">
+  <meta content="f57b0280b6bef43fb5e10a360d1c8f5b1c3d21d8" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1677,11 +1677,9 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p>When invoked on <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑨">Document</a></code> <var>doc</var>, the <dfn class="dfn-paneled idl-code" data-dfn-for="Document" data-dfn-type="method" data-export id="dom-document-requeststorageaccess"><code>requestStorageAccess()</code></dfn> method must run these steps:</p>
    <ol>
     <li data-md>
-     <p>Let <var>storage access request queue</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#starting-a-new-parallel-queue" id="ref-for-starting-a-new-parallel-queue">starting a new parallel queue</a>.</p>
-    <li data-md>
      <p>Let <var>p</var> be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise①">a new promise</a>.</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#enqueue-the-following-steps" id="ref-for-enqueue-the-following-steps">Enqueue the following steps</a> to <var>storage access request queue</var>:</p>
+     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/infrastructure.html#enqueue-the-following-steps" id="ref-for-enqueue-the-following-steps">Enqueue the following steps</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permission-task-source" id="ref-for-permission-task-source">permission task source</a>:</p>
      <ol>
       <li data-md>
        <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map①">obtaining the storage access map</a> for <var>doc</var>.</p>
@@ -2278,12 +2276,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-site②">3.2.1. User Agent storage access policies</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-starting-a-new-parallel-queue">
-   <a href="https://html.spec.whatwg.org/multipage/infrastructure.html#starting-a-new-parallel-queue">https://html.spec.whatwg.org/multipage/infrastructure.html#starting-a-new-parallel-queue</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-starting-a-new-parallel-queue">3.2. Changes to Document</a>
-   </ul>
-  </aside>
   <aside class="dfn-panel" data-for="term-for-top-level-browsing-context">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context</a><b>Referenced in:</b>
    <ul>
@@ -2350,6 +2342,12 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://infra.spec.whatwg.org/#tuple">https://infra.spec.whatwg.org/#tuple</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-tuple">3.1. User Agent state related to storage access</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-permission-task-source">
+   <a href="https://w3c.github.io/permissions/#permission-task-source">https://w3c.github.io/permissions/#permission-task-source</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-permission-task-source">3.2. Changes to Document</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
@@ -2494,7 +2492,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-sandboxing-flag-set" style="color:initial">sandboxing flag set</span>
      <li><span class="dfn-paneled" id="term-for-session-history" style="color:initial">session history</span>
      <li><span class="dfn-paneled" id="term-for-site" style="color:initial">site</span>
-     <li><span class="dfn-paneled" id="term-for-starting-a-new-parallel-queue" style="color:initial">starting a new parallel queue</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
      <li><span class="dfn-paneled" id="term-for-concept-environment-top-level-origin" style="color:initial">top-level origin</span>
      <li><span class="dfn-paneled" id="term-for-transient-activation" style="color:initial">transient activation</span>
@@ -2509,6 +2506,11 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-ordered-map" style="color:initial">map</span>
      <li><span class="dfn-paneled" id="term-for-map-set" style="color:initial">set</span>
      <li><span class="dfn-paneled" id="term-for-tuple" style="color:initial">tuple</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[permissions]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-permission-task-source" style="color:initial">permission task source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
@@ -2551,6 +2553,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dt id="biblio-permissions">[PERMISSIONS]
+   <dd>Mounir Lamouri; Marcos Caceres; Jeffrey Yasskin. <a href="https://www.w3.org/TR/permissions/">Permissions</a>. 25 September 2017. WD. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-url">[URL]
