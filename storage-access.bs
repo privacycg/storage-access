@@ -193,9 +193,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 <!-- https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp#L123 -->
 <!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15629 -->
 
-1. Let |storage access request queue| be the result of [=starting a new parallel queue=].
 1. Let |p| be [=a new promise=].
-1. [=Enqueue the following steps=] to |storage access request queue|:
+1. [=Enqueue the following steps=] on the [=permission task source=]:
     1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
     1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
     1. If |key| is failure, [=reject=] |p|.
