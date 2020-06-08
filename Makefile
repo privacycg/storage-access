@@ -9,16 +9,25 @@
 #
 #    npm install -g doctoc
 
-.PHONY: all clean update-explainer-toc
+.PHONY: all publish clean update-explainer-toc
 .SUFFIXES: .bs .html
 
-all: update-explainer-toc index.html
+publish: build/index.html build/images/storage-access-prompt.png
+
+all: publish update-explainer-toc
 
 clean:
-	rm -f *.html *~
-
-index.html: storage-access.bs Makefile
-	bikeshed --die-on=warning spec $< $@
+	rm -f build *~
 
 update-explainer-toc: README.md Makefile
 	doctoc $< --title "## Table of Contents" > /dev/null
+
+build:
+	mkdir -p build
+
+build/index.html: storage-access.bs Makefile build
+	bikeshed --die-on=warning spec $< $@
+
+build/images/storage-access-prompt.png: images/storage-access-prompt.png Makefile
+	mkdir -p build/images
+	cp images/storage-access-prompt.png build/images
