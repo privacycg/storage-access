@@ -84,7 +84,7 @@ This specification depends on the Infra standard. [[!INFRA]]
 
 <h2 id="the-storage-access-api">The Storage Access API</h2>
 
-This specification defines a method to query whether or not a {{Document}} currently has access to its [=first party data=] ({{Document/hasStorageAccess()}}), and a method that can be used to request access to its [=first party data=] ({{Document/requestStorageAccess()}}).
+This specification defines a method to query whether or not a {{Document}} currently has access to its [=unpartitioned data=] ({{Document/hasStorageAccess()}}), and a method that can be used to request access to its [=unpartitioned data=] ({{Document/requestStorageAccess()}}).
 
 <div class=example>
 
@@ -96,7 +96,7 @@ Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to det
 
 </div>
 
-<dfn>First party data</dfn> is client-side storage that would be available to a [=site=] were it loaded in a [=first-party-site context=].
+<dfn>Unpartitioned data</dfn> is client-side storage that would be available to a [=site=] were it loaded in a [=first-party-site context=].
 
 A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active document=] of a [=top-level browsing context=]. Otherwise, it is in a [=first-party-site context=] if it is an [=active document=] and the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another.
 
@@ -141,9 +141,9 @@ To <dfn type="abstract-op">generate a partitioned storage key</dfn> for a {{Docu
 A <dfn>storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for |embedded site| when loaded in a [=third party context=] on |top-level site|:
 
 : The <dfn for="storage access flag set" id=has-storage-access-flag>has storage access flag</dfn>
-:: When set, this flag indicates |embedded site| has access to its [=first party data=] when it's loaded in a [=third party context=] on |top-level site|.
+:: When set, this flag indicates |embedded site| has access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
 : The <dfn for="storage access flag set" id=was-expressly-denied-storage-access-flag>was expressly denied storage access flag</dfn>
-:: When set, this flag indicates that the user expressly denied |embedded site| access to its [=first party data=] when it's loaded in a [=third party context=] on |top-level site|.
+:: When set, this flag indicates that the user expressly denied |embedded site| access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
 
 To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partitioned storage key=] |key| from a [=/storage access map=] |map|, run the following steps:
 
@@ -221,14 +221,14 @@ ISSUE(10): Remove step 3.9 if we determine that nested <{iframe}>s should be abl
 
 <h4 id="ua-policy">User Agent storage access policies</h4>
 
-Different User Agents have different policies around whether or not [=sites=] may access their [=first party data=] when they're in a [=third party context=]. User Agents check and/or modify these policies when client-side storage is accessed (see [[#storage]]) as well as when {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}} are called.
+Different User Agents have different policies around whether or not [=sites=] may access their [=unpartitioned data=] when they're in a [=third party context=]. User Agents check and/or modify these policies when client-side storage is accessed (see [[#storage]]) as well as when {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}} are called.
 
 To <dfn type="abstract-op">determine if a site has storage access</dfn> with [=partitioned storage key=] |key| and {{Document}} |doc|, run these steps:
 
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
 1. If |flag set|'s [=has storage access flag=] is set, return true.
-1. Let |has storage access| (a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded site=] has access to its [=first party data=] on |key|'s [=partitioned storage key/top-level site=].
+1. Let |has storage access| (a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded site=] has access to its [=unpartitioned data=] on |key|'s [=partitioned storage key/top-level site=].
 1. If |has storage access| is true, set |flag set|'s [=has storage access flag=].
 1. [=Save the storage access flag set=] for |key| in |map|.
 1. Return |has storage access|.
@@ -242,7 +242,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
     Note: These [=implementation-defined=] set of steps might result in |flag set|'s [=has storage access flag=] and [=was expressly denied storage access flag=] changing, since the User Agent could have relevant out-of-band information (e.g. a user preference that changed) that this specification is unaware of.
 1. If |implicitly granted| is true, [=/resolve=] |p| and return.
 1. If |implicitly denied| is true, [=/reject=] |p| and return.
-1. Ask the user if they would like to grant |key|'s [=partitioned storage key/embedded site=] access to its [=first party data=] when it's loaded in a [=third party context=] on |key|'s [=partitioned storage key/top-level site=], and wait for an answer. Let |expressly granted| and |expressly denied| (both [=booleans=]) be the result.
+1. Ask the user if they would like to grant |key|'s [=partitioned storage key/embedded site=] access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |key|'s [=partitioned storage key/top-level site=], and wait for an answer. Let |expressly granted| and |expressly denied| (both [=booleans=]) be the result.
 
     Note: While |expressly granted| and |expressly denied| cannot both be true, they could both be false in User Agents which allow users to dismiss the prompt without choosing to allow or deny the request. (Such a dismissal is interpreted in this algorithm as a denial.)
 1. If |expressly granted| is true, run these steps:
@@ -344,16 +344,16 @@ The [=remote end steps=] are:
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|'s [=environment settings object/origin=].
 1. If |origin| is a single U+002A ASTERISK character (*), then:
     1. If |blocked| is `true`, then:
-        1. Run an [=implementation-defined=] set of steps to ensure that no site has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+        1. Run an [=implementation-defined=] set of steps to ensure that no site has access to its [=unpartitioned data=] when loaded in a [=third party context=] on |top-level site|.
     1. Otherwise, if |blocked| is `false`, then:
-        1. Run an [=implementation-defined=] set of steps to ensure that any site has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+        1. Run an [=implementation-defined=] set of steps to ensure that any site has access to its [=unpartitioned data=] when loaded in a [=third party context=] on |top-level site|.
 1. Otherwise:
     1. Let |embedded site| be the result of [=obtain a site|obtaining a site=] from |origin|.
     1. If |embedded site| is [=same site=] with |top-level site| return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
     1. If |blocked| is `true`, then:
-        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| does not have access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| does not have access to its [=unpartitioned data=] when loaded in a [=third party context=] on |top-level site|.
     1. Otherwise, if |blocked| is `false`, then:
-        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| has access to its [=first party data=] when loaded in a [=third party context=] on |top-level site|.
+        1. Run an [=implementation-defined=] set of steps to ensure that |embedded site| has access to its [=unpartitioned data=] when loaded in a [=third party context=] on |top-level site|.
 1. If the above [=implementation-defined=] step of steps resulted in failure, return a [=WebDriver error=] with [=WebDriver error code=] [=unknown error=].
 1. Return [=success=] with data `null`.
 
