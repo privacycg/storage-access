@@ -180,6 +180,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L90 --> <!-- Gecko's Document.cpp#l15526 -->
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L95 --> <!-- Gecko's Document.cpp#l15531 -->
 1. Let |topDoc| be the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
+1. If |topDoc|'s [=Document/origin=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
 1. If |doc| is [=same origin=] with |topDoc|, [=/resolve=] |p| with true and return |p|. <!-- WebKit's DocumentStorageAccess.cpp#L102 --> <!-- Gecko's Document.cpp#l15541 -->
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. [=/Resolve=] |p| with the result of running [=determine if a site has storage access=] with |key| and |doc|. <!-- WebKit's DocumentStorageAccess.cpp#L115 --> <!-- Gecko's Document.cpp#l15548 -->
@@ -205,6 +206,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L133 --> <!-- Gecko's Document.cpp#l15618 -->
     1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L138 --> <!-- Gecko's Document.cpp#l15632 -->
     1. Let |topDoc| be the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
+    1. If |topDoc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
     1. If |doc| is [=same origin=] with |topDoc|, [=/resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L146 --> <!-- Gecko's Document.cpp#l15604 --> <!-- Gecko's Document.cpp#l15657 -->
     1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L152 --> <!-- Gecko's Document.cpp#l15667 -->
     1. If |doc|'s [=Document/browsing context=]'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
