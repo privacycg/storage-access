@@ -1222,8 +1222,9 @@ Possible extra rowspan handling
 	}
 </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version bcf9ed33, updated Fri May 29 18:11:07 2020 -0700" name="generator">
+  <meta content="Bikeshed version 19c1873c, updated Thu Jun 4 14:44:17 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
+  <meta content="5ee4905650416eb5b8f3f9a3ba5113e081240d79" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1479,7 +1480,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"></p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-06-05">5 June 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-06-08">8 June 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1577,7 +1578,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <p>Script in the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element③">iframe</a></code> can call <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess①">hasStorageAccess()</a></code> to determine if it has access to the cookie. If it does not have access, it can request access by calling <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess①">requestStorageAccess()</a></code>.</p>
    </div>
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-data">First party data</dfn> is client-side storage that would be available to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">site</a> were it loaded in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context①">first-party-site context</a>.</p>
-   <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-site-context">first-party-site context</dfn> if it is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>. Otherwise, it is in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context②">first-party-site context</a> if it is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> and the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin" id="ref-for-top-level-origin">top-level origin</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with one another.</p>
+   <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-site-context">first-party-site context</dfn> if it is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>. Otherwise, it is in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context②">first-party-site context</a> if it is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> and the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin">top-level origin</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with one another.</p>
    <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="third-party-context">third party context</dfn> if it is not in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context③">first-party-site context</a>.</p>
    <p class="issue" id="issue-b7678c76"><a class="self-link" href="#issue-b7678c76"></a> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element④">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h3 class="heading settled" data-level="3.1" id="ua-state"><span class="secno">3.1. </span><span class="content">User Agent state related to storage access</span><a class="self-link" href="#ua-state"></a></h3>
@@ -1606,7 +1607,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context①">top-level browsing context</a>, return the <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key②">partitioned storage key</a> (<var>site</var>, <var>site</var>).</p>
     <li data-md>
-     <p>Let <var>top-level site</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site" id="ref-for-obtain-a-site①">obtaining a site</a> from <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin" id="ref-for-top-level-origin①">top-level origin</a>.</p>
+     <p>Let <var>top-level site</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site" id="ref-for-obtain-a-site①">obtaining a site</a> from <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin①">top-level origin</a>.</p>
     <li data-md>
      <p>Return the <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key③">partitioned storage key</a> (<var>top-level site</var>, <var>site</var>).</p>
    </ol>
@@ -2293,11 +2294,11 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-top-level-browsing-context⑧">6.1. Set Storage Access</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-top-level-origin">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin">https://html.spec.whatwg.org/multipage/webappapis.html#top-level-origin</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-concept-environment-top-level-origin">
+   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin">https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-top-level-origin">3. The Storage Access API</a>
-    <li><a href="#ref-for-top-level-origin①">3.1. User Agent state related to storage access</a>
+    <li><a href="#ref-for-concept-environment-top-level-origin">3. The Storage Access API</a>
+    <li><a href="#ref-for-concept-environment-top-level-origin①">3.1. User Agent state related to storage access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-transient-activation">
@@ -2495,7 +2496,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-site" style="color:initial">site</span>
      <li><span class="dfn-paneled" id="term-for-starting-a-new-parallel-queue" style="color:initial">starting a new parallel queue</span>
      <li><span class="dfn-paneled" id="term-for-top-level-browsing-context" style="color:initial">top-level browsing context</span>
-     <li><span class="dfn-paneled" id="term-for-top-level-origin" style="color:initial">top-level origin</span>
+     <li><span class="dfn-paneled" id="term-for-concept-environment-top-level-origin" style="color:initial">top-level origin</span>
      <li><span class="dfn-paneled" id="term-for-transient-activation" style="color:initial">transient activation</span>
     </ul>
    <li>
