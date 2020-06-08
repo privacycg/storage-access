@@ -17,15 +17,13 @@ publish: build/index.html build/images/storage-access-prompt.png
 all: publish update-explainer-toc
 
 clean:
-	rm -f build *~
+	rm -rf build *~
 
 update-explainer-toc: README.md Makefile
 	doctoc $< --title "## Table of Contents" > /dev/null
 
-build:
+build/index.html: storage-access.bs Makefile
 	mkdir -p build
-
-build/index.html: storage-access.bs Makefile build
 	bikeshed --die-on=warning spec $< $@
 
 build/images/storage-access-prompt.png: images/storage-access-prompt.png Makefile
