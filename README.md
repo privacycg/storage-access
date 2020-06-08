@@ -3,8 +3,9 @@
 A [Work Item](https://privacycg.github.io/charter.html#work-items) of
 the [Privacy Community Group](https://privacycg.github.io/).
 
-## Authors:
+## Editors:
 
+- Theresa O’Connor
 - John Wilander
 
 ## Participate
