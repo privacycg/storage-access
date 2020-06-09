@@ -1224,7 +1224,7 @@ Possible extra rowspan handling
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version 19c1873c, updated Thu Jun 4 14:44:17 2020 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="f57b0280b6bef43fb5e10a360d1c8f5b1c3d21d8" name="document-revision">
+  <meta content="cbfeff7003d632f809da025f51c601764ce0a7da" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -1480,7 +1480,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"></p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-06-08">8 June 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2020-06-09">9 June 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1570,14 +1570,14 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <h2 class="heading settled" data-level="2" id="infra"><span class="secno">2. </span><span class="content">Infrastructure</span><a class="self-link" href="#infra"></a></h2>
    <p>This specification depends on the Infra standard. <a data-link-type="biblio" href="#biblio-infra">[INFRA]</a></p>
    <h2 class="heading settled" data-level="3" id="the-storage-access-api"><span class="secno">3. </span><span class="content">The Storage Access API</span><a class="self-link" href="#the-storage-access-api"></a></h2>
-   <p>This specification defines a method to query whether or not a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> currently has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data">first party data</a> (<code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess">hasStorageAccess()</a></code>), and a method that can be used to request access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data①">first party data</a> (<code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess">requestStorageAccess()</a></code>).</p>
+   <p>This specification defines a method to query whether or not a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document">Document</a></code> currently has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data">unpartitioned data</a> (<code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess">hasStorageAccess()</a></code>), and a method that can be used to request access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data①">unpartitioned data</a> (<code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess">requestStorageAccess()</a></code>).</p>
    <div class="example" id="example-a7805ce9">
     <a class="self-link" href="#example-a7805ce9"></a> 
     <p>Alex visits <code>https://social.example/</code>. The page sets a cookie. This cookie has been set in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context">first-party-site context</a>.</p>
     <p>Later on, Alex visits <code>https://video.example/</code>, which has an <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element②">iframe</a></code> on it which loads <code>https://social.example/heart-button</code>. In this case, the <code>social.example</code> <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①">Document</a></code> <var>doc</var> is in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context">third party context</a>, and the cookie set previously might or might not be visible from <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-cookie" id="ref-for-dom-document-cookie">cookie</a></code>, depending on User Agent storage access policies.</p>
     <p>Script in the <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element③">iframe</a></code> can call <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess①">hasStorageAccess()</a></code> to determine if it has access to the cookie. If it does not have access, it can request access by calling <var>doc</var><code>.</code><code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess①">requestStorageAccess()</a></code>.</p>
    </div>
-   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-data">First party data</dfn> is client-side storage that would be available to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">site</a> were it loaded in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context①">first-party-site context</a>.</p>
+   <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="unpartitioned-data">Unpartitioned data</dfn> is client-side storage that would be available to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">site</a> were it loaded in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context①">first-party-site context</a>.</p>
    <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-site-context">first-party-site context</dfn> if it is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>. Otherwise, it is in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context②">first-party-site context</a> if it is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> and the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin">top-level origin</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with one another.</p>
    <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="third-party-context">third party context</dfn> if it is not in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context③">first-party-site context</a>.</p>
    <p class="issue" id="issue-b7678c76"><a class="self-link" href="#issue-b7678c76"></a> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element④">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
@@ -1615,10 +1615,10 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <dl>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="has-storage-access-flag">has storage access flag</dfn>
     <dd data-md>
-     <p>When set, this flag indicates <var>embedded site</var> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data②">first party data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context②">third party context</a> on <var>top-level site</var>.</p>
+     <p>When set, this flag indicates <var>embedded site</var> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data②">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context②">third party context</a> on <var>top-level site</var>.</p>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="was-expressly-denied-storage-access-flag">was expressly denied storage access flag</dfn>
     <dd data-md>
-     <p>When set, this flag indicates that the user expressly denied <var>embedded site</var> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data③">first party data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context③">third party context</a> on <var>top-level site</var>.</p>
+     <p>When set, this flag indicates that the user expressly denied <var>embedded site</var> access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data③">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context③">third party context</a> on <var>top-level site</var>.</p>
    </dl>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="obtain-a-storage-access-flag-set" type="abstract-op">obtain a storage access flag set</dfn> for a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key④">partitioned storage key</a> <var>key</var> from a <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map">storage access map</a> <var>map</var>, run the following steps:</p>
    <ol>
@@ -1722,7 +1722,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p class="issue" id="issue-18c86ea4"><a class="self-link" href="#issue-18c86ea4"></a> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site②">same site</a>?</p>
    <p class="issue" id="issue-41e7fe80"><a class="self-link" href="#issue-41e7fe80"></a> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element⑤">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h4 class="heading settled" data-level="3.2.1" id="ua-policy"><span class="secno">3.2.1. </span><span class="content">User Agent storage access policies</span><a class="self-link" href="#ua-policy"></a></h4>
-   <p>Different User Agents have different policies around whether or not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site②">sites</a> may access their <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data④">first party data</a> when they’re in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context④">third party context</a>. User Agents check and/or modify these policies when client-side storage is accessed (see <a href="#storage">§ 3.4 Changes to various client-side storage mechanisms</a>) as well as when <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code> are called.</p>
+   <p>Different User Agents have different policies around whether or not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site②">sites</a> may access their <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data④">unpartitioned data</a> when they’re in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context④">third party context</a>. User Agents check and/or modify these policies when client-side storage is accessed (see <a href="#storage">§ 3.4 Changes to various client-side storage mechanisms</a>) as well as when <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code> are called.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-if-a-site-has-storage-access" type="abstract-op">determine if a site has storage access</dfn> with <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key⑥">partitioned storage key</a> <var>key</var> and <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> <var>doc</var>, run these steps:</p>
    <ol>
     <li data-md>
@@ -1732,7 +1732,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag②">has storage access flag</a> is set, return true.</p>
     <li data-md>
-     <p>Let <var>has storage access</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site①">embedded site</a> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑤">first party data</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site①">top-level site</a>.</p>
+     <p>Let <var>has storage access</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site①">embedded site</a> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑤">unpartitioned data</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site①">top-level site</a>.</p>
     <li data-md>
      <p>If <var>has storage access</var> is true, set <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag③">has storage access flag</a>.</p>
     <li data-md>
@@ -1754,7 +1754,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>implicitly denied</var> is true, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject⑥">reject</a> <var>p</var> and return.</p>
     <li data-md>
-     <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site③">embedded site</a> access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑥">first party data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site③">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
+     <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site③">embedded site</a> access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑥">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site③">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
      <p class="note" role="note"><span>Note:</span> While <var>expressly granted</var> and <var>expressly denied</var> cannot both be true, they could both be false in User Agents which allow users to dismiss the prompt without choosing to allow or deny the request. (Such a dismissal is interpreted in this algorithm as a denial.)</p>
     <li data-md>
      <p>If <var>expressly granted</var> is true, run these steps:</p>
@@ -1867,13 +1867,13 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p>If <var>blocked</var> is <code>true</code>, then:</p>
        <ol>
         <li data-md>
-         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined③">implementation-defined</a> set of steps to ensure that no site has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑦">first party data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑥">third party context</a> on <var>top-level site</var>.</p>
+         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined③">implementation-defined</a> set of steps to ensure that no site has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑦">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑥">third party context</a> on <var>top-level site</var>.</p>
        </ol>
       <li data-md>
        <p>Otherwise, if <var>blocked</var> is <code>false</code>, then:</p>
        <ol>
         <li data-md>
-         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined④">implementation-defined</a> set of steps to ensure that any site has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑧">first party data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑦">third party context</a> on <var>top-level site</var>.</p>
+         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined④">implementation-defined</a> set of steps to ensure that any site has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑧">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑦">third party context</a> on <var>top-level site</var>.</p>
        </ol>
      </ol>
     <li data-md>
@@ -1887,13 +1887,13 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p>If <var>blocked</var> is <code>true</code>, then:</p>
        <ol>
         <li data-md>
-         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑤">implementation-defined</a> set of steps to ensure that <var>embedded site</var> does not have access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data⑨">first party data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑧">third party context</a> on <var>top-level site</var>.</p>
+         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑤">implementation-defined</a> set of steps to ensure that <var>embedded site</var> does not have access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑨">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑧">third party context</a> on <var>top-level site</var>.</p>
        </ol>
       <li data-md>
        <p>Otherwise, if <var>blocked</var> is <code>false</code>, then:</p>
        <ol>
         <li data-md>
-         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑥">implementation-defined</a> set of steps to ensure that <var>embedded site</var> has access to its <a data-link-type="dfn" href="#first-party-data" id="ref-for-first-party-data①⓪">first party data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑨">third party context</a> on <var>top-level site</var>.</p>
+         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑥">implementation-defined</a> set of steps to ensure that <var>embedded site</var> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data①⓪">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑨">third party context</a> on <var>top-level site</var>.</p>
        </ol>
      </ol>
     <li data-md>
@@ -2088,7 +2088,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <li><a href="#determine-if-a-site-has-storage-access">determine if a site has storage access</a><span>, in §3.2.1</span>
    <li><a href="#determine-the-storage-access-policy">determine the storage access policy</a><span>, in §3.2.1</span>
    <li><a href="#partitioned-storage-key-embedded-site">embedded site</a><span>, in §3.1</span>
-   <li><a href="#first-party-data">First party data</a><span>, in §3</span>
    <li><a href="#first-party-site-context">first-party-site context</a><span>, in §3</span>
    <li><a href="#generate-a-partitioned-storage-key">generate a partitioned storage key</a><span>, in §3.1</span>
    <li><a href="#global-storage-access-map">global storage access map</a><span>, in §3.1</span>
@@ -2110,6 +2109,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     </ul>
    <li><a href="#third-party-context">third party context</a><span>, in §3</span>
    <li><a href="#partitioned-storage-key-top-level-site">top-level site</a><span>, in §3.1</span>
+   <li><a href="#unpartitioned-data">Unpartitioned data</a><span>, in §3</span>
    <li><a href="#was-expressly-denied-storage-access-flag">was expressly denied storage access flag</a><span>, in §3.1</span>
   </ul>
   <aside class="dfn-panel" data-for="term-for-document">
@@ -2593,13 +2593,13 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <div class="issue"> Write this section.<a href="#issue-089b92ec①"> ↵ </a></div>
    <div class="issue"> Write this section.<a href="#issue-089b92ec②"> ↵ </a></div>
   </div>
-  <aside class="dfn-panel" data-for="first-party-data">
-   <b><a href="#first-party-data">#first-party-data</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="unpartitioned-data">
+   <b><a href="#unpartitioned-data">#unpartitioned-data</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-first-party-data">3. The Storage Access API</a> <a href="#ref-for-first-party-data①">(2)</a>
-    <li><a href="#ref-for-first-party-data②">3.1. User Agent state related to storage access</a> <a href="#ref-for-first-party-data③">(2)</a>
-    <li><a href="#ref-for-first-party-data④">3.2.1. User Agent storage access policies</a> <a href="#ref-for-first-party-data⑤">(2)</a> <a href="#ref-for-first-party-data⑥">(3)</a>
-    <li><a href="#ref-for-first-party-data⑦">6.1. Set Storage Access</a> <a href="#ref-for-first-party-data⑧">(2)</a> <a href="#ref-for-first-party-data⑨">(3)</a> <a href="#ref-for-first-party-data①⓪">(4)</a>
+    <li><a href="#ref-for-unpartitioned-data">3. The Storage Access API</a> <a href="#ref-for-unpartitioned-data①">(2)</a>
+    <li><a href="#ref-for-unpartitioned-data②">3.1. User Agent state related to storage access</a> <a href="#ref-for-unpartitioned-data③">(2)</a>
+    <li><a href="#ref-for-unpartitioned-data④">3.2.1. User Agent storage access policies</a> <a href="#ref-for-unpartitioned-data⑤">(2)</a> <a href="#ref-for-unpartitioned-data⑥">(3)</a>
+    <li><a href="#ref-for-unpartitioned-data⑦">6.1. Set Storage Access</a> <a href="#ref-for-unpartitioned-data⑧">(2)</a> <a href="#ref-for-unpartitioned-data⑨">(3)</a> <a href="#ref-for-unpartitioned-data①⓪">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="first-party-site-context">
