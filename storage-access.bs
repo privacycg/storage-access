@@ -206,7 +206,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Let |topDoc| be the [=active document=] of |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
     1. If |doc| is [=same origin=] with |topDoc|, [=/resolve=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L146 --> <!-- Gecko's Document.cpp#l15604 --> <!-- Gecko's Document.cpp#l15657 -->
     1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L152 --> <!-- Gecko's Document.cpp#l15667 -->
-    1. If |doc|'s [=Document/browsing context=]'s [=opener browsing context=] is not its [=top-level browsing context=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
+    1. If |doc|'s [=Document/browsing context=]'s [=parent browsing context=] is not a [=top-level browsing context=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L158 --> <!-- Gecko's Document.cpp#l15673 -->
     1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] |p|. <!-- WebKit's DocumentStorageAccess.cpp#L163 --> <!-- Gecko's Document.cpp#l15680 -->
     1. [=Determine the storage access policy=] with |key|, |doc|, and |p|. <!-- WebKit's DocumentStorageAccess.cpp#L177 --> <!-- Gecko's Document.cpp#l15685 -->
     1. Set |flag set|'s [=has storage access flag=].
