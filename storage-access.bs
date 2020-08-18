@@ -161,7 +161,7 @@ To <dfn type="abstract-op">save the storage access flag set</dfn> for a [=partit
 <pre class="idl">
 partial interface Document {
   Promise&lt;boolean> hasStorageAccess();
-  Promise&lt;void> requestStorageAccess();
+  Promise&lt;undefined> requestStorageAccess();
 };
 </pre>
 
