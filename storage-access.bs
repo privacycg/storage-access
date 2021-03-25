@@ -182,8 +182,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Run these steps [=in parallel=]:
     1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
     1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-    1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with false and abort these steps.
-    1. If |flag set|'s [=has storage access flag=] is set, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with true and abort these steps.
+    1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with false, and abort these steps.
+    1. If |flag set|'s [=has storage access flag=] is set, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with true, and abort these steps.
     1. Let |hasAccess| be [=a new promise=].
     1. [=Determine the storage access policy=] with |key|, |doc| and |hasAccess|.
     1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with the result of |hasAccess|.
@@ -247,15 +247,15 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
 
     Note: These [=implementation-defined=] set of steps might result in |flag set|'s [=has storage access flag=] and [=was expressly denied storage access flag=] changing, since the User Agent could have relevant out-of-band information (e.g. a user preference that changed) that this specification is unaware of.
 1. Let |global| be |doc|'s [=relevant global object=].
-1. If |implicitly granted| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| and return.
-1. If |implicitly denied| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| and return.
+1. If |implicitly granted| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
+1. If |implicitly denied| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p|, and return.
 1. Ask the user if they would like to grant |key|'s [=partitioned storage key/embedded site=] access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |key|'s [=partitioned storage key/top-level site=], and wait for an answer. Let |expressly granted| and |expressly denied| (both [=booleans=]) be the result.
 
     Note: While |expressly granted| and |expressly denied| cannot both be true, they could both be false in User Agents which allow users to dismiss the prompt without choosing to allow or deny the request. (Such a dismissal is interpreted in this algorithm as a denial.)
 1. If |expressly granted| is true, run these steps:
     1. Unset |flag set|'s [=was expressly denied storage access flag=].
     1. [=Save the storage access flag set=] for |key| in |map|.
-    1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| and return.
+    1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
 1. Unset |flag set|'s [=has storage access flag=].
 1. If |expressly denied| is true, run these steps:
     1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
