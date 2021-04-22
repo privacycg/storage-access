@@ -3,8 +3,9 @@ Title: The Storage Access API
 Shortname: storage-access
 Repository: privacycg/storage-access
 URL: https://privacycg.github.io/storage-access/
+Editor: Johann Hofmann, w3cid 120436, Mozilla https://www.mozilla.org, jhofmann@mozilla.com
 Editor: Theresa O’Connor, w3cid 40614, Apple Inc. https://apple.com, hober@apple.com
-Editor: John Wilander, w3cid 89478, Apple Inc. https://apple.com/, wilander@apple.com
+Editor: John Wilander, w3cid 89478, Apple Inc. https://apple.com, wilander@apple.com
 Abstract: The Storage Access API enables content in iframes to request access to website data (such as cookies).
 Status Text: This specification is intended to be merged into the HTML Living Standard. It is neither a WHATWG Living Standard nor is it on the standards track at W3C.
 Text Macro: LICENSE <a href=https://creativecommons.org/licenses/by/4.0/>Creative Commons Attribution 4.0 International License</a>
@@ -19,6 +20,7 @@ Complain About: accidental-2119 true
 <pre class=link-defaults>
 spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/multipage/history.html#session-history
 spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
+spec:webidl; type:dfn; text:resolve
 </pre>
 
 <pre class="anchors">
