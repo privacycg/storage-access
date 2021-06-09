@@ -297,7 +297,7 @@ To the [=parse a sandboxing directive=] algorithm, add the following under step 
 <li>The [=sandbox storage access by user activation flag=], unless <var ignore>tokens</var> contains the <dfn export attr-value for=iframe/sandbox>allow-storage-access-by-user-activation</dfn> keyword.
 </ul>
 
-<h2 id="permissions-policy-integration">Permissions Policy Integration</h3>
+<h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
 The Storage Access API defines a [=policy-controlled feature=] identified by the string `"request-storage-access"`. Its [=default allowlist=] is `"*"`.
 
