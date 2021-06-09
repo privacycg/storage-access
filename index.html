@@ -4,9 +4,9 @@
   <title>The Storage Access API</title>
   <meta content="width=device-width" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2016/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version c6f50773a, updated Fri Apr 16 16:45:47 2021 -0700" name="generator">
+  <meta content="Bikeshed version 800b43329, updated Tue May 25 14:13:32 2021 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="6df950370542e1fe1c187109a6b3809cf32bccf1" name="document-revision">
+  <meta content="8e5dae182317bf995ad921570fda63d4240608bb" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -576,7 +576,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2021-04-26">26 April 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2021-06-09">9 June 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -632,12 +632,13 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        </ol>
       <li><a href="#sandboxing-storage-access"><span class="secno">3.5</span> <span class="content">Sandboxing storage access</span></a>
      </ol>
-    <li><a href="#privacy"><span class="secno">4</span> <span class="content">Privacy considerations</span></a>
-    <li><a href="#security"><span class="secno">5</span> <span class="content">Security considerations</span></a>
+    <li><a href="#permissions-policy-integration"><span class="secno">4</span> <span class="content">Permissions Policy Integration</span></a>
+    <li><a href="#privacy"><span class="secno">5</span> <span class="content">Privacy considerations</span></a>
+    <li><a href="#security"><span class="secno">6</span> <span class="content">Security considerations</span></a>
     <li>
-     <a href="#automation"><span class="secno">6</span> <span class="content">Automation</span></a>
+     <a href="#automation"><span class="secno">7</span> <span class="content">Automation</span></a>
      <ol class="toc">
-      <li><a href="#set-storage-access-command"><span class="secno">6.1</span> <span class="content">Set Storage Access</span></a>
+      <li><a href="#set-storage-access-command"><span class="secno">7.1</span> <span class="content">Set Storage Access</span></a>
      </ol>
     <li><a href="#acknowledgements"><span class="secno"></span> <span class="content">Acknowledgements</span></a>
     <li>
@@ -682,7 +683,6 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <p><dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="unpartitioned-data">Unpartitioned data</dfn> is client-side storage that would be available to a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site">site</a> were it loaded in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context①">first-party-site context</a>.</p>
    <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="first-party-site-context">first-party-site context</dfn> if it is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a> of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context">top-level browsing context</a>. Otherwise, it is in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context②">first-party-site context</a> if it is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a> and the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> and <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin">top-level origin</a> of its <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a> are <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site">same site</a> with one another.</p>
    <p>A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document③">Document</a></code> is in a <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="third-party-context">third party context</dfn> if it is not in a <a data-link-type="dfn" href="#first-party-site-context" id="ref-for-first-party-site-context③">first-party-site context</a>.</p>
-   <p class="issue" id="issue-b7678c76"><a class="self-link" href="#issue-b7678c76"></a> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element④">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h3 class="heading settled" data-level="3.1" id="ua-state"><span class="secno">3.1. </span><span class="content">User Agent state related to storage access</span><a class="self-link" href="#ua-state"></a></h3>
    <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-map">storage access map</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-map" id="ref-for-ordered-map">map</a> whose keys are <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key">partitioned storage keys</a> and whose values are <a data-link-type="dfn" href="#storage-access-flag-set" id="ref-for-storage-access-flag-set">storage access flag sets</a>.</p>
    <p>User Agents maintain a single <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="global-storage-access-map">global storage access map</dfn>.</p>
@@ -795,7 +795,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc②">browsing context</a> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context③">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve⑧">resolve</a> and return <var>p</var>.</p>
     <li data-md>
-     <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context" id="ref-for-parent-browsing-context">parent browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing context</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> and return <var>p</var>.</p>
+     <p>If <var>doc</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> the <code>"request-storage-access"</code> permission, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject①">reject</a> and return <var>p</var>.</p>
     <li data-md>
      <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin④">top-level origin</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object④">relevant settings object</a> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque" id="ref-for-concept-origin-opaque②">opaque origin</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#reject" id="ref-for-reject②">reject</a> and return <var>p</var>.</p>
     <li data-md>
@@ -840,7 +840,6 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>Return <var>p</var>.</p>
    </ol>
    <p class="issue" id="issue-18c86ea4"><a class="self-link" href="#issue-18c86ea4"></a> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site" id="ref-for-same-site②">same site</a>?</p>
-   <p class="issue" id="issue-41e7fe80"><a class="self-link" href="#issue-41e7fe80"></a> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element" id="ref-for-the-iframe-element⑤">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a></p>
    <h4 class="heading settled" data-level="3.2.1" id="ua-policy"><span class="secno">3.2.1. </span><span class="content">User Agent storage access policies</span><a class="self-link" href="#ua-policy"></a></h4>
    <p>Different User Agents have different policies around whether or not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site②">sites</a> may access their <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data④">unpartitioned data</a> when they’re in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context④">third party context</a>. User Agents check and/or modify these policies when client-side storage is accessed (see <a href="#storage">§ 3.4 Changes to various client-side storage mechanisms</a>) as well as when <code class="idl"><a data-link-type="idl" href="#dom-document-hasstorageaccess" id="ref-for-dom-document-hasstorageaccess③">hasStorageAccess()</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code> are called.</p>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="determine-if-a-site-has-storage-access" type="abstract-op">determine if a site has storage access</dfn> with <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key⑥">partitioned storage key</a> <var>key</var> and <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⓪">Document</a></code> <var>doc</var>, run these steps:</p>
@@ -910,7 +909,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Let <var>doc</var> be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/history.html#current-entry" id="ref-for-current-entry①">current entry</a>'s <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①②">Document</a></code>.</p>
     <li data-md>
-     <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map④">obtaining the storage access map</a> for <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc④">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing context</a>.</p>
+     <p>Let <var>map</var> be the result of <a data-link-type="dfn" href="#obtain-the-storage-access-map" id="ref-for-obtain-the-storage-access-map④">obtaining the storage access map</a> for <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc" id="ref-for-concept-document-bc③">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context④">top-level browsing context</a>.</p>
     <li data-md>
      <p>Let <var>key</var> be the result of <a data-link-type="dfn" href="#generate-a-partitioned-storage-key" id="ref-for-generate-a-partitioned-storage-key②">generating a partitioned storage key</a> from <var>doc</var>.</p>
     <li data-md>
@@ -934,18 +933,20 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
    <ul>
     <li>The <a data-link-type="dfn" href="#sandbox-storage-access-by-user-activation-flag" id="ref-for-sandbox-storage-access-by-user-activation-flag①">sandbox storage access by user activation flag</a>, unless <var>tokens</var> contains the <dfn data-dfn-for="iframe/sandbox" data-dfn-type="attr-value" data-export id="attr-valuedef-iframe-sandbox-allow-storage-access-by-user-activation"><code>allow-storage-access-by-user-activation</code><a class="self-link" href="#attr-valuedef-iframe-sandbox-allow-storage-access-by-user-activation"></a></dfn> keyword. 
    </ul>
-   <p class="issue" id="issue-4c448f45"><a class="self-link" href="#issue-4c448f45"></a> What about Feature Policy? <a href="https://github.com/privacycg/storage-access/issues/12">&lt;https://github.com/privacycg/storage-access/issues/12></a></p>
-   <h2 class="heading settled" data-level="4" id="privacy"><span class="secno">4. </span><span class="content">Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
+   <h2 class="heading settled" data-level="4" id="permissions-policy-integration"><span class="secno">4. </span><span class="content">Permissions Policy Integration</span><a class="self-link" href="#permissions-policy-integration"></a></h2>
+   <p>The Storage Access API defines a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature" id="ref-for-policy-controlled-feature">policy-controlled feature</a> identified by the string <code>"request-storage-access"</code>. Its <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist" id="ref-for-default-allowlist">default allowlist</a> is <code>"*"</code>.</p>
+   <p class="note" role="note"><span>Note:</span> A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①③">Document</a></code>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/dom.html#concept-document-permissions-policy" id="ref-for-concept-document-permissions-policy">permissions policy</a> determines whether any content in that document is allowed to request storage access using <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess④">requestStorageAccess()</a></code>. If disabled in any document, calling <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess⑤">requestStorageAccess()</a></code> in that document will reject.</p>
+   <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy considerations</span><a class="self-link" href="#privacy"></a></h2>
    <p class="issue" id="issue-089b92ec①"><a class="self-link" href="#issue-089b92ec①"></a> Write this section.</p>
    <figure id="example-prompt">
      <img alt="A modal dialog box which states &apos;Do you want to allow “video.example” to use cookies and website data while browsing “news.example”? This will allow “video.example” to track your activity.&apos; and which has two buttons, “Don’t Allow” and “Allow”." height="266" src="images/storage-access-prompt.png" width="840"> 
-    <figcaption>An example prompt which could be shown to the user when a site calls <code>document.</code><code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess④">requestStorageAccess()</a></code>.</figcaption>
+    <figcaption>An example prompt which could be shown to the user when a site calls <code>document.</code><code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess⑥">requestStorageAccess()</a></code>.</figcaption>
    </figure>
-   <h2 class="heading settled" data-level="5" id="security"><span class="secno">5. </span><span class="content">Security considerations</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="6" id="security"><span class="secno">6. </span><span class="content">Security considerations</span><a class="self-link" href="#security"></a></h2>
    <p class="issue" id="issue-089b92ec②"><a class="self-link" href="#issue-089b92ec②"></a> Write this section.</p>
-   <h2 class="heading settled" data-level="6" id="automation"><span class="secno">6. </span><span class="content">Automation</span><a class="self-link" href="#automation"></a></h2>
+   <h2 class="heading settled" data-level="7" id="automation"><span class="secno">7. </span><span class="content">Automation</span><a class="self-link" href="#automation"></a></h2>
    <p>For the purposes of user-agent automation and application testing, this document defines the following <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-extension-commands" id="ref-for-dfn-extension-commands">extension command</a> for the <a data-link-type="biblio" href="#biblio-webdriver">[WebDriver]</a> specification.</p>
-   <h3 class="heading settled" data-level="6.1" id="set-storage-access-command"><span class="secno">6.1. </span><span class="content">Set Storage Access</span><a class="self-link" href="#set-storage-access-command"></a></h3>
+   <h3 class="heading settled" data-level="7.1" id="set-storage-access-command"><span class="secno">7.1. </span><span class="content">Set Storage Access</span><a class="self-link" href="#set-storage-access-command"></a></h3>
    <table>
     <tbody>
      <tr>
@@ -975,7 +976,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p>Set <var>origin</var> to <var>parsedURL</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
      </ol>
     <li data-md>
-     <p>If the <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-current-browsing-context" id="ref-for-dfn-current-browsing-context①">current browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑥">top-level browsing context</a> return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error②">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code②">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation" id="ref-for-dfn-unsupported-operation">unsupported operation</a>.</p>
+     <p>If the <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-current-browsing-context" id="ref-for-dfn-current-browsing-context①">current browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing context</a> return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error②">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code②">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation" id="ref-for-dfn-unsupported-operation">unsupported operation</a>.</p>
     <li data-md>
      <p>Let <var>doc</var> be the <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-current-browsing-context" id="ref-for-dfn-current-browsing-context②">current browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document②">active document</a>.</p>
     <li data-md>
@@ -1117,7 +1118,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <li><a href="#dom-document-requeststorageaccess">requestStorageAccess()</a><span>, in §3.2</span>
    <li><a href="#sandbox-storage-access-by-user-activation-flag">sandbox storage access by user activation flag</a><span>, in §3.5</span>
    <li><a href="#save-the-storage-access-flag-set">save the storage access flag set</a><span>, in §3.1</span>
-   <li><a href="#set-storage-access">Set Storage Access</a><span>, in §6.1</span>
+   <li><a href="#set-storage-access">Set Storage Access</a><span>, in §7.1</span>
    <li><a href="#storage-access-flag-set">storage access flag set</a><span>, in §3.1</span>
    <li>
     storage access map
@@ -1138,6 +1139,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-document⑥">3.2. Changes to Document</a> <a href="#ref-for-document⑦">(2)</a> <a href="#ref-for-document⑧">(3)</a> <a href="#ref-for-document⑨">(4)</a>
     <li><a href="#ref-for-document①⓪">3.2.1. User Agent storage access policies</a> <a href="#ref-for-document①①">(2)</a>
     <li><a href="#ref-for-document①②">3.3. Changes to navigation</a>
+    <li><a href="#ref-for-document①③">4. Permissions Policy Integration</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-document-origin">
@@ -1163,7 +1165,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">https://html.spec.whatwg.org/multipage/browsers.html#active-document</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-active-document">3. The Storage Access API</a> <a href="#ref-for-active-document①">(2)</a>
-    <li><a href="#ref-for-active-document②">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-active-document②">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-active-sandboxing-flag-set">
@@ -1172,12 +1174,18 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-active-sandboxing-flag-set">3.2. Changes to Document</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-allowed-to-use">
+   <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use">https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-allowed-to-use">3.2. Changes to Document</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-document-bc">
    <a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc">https://html.spec.whatwg.org/multipage/browsers.html#concept-document-bc</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-document-bc">3.1. User Agent state related to storage access</a>
-    <li><a href="#ref-for-concept-document-bc①">3.2. Changes to Document</a> <a href="#ref-for-concept-document-bc②">(2)</a> <a href="#ref-for-concept-document-bc③">(3)</a>
-    <li><a href="#ref-for-concept-document-bc④">3.3. Changes to navigation</a>
+    <li><a href="#ref-for-concept-document-bc①">3.2. Changes to Document</a> <a href="#ref-for-concept-document-bc②">(2)</a>
+    <li><a href="#ref-for-concept-document-bc③">3.3. Changes to navigation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-consume-user-activation">
@@ -1202,8 +1210,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-the-iframe-element">1. Introduction</a> <a href="#ref-for-the-iframe-element①">(2)</a>
-    <li><a href="#ref-for-the-iframe-element②">3. The Storage Access API</a> <a href="#ref-for-the-iframe-element③">(2)</a> <a href="#ref-for-the-iframe-element④">(3)</a>
-    <li><a href="#ref-for-the-iframe-element⑤">3.2. Changes to Document</a>
+    <li><a href="#ref-for-the-iframe-element②">3. The Storage Access API</a> <a href="#ref-for-the-iframe-element③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-in-parallel">
@@ -1216,7 +1223,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site">https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-obtain-a-site">3.1. User Agent state related to storage access</a> <a href="#ref-for-obtain-a-site①">(2)</a>
-    <li><a href="#ref-for-obtain-a-site②">6.1. Set Storage Access</a> <a href="#ref-for-obtain-a-site③">(2)</a>
+    <li><a href="#ref-for-obtain-a-site②">7.1. Set Storage Access</a> <a href="#ref-for-obtain-a-site③">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-opaque">
@@ -1230,19 +1237,19 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <ul>
     <li><a href="#ref-for-concept-settings-object-origin">3. The Storage Access API</a>
     <li><a href="#ref-for-concept-settings-object-origin①">3.1. User Agent state related to storage access</a>
-    <li><a href="#ref-for-concept-settings-object-origin②">6.1. Set Storage Access</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-parent-browsing-context">
-   <a href="https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#parent-browsing-context</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-parent-browsing-context">3.2. Changes to Document</a>
+    <li><a href="#ref-for-concept-settings-object-origin②">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-parse-a-sandboxing-directive">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive">https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-parse-a-sandboxing-directive">3.5. Sandboxing storage access</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-document-permissions-policy">
+   <a href="https://html.spec.whatwg.org/multipage/dom.html#concept-document-permissions-policy">https://html.spec.whatwg.org/multipage/dom.html#concept-document-permissions-policy</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-document-permissions-policy">4. Permissions Policy Integration</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-queue-a-global-task">
@@ -1271,7 +1278,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-relevant-settings-object">3. The Storage Access API</a>
     <li><a href="#ref-for-relevant-settings-object①">3.1. User Agent state related to storage access</a>
     <li><a href="#ref-for-relevant-settings-object②">3.2. Changes to Document</a> <a href="#ref-for-relevant-settings-object③">(2)</a> <a href="#ref-for-relevant-settings-object④">(3)</a> <a href="#ref-for-relevant-settings-object⑤">(4)</a>
-    <li><a href="#ref-for-relevant-settings-object⑥">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-relevant-settings-object⑥">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-same-origin">
@@ -1285,7 +1292,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <ul>
     <li><a href="#ref-for-same-site">3. The Storage Access API</a>
     <li><a href="#ref-for-same-site①">3.2. Changes to Document</a> <a href="#ref-for-same-site②">(2)</a>
-    <li><a href="#ref-for-same-site③">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-same-site③">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-sandboxing-flag-set">
@@ -1313,9 +1320,9 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <ul>
     <li><a href="#ref-for-top-level-browsing-context">3. The Storage Access API</a>
     <li><a href="#ref-for-top-level-browsing-context①">3.1. User Agent state related to storage access</a>
-    <li><a href="#ref-for-top-level-browsing-context②">3.2. Changes to Document</a> <a href="#ref-for-top-level-browsing-context③">(2)</a> <a href="#ref-for-top-level-browsing-context④">(3)</a>
-    <li><a href="#ref-for-top-level-browsing-context⑤">3.3. Changes to navigation</a>
-    <li><a href="#ref-for-top-level-browsing-context⑥">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-top-level-browsing-context②">3.2. Changes to Document</a> <a href="#ref-for-top-level-browsing-context③">(2)</a>
+    <li><a href="#ref-for-top-level-browsing-context④">3.3. Changes to navigation</a>
+    <li><a href="#ref-for-top-level-browsing-context⑤">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-environment-top-level-origin">
@@ -1337,7 +1344,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://infra.spec.whatwg.org/#boolean">https://infra.spec.whatwg.org/#boolean</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-boolean">3.2.1. User Agent storage access policies</a> <a href="#ref-for-boolean①">(2)</a> <a href="#ref-for-boolean②">(3)</a>
-    <li><a href="#ref-for-boolean③">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-boolean③">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-map-clone">
@@ -1356,7 +1363,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://infra.spec.whatwg.org/#implementation-defined">https://infra.spec.whatwg.org/#implementation-defined</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-implementation-defined">3.2.1. User Agent storage access policies</a> <a href="#ref-for-implementation-defined①">(2)</a> <a href="#ref-for-implementation-defined②">(3)</a>
-    <li><a href="#ref-for-implementation-defined③">6.1. Set Storage Access</a> <a href="#ref-for-implementation-defined④">(2)</a> <a href="#ref-for-implementation-defined⑤">(3)</a> <a href="#ref-for-implementation-defined⑥">(4)</a> <a href="#ref-for-implementation-defined⑦">(5)</a>
+    <li><a href="#ref-for-implementation-defined③">7.1. Set Storage Access</a> <a href="#ref-for-implementation-defined④">(2)</a> <a href="#ref-for-implementation-defined⑤">(3)</a> <a href="#ref-for-implementation-defined⑥">(4)</a> <a href="#ref-for-implementation-defined⑦">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-ordered-map">
@@ -1384,77 +1391,89 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-permission-task-source④">3.2.1. User Agent storage access policies</a> <a href="#ref-for-permission-task-source⑤">(2)</a> <a href="#ref-for-permission-task-source⑥">(3)</a> <a href="#ref-for-permission-task-source⑦">(4)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-default-allowlist">
+   <a href="https://w3c.github.io/webappsec-permissions-policy/#default-allowlist">https://w3c.github.io/webappsec-permissions-policy/#default-allowlist</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-default-allowlist">4. Permissions Policy Integration</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-policy-controlled-feature">
+   <a href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature">https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-policy-controlled-feature">4. Permissions Policy Integration</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-origin">
    <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-origin">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-concept-url-origin">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-url-parser">
    <a href="https://url.spec.whatwg.org/#concept-url-parser">https://url.spec.whatwg.org/#concept-url-parser</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-concept-url-parser">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-concept-url-parser">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-current-browsing-context">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-current-browsing-context">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-current-browsing-context</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-current-browsing-context">6.1. Set Storage Access</a> <a href="#ref-for-dfn-current-browsing-context①">(2)</a> <a href="#ref-for-dfn-current-browsing-context②">(3)</a>
+    <li><a href="#ref-for-dfn-current-browsing-context">7.1. Set Storage Access</a> <a href="#ref-for-dfn-current-browsing-context①">(2)</a> <a href="#ref-for-dfn-current-browsing-context②">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-extension-commands">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-extension-commands">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-extension-commands</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-extension-commands">6. Automation</a>
-    <li><a href="#ref-for-dfn-extension-commands①">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-dfn-extension-commands">7. Automation</a>
+    <li><a href="#ref-for-dfn-extension-commands①">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-getting-properties">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-getting-properties">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-getting-properties</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-getting-properties">6.1. Set Storage Access</a> <a href="#ref-for-dfn-getting-properties①">(2)</a>
+    <li><a href="#ref-for-dfn-getting-properties">7.1. Set Storage Access</a> <a href="#ref-for-dfn-getting-properties①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-invalid-argument">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-invalid-argument">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-invalid-argument</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-invalid-argument">6.1. Set Storage Access</a> <a href="#ref-for-dfn-invalid-argument①">(2)</a>
+    <li><a href="#ref-for-dfn-invalid-argument">7.1. Set Storage Access</a> <a href="#ref-for-dfn-invalid-argument①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-remote-end-steps">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-remote-end-steps">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-remote-end-steps</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-remote-end-steps">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-dfn-remote-end-steps">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-success">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-success">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-success</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-success">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-dfn-success">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-unknown-error">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unknown-error">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unknown-error</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-unknown-error">6.1. Set Storage Access</a>
+    <li><a href="#ref-for-dfn-unknown-error">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-unsupported-operation">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-unsupported-operation">6.1. Set Storage Access</a> <a href="#ref-for-dfn-unsupported-operation①">(2)</a>
+    <li><a href="#ref-for-dfn-unsupported-operation">7.1. Set Storage Access</a> <a href="#ref-for-dfn-unsupported-operation①">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-error">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-error">6.1. Set Storage Access</a> <a href="#ref-for-dfn-error①">(2)</a> <a href="#ref-for-dfn-error②">(3)</a> <a href="#ref-for-dfn-error③">(4)</a> <a href="#ref-for-dfn-error④">(5)</a>
+    <li><a href="#ref-for-dfn-error">7.1. Set Storage Access</a> <a href="#ref-for-dfn-error①">(2)</a> <a href="#ref-for-dfn-error②">(3)</a> <a href="#ref-for-dfn-error③">(4)</a> <a href="#ref-for-dfn-error④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-dfn-error-code">
    <a href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code">https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-error-code">6.1. Set Storage Access</a> <a href="#ref-for-dfn-error-code①">(2)</a> <a href="#ref-for-dfn-error-code②">(3)</a> <a href="#ref-for-dfn-error-code③">(4)</a> <a href="#ref-for-dfn-error-code④">(5)</a>
+    <li><a href="#ref-for-dfn-error-code">7.1. Set Storage Access</a> <a href="#ref-for-dfn-error-code①">(2)</a> <a href="#ref-for-dfn-error-code②">(3)</a> <a href="#ref-for-dfn-error-code③">(4)</a> <a href="#ref-for-dfn-error-code④">(5)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-idl-promise">
@@ -1515,6 +1534,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-window">Window</span>
      <li><span class="dfn-paneled" id="term-for-active-document">active document</span>
      <li><span class="dfn-paneled" id="term-for-active-sandboxing-flag-set">active sandboxing flag set</span>
+     <li><span class="dfn-paneled" id="term-for-allowed-to-use">allowed to use</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-bc">browsing context</span>
      <li><span class="dfn-paneled" id="term-for-consume-user-activation">consume user activation</span>
      <li><span class="dfn-paneled" id="term-for-dom-document-cookie">cookie</span>
@@ -1524,8 +1544,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-obtain-a-site">obtain a site</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque">opaque origin</span>
      <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin</span>
-     <li><span class="dfn-paneled" id="term-for-parent-browsing-context">parent browsing context</span>
      <li><span class="dfn-paneled" id="term-for-parse-a-sandboxing-directive">parse a sandboxing directive</span>
+     <li><span class="dfn-paneled" id="term-for-concept-document-permissions-policy">permissions policy</span>
      <li><span class="dfn-paneled" id="term-for-queue-a-global-task">queue a global task</span>
      <li><span class="dfn-paneled" id="term-for-relevant-agent">relevant agent</span>
      <li><span class="dfn-paneled" id="term-for-concept-relevant-global">relevant global object</span>
@@ -1554,6 +1574,12 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <a data-link-type="biblio">[permissions]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="term-for-permission-task-source">permission task source</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[permissions-policy-1]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="term-for-default-allowlist">default allowlist</span>
+     <li><span class="dfn-paneled" id="term-for-policy-controlled-feature">policy-controlled feature</span>
     </ul>
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
@@ -1592,13 +1618,15 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <dt id="biblio-dom">[DOM]
    <dd>Anne van Kesteren. <a href="https://dom.spec.whatwg.org/">DOM Standard</a>. Living Standard. URL: <a href="https://dom.spec.whatwg.org/">https://dom.spec.whatwg.org/</a>
    <dt id="biblio-ecmascript">[ECMASCRIPT]
-   <dd><a href="https://tc39.es/ecma262/">ECMAScript Language Specification</a>. URL: <a href="https://tc39.es/ecma262/">https://tc39.es/ecma262/</a>
+   <dd><a href="https://tc39.es/ecma262/multipage/">ECMAScript Language Specification</a>. URL: <a href="https://tc39.es/ecma262/multipage/">https://tc39.es/ecma262/multipage/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-permissions">[PERMISSIONS]
    <dd>Mounir Lamouri; Marcos Caceres; Jeffrey Yasskin. <a href="https://www.w3.org/TR/permissions/">Permissions</a>. 20 July 2020. WD. URL: <a href="https://www.w3.org/TR/permissions/">https://www.w3.org/TR/permissions/</a>
+   <dt id="biblio-permissions-policy-1">[PERMISSIONS-POLICY-1]
+   <dd>Ian Clelland. <a href="https://www.w3.org/TR/permissions-policy-1/">Permissions Policy</a>. 16 July 2020. WD. URL: <a href="https://www.w3.org/TR/permissions-policy-1/">https://www.w3.org/TR/permissions-policy-1/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-url">[URL]
@@ -1622,18 +1650,15 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> If we let nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s use this API, we may have to revisit these definitions. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-b7678c76"> ↵ </a></div>
    <div class="issue"> What is the lifecycle of the <a data-link-type="dfn" href="#global-storage-access-map">global storage access map</a>? How long do we remember its contents? Firefox and Safari differ here. <a href="https://github.com/privacycg/storage-access/issues/2">&lt;https://github.com/privacycg/storage-access/issues/2></a><a href="#issue-c97088f3"> ↵ </a></div>
    <div class="issue"> When do we age out entries in the <a data-link-type="dfn" href="#global-storage-access-map">global storage access map</a>? See also <a href="https://github.com/privacycg/storage-access#scope-of-storage-access">Scope of Storage Access</a>. <a href="https://github.com/privacycg/storage-access/issues/5">&lt;https://github.com/privacycg/storage-access/issues/5></a><a href="#issue-5b7f617d"> ↵ </a></div>
    <div class="issue"> Shouldn’t step 7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-9416e44b"> ↵ </a></div>
    <div class="issue"> Shouldn’t step 3.7 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#same-site">same site</a>?<a href="#issue-18c86ea4"> ↵ </a></div>
-   <div class="issue"> Remove step 3.9 if we determine that nested <code><a data-link-type="element" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element">iframe</a></code>s should be able to request storage access. <a href="https://github.com/privacycg/storage-access/issues/10">&lt;https://github.com/privacycg/storage-access/issues/10></a><a href="#issue-41e7fe80"> ↵ </a></div>
    <div class="issue"> <a href="https://github.com/privacycg/storage-access/pull/24#discussion_r408784492">since this is UA-defined, does it make sense to follow-up separately with a user prompt?</a><a href="#issue-65ce4cf9"> ↵ </a></div>
    <div class="issue"> What this section should look like ultimately hinges on <a href="https://github.com/privacycg/storage-access/issues/3">&lt;https://github.com/privacycg/storage-access/issues/3></a><a href="#issue-0b5538d9"> ↵ </a></div>
    <div class="issue"> Write this section. For each kind of client-side storage affected, modify them to invoke <a data-link-type="dfn" href="#determine-if-a-site-has-storage-access">determine if a site has storage access</a> &amp; modify their behavior based on the result.<a href="#issue-322b6430"> ↵ </a></div>
    <div class="issue"> Should this API affect client-side storage other than cookies? <a href="https://github.com/privacycg/storage-access/issues/4">&lt;https://github.com/privacycg/storage-access/issues/4></a><a href="#issue-924f0e5d"> ↵ </a></div>
    <div class="issue"> Write this section.<a href="#issue-089b92ec"> ↵ </a></div>
-   <div class="issue"> What about Feature Policy? <a href="https://github.com/privacycg/storage-access/issues/12">&lt;https://github.com/privacycg/storage-access/issues/12></a><a href="#issue-4c448f45"> ↵ </a></div>
    <div class="issue"> Write this section.<a href="#issue-089b92ec①"> ↵ </a></div>
    <div class="issue"> Write this section.<a href="#issue-089b92ec②"> ↵ </a></div>
   </div>
@@ -1643,7 +1668,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-unpartitioned-data">3. The Storage Access API</a> <a href="#ref-for-unpartitioned-data①">(2)</a>
     <li><a href="#ref-for-unpartitioned-data②">3.1. User Agent state related to storage access</a> <a href="#ref-for-unpartitioned-data③">(2)</a>
     <li><a href="#ref-for-unpartitioned-data④">3.2.1. User Agent storage access policies</a> <a href="#ref-for-unpartitioned-data⑤">(2)</a> <a href="#ref-for-unpartitioned-data⑥">(3)</a>
-    <li><a href="#ref-for-unpartitioned-data⑦">6.1. Set Storage Access</a> <a href="#ref-for-unpartitioned-data⑧">(2)</a> <a href="#ref-for-unpartitioned-data⑨">(3)</a> <a href="#ref-for-unpartitioned-data①⓪">(4)</a>
+    <li><a href="#ref-for-unpartitioned-data⑦">7.1. Set Storage Access</a> <a href="#ref-for-unpartitioned-data⑧">(2)</a> <a href="#ref-for-unpartitioned-data⑨">(3)</a> <a href="#ref-for-unpartitioned-data①⓪">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="first-party-site-context">
@@ -1658,7 +1683,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-third-party-context">3. The Storage Access API</a>
     <li><a href="#ref-for-third-party-context①">3.1. User Agent state related to storage access</a> <a href="#ref-for-third-party-context②">(2)</a> <a href="#ref-for-third-party-context③">(3)</a>
     <li><a href="#ref-for-third-party-context④">3.2.1. User Agent storage access policies</a> <a href="#ref-for-third-party-context⑤">(2)</a>
-    <li><a href="#ref-for-third-party-context⑥">6.1. Set Storage Access</a> <a href="#ref-for-third-party-context⑦">(2)</a> <a href="#ref-for-third-party-context⑧">(3)</a> <a href="#ref-for-third-party-context⑨">(4)</a>
+    <li><a href="#ref-for-third-party-context⑥">7.1. Set Storage Access</a> <a href="#ref-for-third-party-context⑦">(2)</a> <a href="#ref-for-third-party-context⑧">(3)</a> <a href="#ref-for-third-party-context⑨">(4)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="storage-access-map">
@@ -1766,7 +1791,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-dom-document-requeststorageaccess">3. The Storage Access API</a> <a href="#ref-for-dom-document-requeststorageaccess①">(2)</a>
     <li><a href="#ref-for-dom-document-requeststorageaccess②">3.2. Changes to Document</a>
     <li><a href="#ref-for-dom-document-requeststorageaccess③">3.2.1. User Agent storage access policies</a>
-    <li><a href="#ref-for-dom-document-requeststorageaccess④">4. Privacy considerations</a>
+    <li><a href="#ref-for-dom-document-requeststorageaccess④">4. Permissions Policy Integration</a> <a href="#ref-for-dom-document-requeststorageaccess⑤">(2)</a>
+    <li><a href="#ref-for-dom-document-requeststorageaccess⑥">5. Privacy considerations</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="determine-if-a-site-has-storage-access">
