@@ -279,13 +279,11 @@ ISSUE(3): What this section should look like ultimately hinges on
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
-ISSUE: Write this section. For each kind of client-side storage affected, modify them to invoke [=determine if a site has storage access=] & modify their behavior based on the result.
+ISSUE(privacycg/storage-access#4): Should this API affect client-side storage other than cookies?
 
-ISSUE(4): Should this API affect client-side storage other than cookies?
+ISSUE(privacycg/storage-access#31): Write this section. For each kind of client-side storage affected, modify them to invoke [=determine if a site has storage access=] & modify their behavior based on the result.
 
 <h4 id="cookies">Cookies</h4>
-
-ISSUE: Write this section.
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
