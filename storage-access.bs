@@ -110,9 +110,9 @@ A <dfn>storage access map</dfn> is a [=map=] whose keys are [=partitioned storag
 
 User Agents maintain a single <dfn>global storage access map</dfn>.
 
-ISSUE(2): What is the lifecycle of the [=global storage access map=]? How long do we remember its contents? Firefox and Safari differ here.
+ISSUE(privacycg/storage-access#2): What is the lifecycle of the [=global storage access map=]? How long do we remember its contents? Firefox and Safari differ here.
 
-ISSUE(5): When do we age out entries in the [=global storage access map=]? See also [Scope of Storage Access](https://github.com/privacycg/storage-access#scope-of-storage-access).
+ISSUE(privacycg/storage-access#5): When do we age out entries in the [=global storage access map=]? See also [Scope of Storage Access](https://github.com/privacycg/storage-access#scope-of-storage-access).
 
 Each [=agent cluster=] has a <dfn for="agent cluster">storage access map</dfn>.
 
@@ -275,7 +275,7 @@ Before changing the [=current entry=] of a [=session history=], run the followin
 1. Unset |flag set|'s [=has storage access flag=].
 1. [=Save the storage access flag set=] for |key| in |map|.
 
-ISSUE(3): What this section should look like ultimately hinges on
+ISSUE(privacycg/storage-access#3): What this section should look like ultimately hinges on
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
