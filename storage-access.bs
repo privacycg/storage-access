@@ -3,7 +3,7 @@ Title: The Storage Access API
 Shortname: storage-access
 Repository: privacycg/storage-access
 URL: https://privacycg.github.io/storage-access/
-Editor: Johann Hofmann, w3cid 120436, Mozilla https://www.mozilla.org, jhofmann@mozilla.com
+Editor: Johann Hofmann, w3cid 120436, Google https://google.com, johannhof@google.com
 Editor: Theresa O’Connor, w3cid 40614, Apple Inc. https://apple.com, hober@apple.com
 Editor: John Wilander, w3cid 89478, Apple Inc. https://apple.com, wilander@apple.com
 Abstract: The Storage Access API enables content in iframes to request access to website data (such as cookies).

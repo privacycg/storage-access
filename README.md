@@ -5,6 +5,7 @@ the [Privacy Community Group](https://privacycg.github.io/).
 
 ## Editors:
 
+- Johann Hofmann
 - Theresa O’Connor
 - John Wilander
 
