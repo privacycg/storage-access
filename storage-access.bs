@@ -156,7 +156,7 @@ A <dfn>storage access flag set</dfn> is a set of zero or more of the following f
 :: When set, this flag indicates |embedded site| has access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
 : The <dfn for="storage access flag set" id=was-expressly-denied-storage-access-flag>was expressly denied storage access flag</dfn>
 :: When set, this flag indicates that the user expressly denied |embedded site| access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
-: The <dfn for="has allow request storage access flag sett" id=has-allow-request-storage-access-flag>has allow request storage access flag</dfn>
+: The <dfn for="has allow request storage access flag set" id=has-allow-request-storage-access-flag>has allow request storage access flag</dfn>
 :: When set, this flag indicates |top-level site| is allowing |embedded site| to request access to its [=unpartitioned data=] on |top-level site| from the |embedded site| [=first-party-site context=].
 
 To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partitioned storage key=] |key| from a [=/storage access map=] |map|, run the following steps:
