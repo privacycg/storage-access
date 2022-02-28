@@ -104,9 +104,9 @@ This specification also defines a method for a [=site=] to request access to its
 
 Alex visits `https://site.example`. Alex clicks "Login with Identity", which Alex expects to log them in with their account on `https://identity.example`. The page calls `{{Document.allowStorageAccessRequestOnSite("https://identity.example")}}` and opens a new [=window=] for `https://identity.example`.
 
-In the new [=window=], Alex selects the account to log in with. In response, `https://identity.example` sets a [=cookie=], which by virtue of its [=first party-site context=] is in its [=unpartitioned data=] and calls `{{Document.requestStorageAccessUnderSite("https://site.example")}}`. Once the {{Promise}} returned by `{{Document/requestStorageAccessUnderSite()}}` resolves, the `https://identity.example` [=window=] closes itself, returning Alex to `https://site.example`.
+In the new [=window=], Alex selects the account to log in with. In response, `https://identity.example` sets a cookie, which by virtue of its [=first-party-site context=] is in its [=unpartitioned data=] and calls `{{Document.requestStorageAccessUnderSite("https://site.example")}}`. Once the {{Promise}} returned by `{{Document/requestStorageAccessUnderSite()}}` resolves, the `https://identity.example` [=window=] closes itself, returning Alex to `https://site.example`.
 
-When Alex returns to `https://site.example`, the {{Promise}} returned by `{{Document/allowStorageAccessRequestOnSite()}}` has resolved or will resolve shortly. At this point, requests to `https://idnetity.example` will bear the [=cookie=] set in the previous [=window=].
+When Alex returns to `https://site.example`, the {{Promise}} returned by `{{Document/allowStorageAccessRequestOnSite()}}` has resolved or will resolve shortly. At this point, requests to `https://idnetity.example` will bear the cookie set in the previous [=window=].
 
 </div>
 
@@ -156,8 +156,8 @@ A <dfn>storage access flag set</dfn> is a set of zero or more of the following f
 :: When set, this flag indicates |embedded site| has access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
 : The <dfn for="storage access flag set" id=was-expressly-denied-storage-access-flag>was expressly denied storage access flag</dfn>
 :: When set, this flag indicates that the user expressly denied |embedded site| access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
-: The <dfn for="storage access flag set" id=has-allow-request-storage-access-flag>has allow request storage access flag</dfn>
-:: When set, this flag indicates |top-level site| is allowing |embedded site| to request access to its [=unpartitioned storage=] on |top-level site| from the |embedded site| [=first party context=].
+: The <dfn for="has allow request storage access flag sett" id=has-allow-request-storage-access-flag>has allow request storage access flag</dfn>
+:: When set, this flag indicates |top-level site| is allowing |embedded site| to request access to its [=unpartitioned data=] on |top-level site| from the |embedded site| [=first-party-site context=].
 
 To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partitioned storage key=] |key| from a [=/storage access map=] |map|, run the following steps:
 
@@ -275,7 +275,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
 1. If |flag set|’s [=was expressly denied storage access flag=] is set, 
-    1. Notify all waiting tasks of {{Document/allowRequestStorageAccessOnSite()}} with argument corresponding |doc|'s [=site=].
+    1. Notify all waiting tasks of [{{Document/allowRequestStorageAccessOnSite()}}] with argument corresponding |doc|'s [=site=].
     1. [=resolve=] |p|
     1. return |p|.
 1. If |flag set|’s [=has storage access flag=] is set, 
