@@ -74,7 +74,7 @@ urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
 
 <em>This section is non-normative.</em>
 
-User Agents sometimes prevent third-party content from accessing data stored in client-side storage mechanisms like cookies. This can break embedded content which relies on having access to client-side storage.
+User Agents sometimes prevent content inside certain <{iframe}>s from accessing data stored in client-side storage mechanisms like cookies. This can break embedded content which relies on having access to client-side storage.
 
 The Storage Access API enables third parties to request and be granted access to their client-side storage, so that embedded content which relies on having access to client-side storage can work in such User Agents. [[STORAGE-ACCESS-INTRO]]
 
