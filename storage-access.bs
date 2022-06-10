@@ -99,13 +99,14 @@ Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to det
 </div>
 
 This specification defines a method for a {{Document}} to request access to its [=unpartitioned data=] when later used in a [=third party context=] whose active Document's origin is same-site with a specified site ({{Document/requestStorageAccessUnderSite()}}).
-This specification additionally defines a method for a Document to allow such requests to succeed with arguments that are same-site to its origin in a [=browsing context=] whose active Document's origin is same-site with a specified site ({{Document/allowStorageAccessRequestOnSite()}}).
+This specification additionally defines a method for a Document to allow such requests to succeed with arguments that are same-site to its origin in a [=/browsing context=] whose active Document's origin is same-site with a specified site ({{Document/allowStorageAccessRequestOnSite()}}).
 
 <div class=example>
 
 Alex visits `https://site.example`. Alex clicks "Login with Identity", which Alex expects to log them in with their account on `https://identity.example`. The page, `https://site.example`, calls `{{Document.allowStorageAccessRequestOnSite("https://identity.example")}}` and navigates to `https://identity.example` when the returned promise resolves.
 
-Once navigated, Alex selects the account to log in with. In response, `https://identity.example` sets a cookie, which by virtue of its [=first-party-site context=] is in its [=unpartitioned data=] and calls `{{Document.requestStorageAccessUnderSite("https://site.example")}}`. Once the {{Promise}} returned by `{{Document/requestStorageAccessUnderSite()}}` resolves, the [=browsing context=] navigates, returning Alex to `https://site.example`.
+Once navigated, Alex selects the account to log in with. In response, `https://identity.example` sets a cookie, which by virtue of its [=first-party-site context=] is in its [=unpartitioned data=] and calls `{{Document.requestStorageAccessUnderSite("https://site.example")}}`.
+Once the {{Promise}} returned by `{{Document/requestStorageAccessUnderSite()}}` resolves, the [=/browsing context=] navigates, returning Alex to `https://site.example`.
 
 When Alex returns to `https://site.example` requests to `https://identity.example` will bear the cookie set in the previous [=window=].
 
@@ -244,11 +245,11 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>al
 
 1. Let |p| be [=a new promise=].
 1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] and return |p|.
-1. Let |parsedURI| be the result of parsing |embeddedURI|.
+1. Let |parsedURI| be the result of running the [=URL parser=] on <var ignore>embeddedURI</var>.
 1. If |parsedURI| is failure, [=reject=] and return |p|.
 1. If |doc|'s [=Document/browsing context=] is not a [=top-level browsing context=], [=reject=] and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] and return |p|.
-1. Let |parsedOrigin| be the result of obtaining the origin of |parsedURI|.
+1. Let |parsedOrigin| be the |parsedURI|'s origin.
 1. If |doc|'s [=Document/origin=] is same site to |parsedOrigin|, [=reject=] and return |p|.
 1. Let |settings| be |doc|'s [=relevant settings object=].
 1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
@@ -263,17 +264,15 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>al
     1. [=Resolve=] p.
 1. Return |p|.
 
-ISSUE: Deserialization of site is not well defined
-
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccessUnderSite(DOMString topLevelURI)</code></dfn> method must run these steps:
 
 1. Let |p| be [=a new promise=].
 1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] and return |p|.
-1. Let |parsedURI| be the result of parsing |embeddedURI|.
+1. Let |parsedURI| be the result of running the [=URL parser=] on <var ignore>topLevelURI</var>.
 1. If |parsedURI| is failure, [=reject=] and return |p|.
 1. If |doc|'s [=Document/browsing context=] is not a [=top-level browsing context=], [=reject=] and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] and return |p|.
-1. Let |parsedOrigin| be the result of obtaining the origin of |parsedURI|.
+1. Let |parsedOrigin| be the |parsedURI|'s origin.
 1. If |doc|'s [=Document/origin=] is same site to |parsedOrigin|, [=reject=] and return |p|.
 1. Let |settings| be |doc|'s [=relevant settings object=].
 1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
@@ -299,8 +298,6 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
         1. Resolve |p|.
     1. [=Save the storage access flag set=] for |key| in |map|.
 1. Return |p|.
-
-
 
 <h4 id="ua-policy">User Agent storage access policies</h4>
 
