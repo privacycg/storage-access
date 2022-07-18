@@ -200,7 +200,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. Let |p| be [=a new promise=].
 1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] and return |p|.
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
-1. If |doc| is not [=allowed to use=] the `"request-storage-access"` permission, [=reject=] and return |p|.
+1. If |doc| is not [=allowed to use=] the `"storage-access"` permission, [=reject=] and return |p|.
 1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=reject=] and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] and return |p|.
@@ -297,7 +297,7 @@ To the [=parse a sandboxing directive=] algorithm, add the following under step 
 
 <h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
-The Storage Access API defines a [=policy-controlled feature=] identified by the string `"request-storage-access"`. Its [=default allowlist=] is `"*"`.
+The Storage Access API defines a [=policy-controlled feature=] identified by the string `"storage-access"`. Its [=default allowlist=] is `"*"`.
 
     Note: A {{Document}}’s [=Document/permissions policy=] determines whether any content in that document is allowed to request storage access using {{Document/requestStorageAccess()}}. If disabled in any document, calling {{Document/requestStorageAccess()}} in that document will reject.
 
