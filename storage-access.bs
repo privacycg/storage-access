@@ -20,6 +20,7 @@ Complain About: accidental-2119 true
 <pre class=link-defaults>
 spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/multipage/history.html#session-history
 spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
+spec:html; type:dfn; for:site; text:same site
 spec:webidl; type:dfn; text:resolve
 </pre>
 
