@@ -77,7 +77,7 @@ urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
 
 User Agents sometimes prevent content inside certain <{iframe}>s from accessing data stored in client-side storage mechanisms like cookies. This can break embedded content which relies on having access to client-side storage.
 
-The Storage Access API enables content inside <{iframe}>s to request and be granted access to their client-side storage, so that embedded content which relies on having access to client-side storage can work in such User Agents. [[STORAGE-ACCESS-INTRO]]
+The Storage Access API enables content inside <{iframe}>s to request and be granted access to their client-side storage, so that embedded content which relies on having access to client-side storage can work in such User Agents. It also provides a mechanism to allow top-level sites to request such access on behalf of embedded sites. [[STORAGE-ACCESS-INTRO]]
 
 </section>
 
@@ -87,7 +87,7 @@ This specification depends on the Infra standard. [[!INFRA]]
 
 <h2 id="the-storage-access-api">The Storage Access API</h2>
 
-This specification defines a method to query whether or not a {{Document}} currently has access to its [=unpartitioned data=] ({{Document/hasStorageAccess()}}), and a method that can be used to request access to its [=unpartitioned data=] ({{Document/requestStorageAccess()}}).
+This specification defines a method to query whether or not a {{Document}} currently has access to its [=unpartitioned data=] ({{Document/hasStorageAccess()}}), a method that can be used to request access to its [=unpartitioned data=] ({{Document/requestStorageAccess()}}), and a method that can be used to request access to [=unpartitioned data=] on behalf of another site ({{Document/requestStorageAccessForSite(site)}}).
 
 <div class=example>
 
@@ -95,7 +95,7 @@ Alex visits `https://social.example/`. The page sets a cookie. This cookie has b
 
 Later on, Alex visits `https://video.example/`, which has an <{iframe}> on it which loads `https://social.example/heart-button`. In this case, the `social.example` {{Document}} |doc| is in a [=third party context=], and the cookie set previously might or might not be visible from |doc|`.`{{Document/cookie}}, depending on User Agent storage access policies.
 
-Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to determine if it has access to the cookie. If it does not have access, it can request access by calling |doc|`.`{{Document/requestStorageAccess()}}.
+Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to determine if it has access to the cookie. If it does not have access, it can request access by calling |doc|`.`{{Document/requestStorageAccess()}}. Alternatively, a script on `https://video.example/` could request access on behalf of `https://social.example` by calling |doc|`.`{{Document/requestStorageAccessForSite(site)}} with {{USVString}} |site| as `https://social.example`.
 
 </div>
 
@@ -139,6 +139,15 @@ To <dfn type="abstract-op">generate a partitioned storage key</dfn> for a {{Docu
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
 1. Return the [=partitioned storage key=] (|top-level site|, |site|).
 
+To <dfn type="abstract-op">generate an overridden partitioned storage key</dfn> for a {{Document}} |doc| and an [=url/origin=] |override|, run the following steps:
+<!--TODO: type of |override|...could be parsed url, USVString, or Origin. The settings objects referenced above appear to use origin and then obtain a site from it-->
+1. Let |settings| be |doc|'s [=relevant settings object=].
+<!--TODO: use top-level here, trusting the prior steps to have verified the caller is itself top-level? -->
+<!--TODO: parse the site override, obtain its site (vs assuming the passed-in URL is scoped correctly)?-->
+1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
+1. Let |site override| be the result of [=obtain a site|obtaining a site=] from |override|.
+1. Return the [=partitioned storage key=] (|top-level site|, |site override|).
+
 A <dfn>storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for |embedded site| when loaded in a [=third party context=] on |top-level site|:
 
 : The <dfn for="storage access flag set" id=has-storage-access-flag>has storage access flag</dfn>
@@ -163,6 +172,7 @@ To <dfn type="abstract-op">save the storage access flag set</dfn> for a [=partit
 partial interface Document {
   Promise&lt;boolean> hasStorageAccess();
   Promise&lt;undefined> requestStorageAccess();
+  Promise&lt;undefined> requestStorageAccessForSite(USVString site);
 };
 </pre>
 
@@ -224,9 +234,41 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 
 ISSUE: Shouldn't step 3.7 be [=same site=]?
 
+When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccessForSite(site)</code></dfn> method must run these steps:
+
+1. Let |p| be [=a new promise=].
+1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] and return |p|.
+1. If |doc|'s [=Document/browsing context=] is not a [=top-level browsing context=], [=reject=] and return |p|.
+1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] and return |p|.
+1. Let |parsedURL| be the the result of running the [=URL parser=] on |site|.
+1. If |parsedURL| is failure, [=reject=] and return |p|.
+1. Let |origin| be |parsedURL|'s [=url/origin=].
+1. If |origin| is an [=opaque origin=], [=reject=] and return |p|.
+1. If |doc|'s [=Document/origin=] is [=same origin=] with |origin|, [=/resolve=] and return |p|.
+<!-- TODO: generate a partitioned storage key assumes (top-level site, site) come from |doc| and doesn't have the possibility of override. -->
+<!-- we can either change those steps to take two site parameters or write new steps -->
+<!-- also could pass |parsedURL| instead of |origin|, or could pass |site| directly-->
+1. Let |key| be the result of [=generate an overridden partitioned storage key|generating an overridden partitioned storage key=] from |doc| and |origin|.
+1. If |key| is failure, [=reject=] and return |p|.
+1. Let |global| be |doc|'s [=relevant global object=].
+<!-- TODO: may need to make 'obtain the storage access map' generic too, or otherwise indicate that |doc| in the other function would be like "as if there was a |doc| whose site was the passed-in site" -->
+<!-- alternatively, since doc's storage access map is a clone of the global map, this may be fine-->
+1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
+1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
+1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=reject=] and return |p|.
+1. If |flag set|'s [=has storage access flag=] is set, [=/resolve=] and return |p|.
+1. Otherwise, run these steps [=in parallel=]:
+    1. Let |hasAccess| be [=a new promise=].
+    1. [=Determine the storage access policy=] with |key|, |doc| and |hasAccess|.
+    1. [=Queue a global task=] on the [=permission task source=] given |global| to
+        1. Set |flag set|'s [=has storage access flag=].
+        1. Resolve or reject |p| based on the result of |hasAccess|.
+    1. [=Save the storage access flag set=] for |key| in |map|.
+1. Return |p|.
+
 <h4 id="ua-policy">User Agent storage access policies</h4>
 
-Different User Agents have different policies around whether or not [=sites=] may access their [=unpartitioned data=] when they're in a [=third party context=]. User Agents check and/or modify these policies when client-side storage is accessed (see [[#storage]]) as well as when {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}} are called.
+Different User Agents have different policies around whether or not [=sites=] may access their [=unpartitioned data=] when they're in a [=third party context=]. User Agents check and/or modify these policies when client-side storage is accessed (see [[#storage]]) as well as when {{Document/hasStorageAccess()}}, {{Document/requestStorageAccess()}}, and {{Document/requestStorageAccessForSite(site)}} are called.
 
 To <dfn type="abstract-op">determine if a site has storage access</dfn> with [=partitioned storage key=] |key| and {{Document}} |doc|, run these steps:
 
@@ -268,6 +310,7 @@ ISSUE: [since this is UA-defined, does it make sense to follow-up separately wit
 
 Before changing the [=current entry=] of a [=session history=], run the following steps:
 
+<!-- TODO: does rsaFor change this? We may need to modify it to 'unset all |has storage access flag| of sites requested from |doc|'...but is this really necessary? -->
 1. Let |doc| be [=current entry=]'s {{Document}}.
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
