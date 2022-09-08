@@ -5,8 +5,8 @@ the [Privacy Community Group](https://privacycg.github.io/).
 
 ## Editors:
 
+- Benjamin VanderSloot
 - Johann Hofmann
-- Theresa O’Connor
 - John Wilander
 
 ## Participate
