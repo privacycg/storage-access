@@ -202,19 +202,19 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 
 1. Let |p| be [=a new promise=].
 1. If |doc| is not [=Document/fully active=], then [=reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
-1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|.
+1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
-1. If |doc| is not [=allowed to use=] the `"storage-access"` permission, [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|.
-1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
+1. If |doc| is not [=allowed to use=] the `"storage-access"` permission, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] and return |p|.
-1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|.
-1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|.
+1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
-1. If |key| is failure, [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|.
+1. If |key| is failure, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |global| be |doc|'s [=relevant global object=].
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=reject=] |p| with a "{{NotAllowedError}}" {{DomException}} and return |p|.
+1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |flag set|'s [=has storage access flag=] is set, [=/resolve=] and return |p|.
 1. Otherwise, run these steps [=in parallel=]:
     1. Let |hasAccess| be [=a new promise=].
