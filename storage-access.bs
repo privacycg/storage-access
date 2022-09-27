@@ -250,7 +250,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
     Note: These [=implementation-defined=] set of steps might result in |flag set|'s [=has storage access flag=] and [=was expressly denied storage access flag=] changing, since the User Agent could have relevant out-of-band information (e.g. a user preference that changed) that this specification is unaware of.
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |implicitly granted| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
-1. If |implicitly denied| is true, return.
+1. If |implicitly denied| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}, and return |p|.
 1. Ask the user if they would like to grant |key|'s [=partitioned storage key/embedded site=] access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |key|'s [=partitioned storage key/top-level site=], and wait for an answer. Let |expressly granted| and |expressly denied| (both [=booleans=]) be the result.
 
     Note: While |expressly granted| and |expressly denied| cannot both be true, they could both be false in User Agents which allow users to dismiss the prompt without choosing to allow or deny the request. (Such a dismissal is interpreted in this algorithm as a denial.)
@@ -263,6 +263,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
     1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
     1. Set |flag set|'s [=was expressly denied storage access flag=].
 1. [=Save the storage access flag set=] for |key| in |map|.
+1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}
 
 ISSUE: [since this is UA-defined, does it make sense to follow-up separately with a user prompt?](https://github.com/privacycg/storage-access/pull/24#discussion_r408784492)
 
