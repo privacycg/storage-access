@@ -263,7 +263,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
     1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
     1. Set |flag set|'s [=was expressly denied storage access flag=].
 1. [=Save the storage access flag set=] for |key| in |map|.
-1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}
+1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
 
 ISSUE: [since this is UA-defined, does it make sense to follow-up separately with a user prompt?](https://github.com/privacycg/storage-access/pull/24#discussion_r408784492)
 
