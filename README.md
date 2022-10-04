@@ -7,7 +7,7 @@ the [Privacy Community Group](https://privacycg.github.io/).
 
 - Benjamin VanderSloot
 - Johann Hofmann
-- John Wilander
+- Anne van Kesteren
 
 ## Participate
 - https://github.com/privacycg/storage-access/issues
