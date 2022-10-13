@@ -4,9 +4,9 @@
   <title>The Storage Access API</title>
   <meta content="width=device-width" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 11cdbd324, updated Fri Oct 7 18:14:16 2022 -0700" name="generator">
+  <meta content="Bikeshed version 07caf056f, updated Wed Oct 12 12:03:55 2022 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="767cfa6ffe5d4a82b84f39488bab955bfc37e075" name="document-revision">
+  <meta content="c7abefa3ec0f24b2dec7d3131d54dd45ab7445c2" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -586,7 +586,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2022-10-11">11 October 2022</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2022-10-13">13 October 2022</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -708,10 +708,10 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Return the <a data-link-type="dfn" href="#agent-cluster-storage-access-map" id="ref-for-agent-cluster-storage-access-map①">storage access map</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-agent" id="ref-for-relevant-agent">relevant agent</a>'s <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-agent-clusters" id="ref-for-sec-agent-clusters②">agent cluster</a>.</p>
    </ol>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> consisting of a <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-top-level-site">top-level site</dfn> and an <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-embedded-site">embedded site</dfn> (both <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site①">sites</a>).</p>
-   <div class="example" id="example-2fc6d38b">
-    <a class="self-link" href="#example-2fc6d38b"></a> 
-    <p><code>(("https", "news.example"), ("https", "social.example"))</code> is a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key①">partitioned storage key</a> whose <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site">top-level site</a> is <code>("https", "news.example")</code> and whose <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site">embedded site</a> is <code>("https", "social.example")</code>.</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="partitioned-storage-key">partitioned storage key</dfn> is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> consisting of a <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-top-level-site">top-level site</dfn> (a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#site" id="ref-for-site①">site</a>) and an <dfn class="dfn-paneled" data-dfn-for="partitioned storage key" data-dfn-type="dfn" data-noexport id="partitioned-storage-key-embedded-origin">embedded origin</dfn> (an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin" id="ref-for-concept-origin">origin</a>).</p>
+   <div class="example" id="example-de08b07d">
+    <a class="self-link" href="#example-de08b07d"></a> 
+    <p><code>(("https", "news.example"), ("https", "social.example", null, null))</code> is a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key①">partitioned storage key</a> whose <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site">top-level site</a> is <code>("https", "news.example")</code> and whose <a data-link-type="dfn" href="#partitioned-storage-key-embedded-origin" id="ref-for-partitioned-storage-key-embedded-origin">embedded origin</a> is <code>("https", "social.example", null, null)</code>.</p>
    </div>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="generate-a-partitioned-storage-key" type="abstract-op">generate a partitioned storage key</dfn> for a <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑤">Document</a></code> <var>doc</var>, run the following steps:</p>
    <ol>
@@ -726,14 +726,14 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Return the <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key③">partitioned storage key</a> (<var>top-level site</var>, <var>site</var>).</p>
    </ol>
-   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-flag-set">storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for <var>embedded site</var> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context①">third party context</a> on <var>top-level site</var>:</p>
+   <p>A <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="storage-access-flag-set">storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for <var>embedded origin</var> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context①">third party context</a> on <var>top-level site</var>:</p>
    <dl>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="has-storage-access-flag">has storage access flag</dfn>
     <dd data-md>
-     <p>When set, this flag indicates <var>embedded site</var> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data②">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context②">third party context</a> on <var>top-level site</var>.</p>
+     <p>When set, this flag indicates <var>embedded origin</var> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data②">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context②">third party context</a> on <var>top-level site</var>.</p>
     <dt data-md>The <dfn class="dfn-paneled" data-dfn-for="storage access flag set" data-dfn-type="dfn" data-noexport id="was-expressly-denied-storage-access-flag">was expressly denied storage access flag</dfn>
     <dd data-md>
-     <p>When set, this flag indicates that the user expressly denied <var>embedded site</var> access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data③">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context③">third party context</a> on <var>top-level site</var>.</p>
+     <p>When set, this flag indicates that the user expressly denied <var>embedded origin</var> access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data③">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context③">third party context</a> on <var>top-level site</var>.</p>
    </dl>
    <p>To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="obtain-a-storage-access-flag-set" type="abstract-op">obtain a storage access flag set</dfn> for a <a data-link-type="dfn" href="#partitioned-storage-key" id="ref-for-partitioned-storage-key④">partitioned storage key</a> <var>key</var> from a <a data-link-type="dfn" href="#storage-access-map" id="ref-for-storage-access-map">storage access map</a> <var>map</var>, run the following steps:</p>
    <ol>
@@ -868,7 +868,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag③">has storage access flag</a> is set, return true.</p>
     <li data-md>
-     <p>Let <var>has storage access</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site①">embedded site</a> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑤">unpartitioned data</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site①">top-level site</a>.</p>
+     <p>Let <var>has storage access</var> (a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-origin" id="ref-for-partitioned-storage-key-embedded-origin①">embedded origin</a> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑤">unpartitioned data</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site①">top-level site</a>.</p>
     <li data-md>
      <p>If <var>has storage access</var> is true, set <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag④">has storage access flag</a>.</p>
     <li data-md>
@@ -883,7 +883,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Let <var>flag set</var> be the result of <a data-link-type="dfn" href="#obtain-a-storage-access-flag-set" id="ref-for-obtain-a-storage-access-flag-set③">obtaining the storage access flag set</a> with <var>key</var> from <var>map</var>.</p>
     <li data-md>
-     <p>Let <var>implicitly granted</var> and <var>implicitly denied</var> (each a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined①">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site②">embedded site</a>'s request for storage access on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site②">top-level site</a> should be granted or denied without prompting the user.</p>
+     <p>Let <var>implicitly granted</var> and <var>implicitly denied</var> (each a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean①">boolean</a>) be the result of running an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined①">implementation-defined</a> set of steps to determine if <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-origin" id="ref-for-partitioned-storage-key-embedded-origin②">embedded origin</a>'s request for storage access on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site②">top-level site</a> should be granted or denied without prompting the user.</p>
      <p class="note" role="note"><span>Note:</span> These <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined②">implementation-defined</a> set of steps might result in <var>flag set</var>’s <a data-link-type="dfn" href="#has-storage-access-flag" id="ref-for-has-storage-access-flag⑤">has storage access flag</a> and <a data-link-type="dfn" href="#was-expressly-denied-storage-access-flag" id="ref-for-was-expressly-denied-storage-access-flag②">was expressly denied storage access flag</a> changing, since the User Agent could have relevant out-of-band information (e.g. a user preference that changed) that this specification is unaware of.</p>
     <li data-md>
      <p>Let <var>global</var> be <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global②">relevant global object</a>.</p>
@@ -892,7 +892,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>implicitly denied</var> is true, <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task⑤">queue a global task</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permissions-task-source" id="ref-for-dfn-permissions-task-source⑤">permission task source</a> given <var>global</var> to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#reject" id="ref-for-reject⑨">reject</a> <var>p</var> with a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror⑦">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException⑨">DOMException</a></code>, and return <var>p</var>.</p>
     <li data-md>
-     <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-site" id="ref-for-partitioned-storage-key-embedded-site③">embedded site</a> access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑥">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site③">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
+     <p>Ask the user if they would like to grant <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-embedded-origin" id="ref-for-partitioned-storage-key-embedded-origin③">embedded origin</a> access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑥">unpartitioned data</a> when it’s loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑤">third party context</a> on <var>key</var>’s <a data-link-type="dfn" href="#partitioned-storage-key-top-level-site" id="ref-for-partitioned-storage-key-top-level-site③">top-level site</a>, and wait for an answer. Let <var>expressly granted</var> and <var>expressly denied</var> (both <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean②">booleans</a>) be the result.</p>
      <p class="note" role="note"><span>Note:</span> While <var>expressly granted</var> and <var>expressly denied</var> cannot both be true, they could both be false in User Agents which allow users to dismiss the prompt without choosing to allow or deny the request. (Such a dismissal is interpreted in this algorithm as a denial.)</p>
     <li data-md>
      <p>If <var>expressly granted</var> is true, run these steps:</p>
@@ -980,16 +980,16 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>If <var>blocked</var> is not a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#boolean" id="ref-for-boolean③">boolean</a> return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-invalid-argument" id="ref-for-dfn-invalid-argument">invalid argument</a>.</p>
     <li data-md>
-     <p>Let <var>origin</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-getting-properties" id="ref-for-dfn-getting-properties①">getting a property</a> from <var>parameters</var> named <code>origin</code>.</p>
+     <p>Let <var>embedded origin</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-getting-properties" id="ref-for-dfn-getting-properties①">getting a property</a> from <var>parameters</var> named <code>origin</code>.</p>
     <li data-md>
-     <p>If <var>origin</var> is not a single U+002A ASTERISK character (*), then:</p>
+     <p>If <var>embedded origin</var> is not a single U+002A ASTERISK character (*), then:</p>
      <ol>
       <li data-md>
-       <p>Let <var>parsedURL</var> be the the result of running the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-parser" id="ref-for-concept-url-parser">URL parser</a> on <var>origin</var>.</p>
+       <p>Let <var>parsedURL</var> be the the result of running the <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-parser" id="ref-for-concept-url-parser">URL parser</a> on <var>embedded origin</var>.</p>
       <li data-md>
        <p>If <var>parsedURL</var> is failure, then return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error①">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code①">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-invalid-argument" id="ref-for-dfn-invalid-argument①">invalid argument</a>.</p>
       <li data-md>
-       <p>Set <var>origin</var> to <var>parsedURL</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
+       <p>Set <var>embedded origin</var> to <var>parsedURL</var>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
      </ol>
     <li data-md>
      <p>If the <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-current-browsing-context" id="ref-for-dfn-current-browsing-context①">current browsing context</a> is not a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#top-level-browsing-context" id="ref-for-top-level-browsing-context⑤">top-level browsing context</a> return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error②">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code②">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation" id="ref-for-dfn-unsupported-operation">unsupported operation</a>.</p>
@@ -1000,7 +1000,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <li data-md>
      <p>Let <var>top-level site</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site" id="ref-for-obtain-a-site②">obtaining a site</a> from <var>settings</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin②">origin</a>.</p>
     <li data-md>
-     <p>If <var>origin</var> is a single U+002A ASTERISK character (*), then:</p>
+     <p>If <var>embedded origin</var> is a single U+002A ASTERISK character (*), then:</p>
      <ol>
       <li data-md>
        <p>If <var>blocked</var> is <code>true</code>, then:</p>
@@ -1019,20 +1019,18 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>Otherwise:</p>
      <ol>
       <li data-md>
-       <p>Let <var>embedded site</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site" id="ref-for-obtain-a-site③">obtaining a site</a> from <var>origin</var>.</p>
-      <li data-md>
-       <p>If <var>embedded site</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-site-same-site" id="ref-for-concept-site-same-site③">same site</a> with <var>top-level site</var> return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error③">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code③">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation" id="ref-for-dfn-unsupported-operation①">unsupported operation</a>.</p>
+       <p>If <var>embedded origin</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-site-same-site" id="ref-for-concept-site-same-site③">same site</a> with <var>top-level site</var> return a <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error" id="ref-for-dfn-error③">WebDriver error</a> with <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-error-code" id="ref-for-dfn-error-code③">WebDriver error code</a> <a data-link-type="dfn" href="https://w3c.github.io/webdriver/webdriver-spec.html#dfn-unsupported-operation" id="ref-for-dfn-unsupported-operation①">unsupported operation</a>.</p>
       <li data-md>
        <p>If <var>blocked</var> is <code>true</code>, then:</p>
        <ol>
         <li data-md>
-         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑤">implementation-defined</a> set of steps to ensure that <var>embedded site</var> does not have access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑨">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑧">third party context</a> on <var>top-level site</var>.</p>
+         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑤">implementation-defined</a> set of steps to ensure that <var>embedded origin</var> does not have access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑨">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑧">third party context</a> on <var>top-level site</var>.</p>
        </ol>
       <li data-md>
        <p>Otherwise, if <var>blocked</var> is <code>false</code>, then:</p>
        <ol>
         <li data-md>
-         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑥">implementation-defined</a> set of steps to ensure that <var>embedded site</var> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data①⓪">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑨">third party context</a> on <var>top-level site</var>.</p>
+         <p>Run an <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#implementation-defined" id="ref-for-implementation-defined⑥">implementation-defined</a> set of steps to ensure that <var>embedded origin</var> has access to its <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data①⓪">unpartitioned data</a> when loaded in a <a data-link-type="dfn" href="#third-party-context" id="ref-for-third-party-context⑨">third party context</a> on <var>top-level site</var>.</p>
        </ol>
      </ol>
     <li data-md>
@@ -1121,7 +1119,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <li><a href="#attr-valuedef-iframe-sandbox-allow-storage-access-by-user-activation">allow-storage-access-by-user-activation</a><span>, in § 3.5</span>
    <li><a href="#determine-if-a-site-has-storage-access">determine if a site has storage access</a><span>, in § 3.2.1</span>
    <li><a href="#determine-the-storage-access-policy">determine the storage access policy</a><span>, in § 3.2.1</span>
-   <li><a href="#partitioned-storage-key-embedded-site">embedded site</a><span>, in § 3.1</span>
+   <li><a href="#partitioned-storage-key-embedded-origin">embedded origin</a><span>, in § 3.1</span>
    <li><a href="#first-party-site-context">first-party-site context</a><span>, in § 3</span>
    <li><a href="#generate-a-partitioned-storage-key">generate a partitioned storage key</a><span>, in § 3.1</span>
    <li><a href="#global-storage-access-map">global storage access map</a><span>, in § 3.1</span>
@@ -1244,13 +1242,19 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <a href="https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site">https://html.spec.whatwg.org/multipage/origin.html#obtain-a-site</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-obtain-a-site">3.1. User Agent state related to storage access</a> <a href="#ref-for-obtain-a-site①">(2)</a>
-    <li><a href="#ref-for-obtain-a-site②">7.1. Set Storage Access</a> <a href="#ref-for-obtain-a-site③">(2)</a>
+    <li><a href="#ref-for-obtain-a-site②">7.1. Set Storage Access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-origin-opaque">
    <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-opaque</a><b>Referenced in:</b>
    <ul>
     <li><a href="#ref-for-concept-origin-opaque">3.2. Changes to Document</a> <a href="#ref-for-concept-origin-opaque①">(2)</a> <a href="#ref-for-concept-origin-opaque②">(3)</a> <a href="#ref-for-concept-origin-opaque③">(4)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-concept-origin">
+   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin">https://html.spec.whatwg.org/multipage/origin.html#concept-origin</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-concept-origin">3.1. User Agent state related to storage access</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-concept-settings-object-origin">
@@ -1585,7 +1589,8 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="term-for-in-parallel">in parallel</span>
      <li><span class="dfn-paneled" id="term-for-obtain-a-site">obtain a site</span>
      <li><span class="dfn-paneled" id="term-for-concept-origin-opaque">opaque origin</span>
-     <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin</span>
+     <li><span class="dfn-paneled" id="term-for-concept-origin">origin</span>
+     <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin <small>(for environment settings object)</small></span>
      <li><span class="dfn-paneled" id="term-for-parse-a-sandboxing-directive">parse a sandboxing directive</span>
      <li><span class="dfn-paneled" id="term-for-concept-document-permissions-policy">permissions policy</span>
      <li><span class="dfn-paneled" id="term-for-queue-a-global-task">queue a global task</span>
@@ -1770,11 +1775,11 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     <li><a href="#ref-for-partitioned-storage-key-top-level-site①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-top-level-site②">(2)</a> <a href="#ref-for-partitioned-storage-key-top-level-site③">(3)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="partitioned-storage-key-embedded-site">
-   <b><a href="#partitioned-storage-key-embedded-site">#partitioned-storage-key-embedded-site</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="partitioned-storage-key-embedded-origin">
+   <b><a href="#partitioned-storage-key-embedded-origin">#partitioned-storage-key-embedded-origin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-partitioned-storage-key-embedded-site">3.1. User Agent state related to storage access</a>
-    <li><a href="#ref-for-partitioned-storage-key-embedded-site①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-embedded-site②">(2)</a> <a href="#ref-for-partitioned-storage-key-embedded-site③">(3)</a>
+    <li><a href="#ref-for-partitioned-storage-key-embedded-origin">3.1. User Agent state related to storage access</a>
+    <li><a href="#ref-for-partitioned-storage-key-embedded-origin①">3.2.1. User Agent storage access policies</a> <a href="#ref-for-partitioned-storage-key-embedded-origin②">(2)</a> <a href="#ref-for-partitioned-storage-key-embedded-origin③">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="generate-a-partitioned-storage-key">
