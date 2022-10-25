@@ -370,7 +370,7 @@ The [=remote end steps=] are:
 
 <h2 id="acknowledgements" class="no-num">Acknowledgements</h2>
 
-This specification builds on the foundations created by former editors John Wilander, who invented the Storage Access API, and Theresa O’Connor, who wrote significant portions of the initial spec. We are grateful for their ideas and contributions.
+This specification builds on the foundations created by former editors John Wilander, who invented the Storage Access API, and Theresa O’Connor, who wrote significant portions of the initial text. We are grateful for their ideas and contributions.
 
 Many thanks to
 Anne van Kesteren,
