@@ -209,9 +209,9 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
 1. If |doc| is not [=allowed to use=] the `"storage-access"` permission, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] and return |p|.
-1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. If |key| is failure, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
