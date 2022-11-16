@@ -20,8 +20,6 @@ Complain About: accidental-2119 true
 
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
-spec:html; type:dfn; text:session history; url:https://html.spec.whatwg.org/multipage/history.html#session-history
-spec:html; type:dfn; text:current entry; url:https://html.spec.whatwg.org/multipage/history.html#current-entry
 spec:html; type:dfn; for:site; text:same site
 spec:webidl; type:dfn; text:resolve
 </pre>
@@ -272,9 +270,9 @@ ISSUE: [since this is UA-defined, does it make sense to follow-up separately wit
 
 <h3 id="navigation">Changes to navigation</h3>
 
-Before changing the [=current entry=] of a [=session history=], run the following steps:
+Before changing the current entry of a session history, run the following steps:
 
-1. Let |doc| be [=current entry=]'s {{Document}}.
+1. Let |doc| be current entry's {{Document}}.
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. If |key| is failure, abort these steps.
@@ -283,6 +281,8 @@ Before changing the [=current entry=] of a [=session history=], run the followin
 1. [=Save the storage access flag set=] for |key| in |map|.
 
 ISSUE(privacycg/storage-access#3): What this section should look like ultimately hinges on
+
+ISSUE(privacycg/storage-access#137): Add links to current entry and session history to reflect the [navigation and session history rewrite](https://github.com/whatwg/html/pull/6315).
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
