@@ -282,7 +282,7 @@ Before changing the current entry of a session history, run the following steps:
 
 ISSUE(privacycg/storage-access#3): What this section should look like ultimately hinges on
 
-ISSUE: Add links to current entry and session history to reflect the [navigation and session history rewrite](https://github.com/whatwg/html/pull/6315).
+ISSUE(privacycg/storage-access#137): Add links to current entry and session history to reflect the [navigation and session history rewrite](https://github.com/whatwg/html/pull/6315).
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
