@@ -148,8 +148,6 @@ A <dfn>storage access flag set</dfn> is a set of zero or more of the following f
 
 : The <dfn for="storage access flag set" id=has-storage-access-flag>has storage access flag</dfn>
 :: When set, this flag indicates |embedded origin| has access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
-: The <dfn for="storage access flag set" id=was-expressly-denied-storage-access-flag>was expressly denied storage access flag</dfn>
-:: When set, this flag indicates that the user expressly denied |embedded origin| access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
 
 To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partitioned storage key=] |key| from a [=/storage access map=] |map|, run the following steps:
 
@@ -157,10 +155,6 @@ To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partit
     1. Let |flags| be a new [=storage access flag set=].
     1. [=map/Set=] |map|[|key|] to |flags|.
 1. Return |map|[|key|].
-
-To <dfn type="abstract-op">save the storage access flag set</dfn> for a [=partitioned storage key=] |key| in a [=/storage access map=] |map|, run the following steps:
-
-1. [=map/Set=] [=global storage access map=][|key|] to |map|[|key|].
 
 <h3 id="the-document-object">Changes to {{Document}}</h3>
 
@@ -187,14 +181,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] |p| with true and return |p|.
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. If |key| is failure, [=resolve=] |p| with false and return |p|.
-1. Run these steps [=in parallel=]:
-    1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
-    1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-    1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with false, and abort these steps.
-    1. If |flag set|'s [=has storage access flag=] is set, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with true, and abort these steps.
-    1. Let |hasAccess| be [=a new promise=].
-    1. [=Determine the storage access policy=] with |key|, |doc| and |hasAccess|.
-    1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p| with the result of |hasAccess|.
+1. [=Resolve=] or [=reject=] |p| based on the result of running [=determine if a site has storage access=] with |key| and |doc|.
 1. Return |p|.
 
 ISSUE: Shouldn't step 8 be [=same site=]?
@@ -220,7 +207,6 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If |key| is failure, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-1. If |flag set|'s [=was expressly denied storage access flag=] is set, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |flag set|'s [=has storage access flag=] is set, [=/resolve=] and return |p|.
 1. Otherwise, run these steps [=in parallel=]:
     1. Let |hasAccess| be [=a new promise=].
@@ -228,7 +214,6 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. [=Queue a global task=] on the [=permission task source=] given |global| to
         1. Set |flag set|'s [=has storage access flag=].
         1. Resolve or reject |p| based on the result of |hasAccess|.
-    1. [=Save the storage access flag set=] for |key| in |map|.
 1. Return |p|.
 
 ISSUE: Shouldn't step 9 be [=same site=]?
@@ -242,36 +227,21 @@ To <dfn type="abstract-op">determine if a site has storage access</dfn> with [=p
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
 1. If |flag set|'s [=has storage access flag=] is set, return true.
-1. Let |has storage access| (a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=] has access to its [=unpartitioned data=] on |key|'s [=partitioned storage key/top-level site=].
-1. If |has storage access| is true, set |flag set|'s [=has storage access flag=].
-1. [=Save the storage access flag set=] for |key| in |map|.
-1. Return |has storage access|.
+1. Return false.
 
 To <dfn type="abstract-op">determine the storage access policy</dfn> for [=partitioned storage key=] |key| with {{Document}} |doc| and {{Promise}} |p|, run these steps:
 
 1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
 1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
-
-    Note: These [=implementation-defined=] set of steps might result in |flag set|'s [=has storage access flag=] and [=was expressly denied storage access flag=] changing, since the User Agent could have relevant out-of-band information (e.g. a user preference that changed) that this specification is unaware of.
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |implicitly granted| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
 1. If |implicitly denied| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}, and return |p|.
-1. Ask the user if they would like to grant |key|'s [=partitioned storage key/embedded origin=] access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |key|'s [=partitioned storage key/top-level site=], and wait for an answer. Let |expressly granted| and |expressly denied| (both [=booleans=]) be the result.
-
-    Note: While |expressly granted| and |expressly denied| cannot both be true, they could both be false in User Agents which allow users to dismiss the prompt without choosing to allow or deny the request. (Such a dismissal is interpreted in this algorithm as a denial.)
-1. If |expressly granted| is true, run these steps:
-    1. Unset |flag set|'s [=was expressly denied storage access flag=].
-    1. [=Save the storage access flag set=] for |key| in |map|.
-    1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
+1. Let |permissionState| be the result of [=requesting permission to use=] "storage-access".
+1. If |permissionState| is "granted", [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
 1. Unset |flag set|'s [=has storage access flag=].
-1. If |expressly denied| is true, run these steps:
-    1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
-    1. Set |flag set|'s [=was expressly denied storage access flag=].
-1. [=Save the storage access flag set=] for |key| in |map|.
+1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
 1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
-
-ISSUE: [since this is UA-defined, does it make sense to follow-up separately with a user prompt?](https://github.com/privacycg/storage-access/pull/24#discussion_r408784492)
 
 <h3 id="navigation">Changes to navigation</h3>
 
@@ -283,7 +253,6 @@ Before changing the current entry of a session history, run the following steps:
 1. If |key| is failure, abort these steps.
 1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
 1. Unset |flag set|'s [=has storage access flag=].
-1. [=Save the storage access flag set=] for |key| in |map|.
 
 ISSUE(privacycg/storage-access#3): What this section should look like ultimately hinges on
 
@@ -312,6 +281,30 @@ To the [=parse a sandboxing directive=] algorithm, add the following under step 
 <ul>
 <li>The [=sandbox storage access by user activation flag=], unless <var ignore>tokens</var> contains the <dfn export attr-value for=iframe/sandbox>allow-storage-access-by-user-activation</dfn> keyword.
 </ul>
+
+<h2 id="permissions-integration">Permissions Integration</h2>
+
+The Storage Access API defines a [=powerful feature=] identified by the [=powerful feature/name=] `"storage-access"`.
+
+<h3 id="permissions-key-generate">Changes to generate a permission store key</h3>
+
+Update the generate a permission store key algorithm to take the [=powerful feature/name=] |name|. Prepend the following steps to it:
+
+1. If |name| is "storage-access", run the following steps:
+    1. Let |topLevelOrigin| be |settings|' [=environment/top-level origin].
+    1. Let |embeddedOrigin| be |settings|' [=environment/origin].
+    1. Return (|topLevelOrigin|, |embeddedOrigin|).
+
+<h3 id="permissions-key-compare">Changes to compare permission store keys</h3>
+
+Update the compare permission store keys algorithm to take the [=powerful feature/name=] |name|. Prepend the following steps to it:
+
+1. If |name| is "storage-access", run the following steps:
+    1. Let |topLevelSite1| be the result of [=obtaining a site=] from |key1|'s permission store key/top-level origin.
+    1. Let |topLevelSite2| be the result of [=obtaining a site=] from |key2|'s permission store key/top-level origin.
+    1. If |topLevelSite1| is not [=same site=] with |topLevelSite2|, return false.
+    1. If |key1|'s permission store key/granted origin is not [=same origin=] with |key2|'s permission store key/granted origin, return false.
+    1. Return true.
 
 <h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
