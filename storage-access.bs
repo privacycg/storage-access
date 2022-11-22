@@ -237,7 +237,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |implicitly granted| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
 1. If |implicitly denied| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}, and return |p|.
-1. Let |permissionState| be the result of [=requesting permission to use=] "storage-access".
+1. Let |permissionState| be the result of [=requesting permission to use=] "<a permission><code>storage-access</code></a>".
 1. If |permissionState| is "granted", [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
 1. Unset |flag set|'s [=has storage access flag=].
 1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
