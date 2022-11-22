@@ -284,22 +284,22 @@ To the [=parse a sandboxing directive=] algorithm, add the following under step 
 
 <h2 id="permissions-integration">Permissions Integration</h2>
 
-The Storage Access API defines a [=powerful feature=] identified by the [=powerful feature/name=] `"storage-access"`.
+The Storage Access API defines a [=powerful feature=] identified by the [=powerful feature/name=] "<dfn export permission><code>storage-access</code></dfn>".
 
 <h3 id="permissions-key-generate">Changes to generate a permission store key</h3>
 
 Update the generate a permission store key algorithm to take the [=powerful feature/name=] |name|. Prepend the following steps to it:
 
-1. If |name| is "storage-access", run the following steps:
-    1. Let |topLevelOrigin| be |settings|' [=environment/top-level origin].
-    1. Let |embeddedOrigin| be |settings|' [=environment/origin].
+1. If |name| is "<a permission><code>storage-access</code></a>", run the following steps:
+    1. Let |topLevelOrigin| be |settings|' [=top-level origin=].
+    1. Let |embeddedOrigin| be |settings|' [=environment settings object/origin=].
     1. Return (|topLevelOrigin|, |embeddedOrigin|).
 
 <h3 id="permissions-key-compare">Changes to compare permission store keys</h3>
 
 Update the compare permission store keys algorithm to take the [=powerful feature/name=] |name|. Prepend the following steps to it:
 
-1. If |name| is "storage-access", run the following steps:
+1. If |name| is "<a permission><code>storage-access</code></a>", run the following steps:
     1. Let |topLevelSite1| be the result of [=obtaining a site=] from |key1|'s permission store key/top-level origin.
     1. Let |topLevelSite2| be the result of [=obtaining a site=] from |key2|'s permission store key/top-level origin.
     1. If |topLevelSite1| is not [=same site=] with |topLevelSite2|, return false.
