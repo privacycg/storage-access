@@ -284,27 +284,35 @@ To the [=parse a sandboxing directive=] algorithm, add the following under step 
 
 <h2 id="permissions-integration">Permissions Integration</h2>
 
-The Storage Access API defines a [=powerful feature=] identified by the [=powerful feature/name=] "<dfn export permission><code>storage-access</code></dfn>".
+The Storage Access API defines a [=powerful feature=] identified by the [=powerful feature/name=] "<dfn export permission><code>storage-access</code></dfn>". It defines the following permission-related algorithms:
 
-<h3 id="permissions-key-generate">Changes to generate a permission store key</h3>
+<dl>
+  <dt>[=powerful feature/permission query algorithm=]</dt>
+  <dd>
+    To query the "<a permission><code>storage-access</code></a>" permission, given a {{PermissionDescriptor}} |permissionDesc| and a {{PermissionStatus}} |status|, run the following steps:
 
-Update the generate a permission store key algorithm to take the [=powerful feature/name=] |name|. Prepend the following steps to it:
+    1. Set |status|'s {{PermissionStatus/state}} to |permissionDesc|'s [=permission state=].
+    1. If |status|'s {{PermissionStatus/state}} is [=permission/denied=], set |status|'s {{PermissionStatus/state}} to [=permission/prompt=].
 
-1. If |name| is "<a permission><code>storage-access</code></a>", run the following steps:
-    1. Let |topLevelOrigin| be |settings|' [=top-level origin=].
+        Note: The "denied" permission state is not revealed to avoid exposing the user's decision to developers. This is done to prevent retaliation against the user and repeated prompting to the detriment of the user experience.
+  </dd>
+  <dt>[=powerful feature/permission key generation algorithm]</dt>
+  <dd>
+    To generate a new [=permission store key] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
+
+    1. Let |topLevelSite| be |settings|' [=top-level site=].
     1. Let |embeddedOrigin| be |settings|' [=environment settings object/origin=].
-    1. Return (|topLevelOrigin|, |embeddedOrigin|).
+    1. Return (|topLevelSite|, |embeddedOrigin|).
+  </dd>
+  <dt>[=powerful feature/permission key comparison algorithm]</dt>
+  <dd>
+    To compare the [=permission keys] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
-<h3 id="permissions-key-compare">Changes to compare permission store keys</h3>
-
-Update the compare permission store keys algorithm to take the [=powerful feature/name=] |name|. Prepend the following steps to it:
-
-1. If |name| is "<a permission><code>storage-access</code></a>", run the following steps:
-    1. Let |topLevelSite1| be the result of [=obtaining a site=] from |key1|'s permission store key/top-level origin.
-    1. Let |topLevelSite2| be the result of [=obtaining a site=] from |key2|'s permission store key/top-level origin.
-    1. If |topLevelSite1| is not [=same site=] with |topLevelSite2|, return false.
-    1. If |key1|'s permission store key/granted origin is not [=same origin=] with |key2|'s permission store key/granted origin, return false.
+    1. If |key1|[0] is not [=same site=] with |key2|[0], return false.
+    1. If |key1|[1] is not [=same origin=] with |key2|[1], return false.
     1. Return true.
+  </dd>
+</dl>
 
 <h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
