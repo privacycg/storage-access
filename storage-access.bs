@@ -44,6 +44,19 @@ urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
         text: unsupported operation; url: dfn-unsupported-operation
         text: session; url: dfn-session
         text: success; url: dfn-success
+
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
+    type: dfn
+        text: source snapshot params; url: browsing-the-web.html#source-snapshot-params
+        text: snapshotting source snapshot params; url: browsing-the-web.html#snapshotting-source-snapshot-params
+        text: create navigation params by fetching; url: browsing-the-web.html#create-navigation-params-by-fetching
+        text: set up a window environment settings object; url: nav-history-apis.html#set-up-a-window-environment-settings-object
+        text: environment
+
+spec: fetch; urlPrefix: https://fetch.spec.whatwg.org/
+    type: dfn
+        for: response
+            text: has-cross-origin-redirects; url: #response-has-cross-origin-redirects
 </pre>
 
 <pre class=biblio>
@@ -105,23 +118,14 @@ A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active
 
 A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first-party-site context=].
 
-<h3 id="ua-state">User Agent state related to storage access</h3>
+<h3 id="ua-state">Changes to User Agent state related to storage access</h3>
 
-A <dfn>storage access map</dfn> is a [=map=] whose keys are [=partitioned storage keys=] and whose values are [=storage access flag sets=].
+Modify the definition of [=environment=] in the following manner:
+1. Add a new member called <dfn for="environment">obtained storage access flag</dfn> of type boolean.
 
-User Agents maintain a single <dfn>global storage access map</dfn>.
-
-ISSUE(privacycg/storage-access#2): What is the lifecycle of the [=global storage access map=]? How long do we remember its contents? Firefox and Safari differ here.
-
-ISSUE(privacycg/storage-access#5): When do we age out entries in the [=global storage access map=]? See also [Scope of Storage Access](https://github.com/privacycg/storage-access#scope-of-storage-access).
-
-Each [=agent cluster=] has a <dfn for="agent cluster">storage access map</dfn>.
-
-When an [=agent cluster=] is created, its [=agent cluster/storage access map=] is initialized with a [=map/clone=] of the [=global storage access map=].
-
-To <dfn type="abstract-op">obtain the storage access map</dfn> for a {{Document}} |doc|, run the following steps:
-
-1. Return the [=agent cluster/storage access map=] of |doc|'s [=relevant agent=]'s [=agent cluster=].
+Modify the definition of [=source snapshot params=] in the following manner:
+1. Add a new member called <dfn for="source snapshot params">obtained storage access flag</dfn> of type boolean.
+1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque string.
 
 A <dfn>partitioned storage key</dfn> is a [=tuple=] consisting of a <dfn for="partitioned storage key">top-level site</dfn> (a [=site=]) and an <dfn for="partitioned storage key">embedded origin</dfn> (an [=/origin=]).
 
@@ -138,18 +142,6 @@ To <dfn type="abstract-op">generate a partitioned storage key</dfn> for a {{Docu
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], return the [=partitioned storage key=] (|site|, |site|).
 1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
 1. Return the [=partitioned storage key=] (|top-level site|, |site|).
-
-A <dfn>storage access flag set</dfn> is a set of zero or more of the following flags, which are used to gate access to client-side storage for |embedded origin| when loaded in a [=third party context=] on |top-level site|:
-
-: The <dfn for="storage access flag set" id=has-storage-access-flag>has storage access flag</dfn>
-:: When set, this flag indicates |embedded origin| has access to its [=unpartitioned data=] when it's loaded in a [=third party context=] on |top-level site|.
-
-To <dfn type="abstract-op">obtain a storage access flag set</dfn> for a [=partitioned storage key=] |key| from a [=/storage access map=] |map|, run the following steps:
-
-1. If |map|[|key|] [=map/exists|does not exist=], run these steps:
-    1. Let |flags| be a new [=storage access flag set=].
-    1. [=map/Set=] |map|[|key|] to |flags|.
-1. Return |map|[|key|].
 
 <h3 id="the-document-object">Changes to {{Document}}</h3>
 
@@ -174,9 +166,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] |p| with true and return |p|.
 1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] |p| with true and return |p|.
-1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
-1. If |key| is failure, [=resolve=] |p| with false and return |p|.
-1. [=Resolve=] or [=reject=] |p| based on the result of running [=determine if a site has storage access=] with |key| and |doc|.
+1. [=Resolve=] or [=reject=] |p| based on |global|'s [=environment/obtained storage access flag=].
 1. Return |p|.
 
 ISSUE: Shouldn't step 8 be [=same site=]?
@@ -198,56 +188,57 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] and return |p|.
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
-1. If |key| is failure, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
-1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-1. If |flag set|'s [=has storage access flag=] is set, [=/resolve=] and return |p|.
+1. If |global|'s [=environment/obtained storage access flag=] is true, [=resolve=] and return |p|.
 1. Otherwise, run these steps [=in parallel=]:
     1. Let |hasAccess| be [=a new promise=].
-    1. [=Determine the storage access policy=] with |key|, |doc| and |hasAccess|.
-    1. [=Queue a global task=] on the [=permission task source=] given |global| to
-        1. Set |flag set|'s [=has storage access flag=].
-        1. Resolve or reject |p| based on the result of |hasAccess|.
+    1. [=Determine the storage access policy=] with |doc| and |hasAccess|.
+    1. [=Queue a global task=] on the [=permission task source=] given |global| to resolve or reject |p| based on the result of |hasAccess|.
 1. Return |p|.
 
-ISSUE: Shouldn't step 9 be [=same site=]?
+ISSUE: Shouldn't step 10 be [=same site=]?
 
 <h4 id="ua-policy">User Agent storage access policies</h4>
 
 Different User Agents have different policies around whether or not [=sites=] may access their [=unpartitioned data=] when they're in a [=third party context=]. User Agents check and/or modify these policies when client-side storage is accessed (see [[#storage]]) as well as when {{Document/hasStorageAccess()}} and {{Document/requestStorageAccess()}} are called.
 
-To <dfn type="abstract-op">determine if a site has storage access</dfn> with [=partitioned storage key=] |key| and {{Document}} |doc|, run these steps:
+To <dfn type="abstract-op">determine if a site has storage access</dfn> with {{Document}} |doc|, run these steps:
 
-1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
-1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-1. If |flag set|'s [=has storage access flag=] is set, return true.
-1. Return false.
+1. Let |global| be |doc|'s [=relevant global object=].
+1. Return |global|'s [=environment/obtained storage access flag=].
 
-To <dfn type="abstract-op">determine the storage access policy</dfn> for [=partitioned storage key=] |key| with {{Document}} |doc| and {{Promise}} |p|, run these steps:
+To <dfn type="abstract-op">determine the storage access policy</dfn> for {{Document}} |doc| with {{Promise}} |p|, run these steps:
 
-1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|.
-1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
+1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |implicitly granted| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
 1. If |implicitly denied| is true, [=queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}, and return |p|.
 1. Let |permissionState| be the result of [=requesting permission to use=] "<a permission><code>storage-access</code></a>".
-1. If |permissionState| is "granted", [=queue a global task=] on the [=permission task source=] given |global| to [=/resolve=] |p|, and return.
-1. Unset |flag set|'s [=has storage access flag=].
+1. If |permissionState| is "granted":
+    1. [=Queue a global task=] on the [=permission task source=] given |global| to:
+        1. Set |global|'s [=environment/obtained storage access flag=] to true.
+        1. [=/Resolve=] |p|.
+    1. Return.
+1. Set |global|'s [=environment/obtained storage access flag=] to false.
 1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
 1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
 
 <h3 id="navigation">Changes to navigation</h3>
 
-Before changing the current entry of a session history, run the following steps:
+When [=snapshotting source snapshot params=]:
+1. Set [=source snapshot params/obtained storage access flag=] to |sourceDocument|'s [=source snapshot params/obtained storage access flag=].
+1. Set [=source snapshot params/environment id=] to |sourceDocument|'s [=relevant settings object=]'s [=environment/id=].
 
-1. Let |doc| be current entry's {{Document}}.
-1. Let |map| be the result of [=obtain the storage access map|obtaining the storage access map=] for |doc|'s [=Document/browsing context=]'s [=top-level browsing context=].
-1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
-1. If |key| is failure, abort these steps.
-1. Let |flag set| be the result of [=obtain a storage access flag set|obtaining the storage access flag set=] with |key| from |map|.
-1. Unset |flag set|'s [=has storage access flag=].
+When creating |request|'s [=reserved client=] in [=create navigation params by fetching=]:
+1. Set the [=reserved client=]'s [=environment/obtained storage access flag=] to be |sourceSnapshotParams|'s [=source snapshot params/obtained storage access flag=] if:
+    1. |sourceSnapshotParams|'s [=source snapshot params/environment id=] equals <var ignore>navigable</var>'s [=active document=]'s [=relevant settings object=]'s [=environment/id=].
+    1. <var ignore>entry</var>'s URL is [=same origin=] with <var ignore>currentURL</var>.
+    1. |response| is null or |response|'s [=response/has-cross-origin-redirects=] is false.
+1. Otherwise, set |request|'s [=reserved client=]'s [=environment/obtained storage access flag=] to false.
+
+When [=set up a window environment settings object|setting up a window environment settings object=]:
+1. Set <var ignore>settings object</var>'s [=environment/obtained storage access flag=] to <var ignore>reserved environment</var>'s [=environment/obtained storage access flag=].
+
 
 ISSUE(privacycg/storage-access#3): What this section should look like ultimately hinges on
 
