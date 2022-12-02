@@ -285,9 +285,13 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
 
         Note: The "denied" permission state is not revealed to avoid exposing the user's decision to developers. This is done to prevent retaliation against the user and repeated prompting to the detriment of the user experience.
   </dd>
+  <dt>[=powerful feature/permission key type]</dt>
+  <dd>
+    A [=permission key] of the "<a permission><code>storage-access</code></a>" feature has the type ([=site=], [=/origin=]).
+  </dd>
   <dt>[=powerful feature/permission key generation algorithm]</dt>
   <dd>
-    To generate a new [=permission store key] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
+    To generate a new [=permission key] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
 
     1. Let |topLevelSite| be |settings|' [=top-level site=].
     1. Let |embeddedOrigin| be |settings|' [=environment settings object/origin=].
