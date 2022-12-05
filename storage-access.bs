@@ -181,7 +181,6 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If |doc| is not [=Document/fully active=], then [=reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |global| is not a [=secure context=], then [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If this algorithm was invoked when |doc|'s {{Window}} object did not have [=transient activation=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
 1. If |doc| is not [=allowed to use=] the `"storage-access"` permission, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
@@ -208,6 +207,12 @@ To <dfn type="abstract-op">determine if a site has storage access</dfn> with {{D
 
 To <dfn type="abstract-op">determine the storage access policy</dfn> for {{Document}} |doc| with {{Promise}} |p|, run these steps:
 
+1. Let |previousPermissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
+1. If |previousPermissionState| is not [=permission/prompt=]:
+    1. Set |global|'s [=environment/obtained storage access flag=] based on whether |previousPermissionState| is [=permission/granted=] or [=permission/denied=].
+    1. [=/Resolve=] or [=/reject=] |p| (with a "{{NotAllowedError}}" {{DOMException}}) based on whether |previousPermissionState| is [=permission/granted=] or [=permission/denied=].
+    1. Return.
+1. If |doc|'s {{Window}} object does not have [=transient activation=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
 1. Let |global| be |doc|'s [=relevant global object=].
@@ -220,7 +225,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for {{Docum
         1. [=/Resolve=] |p|.
     1. Return.
 1. Set |global|'s [=environment/obtained storage access flag=] to false.
-1. If |doc|'s {{Window}} object has [=transient activation=], [=consume user activation=] with it.
+1. [=Consume user activation=] given |doc|'s {{Window}} object.
 1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
 
 <h3 id="navigation">Changes to navigation</h3>
