@@ -194,7 +194,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. [=Queue a global task=] on the [=permission task source=] given |global| to resolve or reject |p| based on the result of |hasAccess|.
 1. Return |p|.
 
-ISSUE: Shouldn't step 10 be [=same site=]?
+ISSUE: Shouldn't step 9 be [=same site=]?
 
 <h4 id="ua-policy">User Agent storage access policies</h4>
 
