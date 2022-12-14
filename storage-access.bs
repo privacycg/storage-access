@@ -29,6 +29,11 @@ urlPrefix: https://tc39.github.io/ecma262/; spec: ECMASCRIPT
     text: agent cluster; url: #sec-agent-clusters; type: dfn
 urlPrefix: https://infra.spec.whatwg.org/; spec: INFRA
     text: implementation-defined; url: #implementation-defined; type: dfn
+urlPrefix: https://fetch.spec.whatwg.org/; spec: Fetch
+    text: http-network-or-cache fetch; url: #concept-http-network-or-cache-fetch; type: dfn
+spec: RFC6265; urlPrefix: https://tools.ietf.org/html/rfc6265
+    type: dfn
+        text: cookie store; url: section-5.3
 urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
     type: dfn
         text: current browsing context; url: dfn-current-browsing-context
@@ -286,11 +291,11 @@ ISSUE(privacycg/storage-access#137): Add links to current entry and session hist
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
-ISSUE(privacycg/storage-access#4): Should this API affect client-side storage other than cookies?
-
-ISSUE(privacycg/storage-access#31): Write this section. For each kind of client-side storage affected, modify them to invoke [=determine if a site has storage access=] & modify their behavior based on the result.
-
 <h4 id="cookies">Cookies</h4>
+
+This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request (to determine whether to attach cross-site, partitioned, or no cookies) as well as whether the request was made for a document that has storage access, through running the [=determine if a site has storage access=] algorithm that is defined in this specification.
+
+Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and [=document.cookie=] to run [=determine if a site has storage access=] and pass this information to the [=cookie store=] when retrieving cookies.
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
