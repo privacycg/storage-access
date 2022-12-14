@@ -319,7 +319,7 @@ Importantly, we do not degrade privacy properties when compared to pre-removal o
 
 Our privacy considerations are more challenging where default cross-site cookies are already deprecated. The challenge is to decide when and how to permit the Storage Access API to be used to revert a cookie-less (or cookie-partitioned) nested {{Document}} to a pre-deprecation state, giving it access to its [=unpartitioned data=].
 
-In an ideal case, an nested {{Document}} would only be able to gain access to its [=unpartitioned data=] if:
+In an ideal case, a nested {{Document}} would only be able to gain access to its [=unpartitioned data=] if:
 
 1. the user interacts with the nested {{Document}}
 2. the nested {{Document}} is permitted by the embedder to use the API
