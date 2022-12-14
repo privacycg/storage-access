@@ -183,7 +183,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] |p| with true and return |p|.
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. If |key| is failure, [=resolve=] |p| with false and return |p|.
-1. [=Resolve=] or [=reject=] |p| based on the result of running [=determine if a site has storage access=] with |key| and |doc|.
+1. [=Resolve=] |p| with the result of running [=determine if a site has storage access=] with |key| and |doc|.
 1. Return |p|.
 
 ISSUE: Shouldn't step 8 be [=same site=]?
@@ -215,8 +215,11 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. [=Determine the storage access policy=] with |key|, |doc| and |hasAccess|.
     1. [=Queue a global task=] on the [=permissions task source=] given |global| to
         1. Set |flag set|'s [=has storage access flag=].
-        1. Resolve or reject |p| based on the result of |hasAccess|.
+        1. If |hasAccess| is true, resolve |p|.
+        1. Reject |p| with a "{{NotAllowedError}}" {{DOMException}}.
 1. Return |p|.
+
+ISSUE(privacycg/storage-access#144): We shouldn't use the permissions task source here.
 
 ISSUE: Shouldn't step 9 be [=same site=]?
 
@@ -238,7 +241,7 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for [=parti
 1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |implicitly granted| is true, [=queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p|, and return.
-1. If |implicitly denied| is true, [=queue a global task=] on the [=permissions task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}, and return |p|.
+1. If |implicitly denied| is true, [=queue a global task=] on the [=permissions task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}, and return.
 1. Let |permissionState| be the result of [=requesting permission to use=] "<a permission><code>storage-access</code></a>".
 1. If |permissionState| is "granted", [=queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p|, and return.
 1. Unset |flag set|'s [=has storage access flag=].
@@ -300,7 +303,7 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   </dd>
   <dt>[=powerful feature/permission key type=]</dt>
   <dd>
-    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature has the type ([=site=], [=/origin=]).
+    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">key site</dfn> and an [=/origin=] <dfn for="permission key">key origin</dfn>.
   </dd>
   <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
@@ -314,8 +317,8 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   <dd>
     To compare the [=permission keys=] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
-    1. If |key1|[0] is not [=same site=] with |key2|[0], return false.
-    1. If |key1|[1] is not [=same origin=] with |key2|[1], return false.
+    1. If |key1|'s [=permission key/key site=] is not [=same site=] with |key2|'s [=permission key/key site=], return false.
+    1. If |key1|'s [=permission key/key origin=] is not [=same origin=] with |key2|'s [=permission key/key origin=], return false.
     1. Return true.
   </dd>
 </dl>
