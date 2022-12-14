@@ -291,7 +291,7 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
 <dl>
   <dt>[=powerful feature/permission query algorithm=]</dt>
   <dd>
-    To query the "<a permission><code>storage-access</code></a>" permission, given a {{PermissionDescriptor}} |permissionDesc| and a {{PermissionStatus}} |status|, run the following steps:
+    To query the "<a permission><code>storage-access</code></a>" permission, given a {{PermissionDescriptor}} |permissionDesc| and a {{PermissionStatus}} |status|:
 
     1. Set |status|'s {{PermissionStatus/state}} to |permissionDesc|'s [=permission state=].
     1. If |status|'s {{PermissionStatus/state}} is [=permission/denied=], set |status|'s {{PermissionStatus/state}} to [=permission/prompt=].
