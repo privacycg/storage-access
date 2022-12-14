@@ -310,7 +310,7 @@ The Storage Access API defines a [=policy-controlled feature=] identified by the
 
 <h2 id="privacy">Privacy considerations</h2>
 
-The Storage Access API enabled the removal of cross-site cookies. Specifically, it allows the authenticated embeds use case to continue to work. As such, the API provides a way for developers to re-gain access to cross-site cookies, albeit under further constraints.
+The Storage Access API enables the removal of cross-site cookies. Specifically, it allows the authenticated embeds use case to continue to work. As such, the API provides a way for developers to re-gain access to cross-site cookies, albeit under further constraints.
 
 A nested {{Document}} gains access to the same cookies it has as the [=active document=] of a [=top-level browsing context=] when it calls {{Document/requestStorageAccess()}} and is returned a resolving {{Promise}}. With these cookies it can authenticate itself to the server and load user-specific information.
 
