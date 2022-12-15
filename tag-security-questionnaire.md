@@ -78,8 +78,8 @@ This specification is meant to be used in third-party contexts with a default gr
 14.  How do the features in this specification work in the context of a browser’s
      Private Browsing or Incognito mode?
 
-It should 
- 
+The specification currently makes no explicit recommendation, as preferences may differ between user agents. It can generally be expected that in most user agents cross-site cookies are disabled in Private Browsing contexts, which would make it a natural fit for SAA. However, exposing prompts to users in private browsing that request sharing of data between two sites may be viewed as intrusive. The API includes sufficient mechanisms for user agents to always deny storage access requests in private browsing.
+
 15.  Does this specification have both "Security Considerations" and "Privacy
      Considerations" sections?
 
