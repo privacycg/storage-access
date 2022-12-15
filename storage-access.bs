@@ -183,7 +183,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] |p| with true and return |p|.
 1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
 1. If |key| is failure, [=resolve=] |p| with false and return |p|.
-1. [=Resolve=] |p| with the result of running [=determine if a site has storage access=] with |key| and |doc|.
+1. Let |hasAccess| be the result of running [=determine if a site has storage access=] with |key| and |doc|.
+1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |hasAccess|.
 1. Return |p|.
 
 ISSUE: Shouldn't step 8 be [=same site=]?
@@ -304,6 +305,8 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   <dt>[=powerful feature/permission key type=]</dt>
   <dd>
     A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">key site</dfn> and an [=/origin=] <dfn for="permission key">key origin</dfn>.
+
+    ISSUE(privacycg/storage-access#147): Note that this will likely change to a (site, site) keying.
   </dd>
   <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
