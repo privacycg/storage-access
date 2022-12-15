@@ -291,11 +291,17 @@ ISSUE(privacycg/storage-access#137): Add links to current entry and session hist
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
+This API only impacts cookies [[!RFC6265]]. A future revision of this API might impact other client-side state.
+
 <h4 id="cookies">Cookies</h4>
 
 This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request (to determine whether to attach cross-site, partitioned, or no cookies) as well as whether the request was made for a document that has storage access, through running the [=determine if a site has storage access=] algorithm that is defined in this specification.
 
-Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and [=document.cookie=] to run [=determine if a site has storage access=] and pass this information to the [=cookie store=] when retrieving cookies.
+Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and {{Document/cookie}} to run [=determine if a site has storage access=] and pass this information to the [=cookie store=] when retrieving cookies.
+
+When getting unpartitioned cookies from the [=cookie store=] with storage access, user agents must follow applicable `SameSite` restrictions (i.e. not attach cookies marked `SameSite=Strict` or `SameSite=Lax` in [=third party contexts=]).
+
+Note: User agents could apply different default values for the `SameSite` cookie attribute. This could lead to unpartitioned cookies without a `SameSite` attribute being attached to requests in some user agents (where `SameSite=None` is the default), but not in others (where `SameSite=Lax` is the default). The authors encourage user agents to seek consistent defaults for `SameSite` to avoid interoperability issues.
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
