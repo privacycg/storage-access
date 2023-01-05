@@ -29,6 +29,13 @@ urlPrefix: https://tc39.github.io/ecma262/; spec: ECMASCRIPT
     text: agent cluster; url: #sec-agent-clusters; type: dfn
 urlPrefix: https://infra.spec.whatwg.org/; spec: INFRA
     text: implementation-defined; url: #implementation-defined; type: dfn
+urlPrefix: https://fetch.spec.whatwg.org/; spec: Fetch
+    text: http-network-or-cache fetch; url: #concept-http-network-or-cache-fetch; type: dfn
+spec: RFC6265; urlPrefix: https://tools.ietf.org/html/rfc6265
+    type: dfn
+        text: cookie store; url: section-5.3
+urlPrefix: https://w3c.github.io/permissions/; spec: permissions
+    text: permissions task source; url: #permissions-task-source; type: dfn
 urlPrefix: https://w3c.github.io/webdriver/webdriver-spec.html#; spec: webdriver
     type: dfn
         text: current browsing context; url: dfn-current-browsing-context
@@ -191,6 +198,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. [=Determine the storage access policy=] with |doc| and |p|.
 1. Return |p|.
 
+ISSUE(privacycg/storage-access#144): We shouldn't use the permissions task source here.
+
 ISSUE: Shouldn't step 9 be [=same site=]?
 
 <h4 id="ua-policy">User Agent storage access policies</h4>
@@ -251,11 +260,17 @@ ISSUE(privacycg/storage-access#137): Add links to current entry and session hist
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
-ISSUE(privacycg/storage-access#4): Should this API affect client-side storage other than cookies?
-
-ISSUE(privacycg/storage-access#31): Write this section. For each kind of client-side storage affected, modify them to invoke [=determine if a site has storage access=] & modify their behavior based on the result.
+This API only impacts HTTP cookies. A future revision of this API might impact other client-side state. [[!RFC6265]]
 
 <h4 id="cookies">Cookies</h4>
+
+This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request (to determine whether to attach cross-site, partitioned, or no cookies) as well as whether the request was made for a document that has storage access, through running the [=determine if a site has storage access=] algorithm that is defined in this specification.
+
+Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and {{Document/cookie}} to run [=determine if a site has storage access=] and pass this information to the [=cookie store=] when retrieving cookies.
+
+When getting unpartitioned cookies from the [=cookie store=] with storage access, user agents will still follow applicable `SameSite` restrictions (i.e., not attach cookies marked `SameSite=Strict` or `SameSite=Lax` in [=third party contexts=]).
+
+Note: User agents could apply different default values for the `SameSite` cookie attribute. This could lead to unpartitioned cookies without a `SameSite` attribute being attached to requests in some user agents (where `SameSite=None` is the default), but not in others (where `SameSite=Lax` is the default). Web developers are encouraged to set the `SameSite` attribute on their cookies to not run into issues.
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
@@ -274,31 +289,33 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
 <dl>
   <dt>[=powerful feature/permission query algorithm=]</dt>
   <dd>
-    To query the "<a permission><code>storage-access</code></a>" permission, given a {{PermissionDescriptor}} |permissionDesc| and a {{PermissionStatus}} |status|, run the following steps:
+    To query the "<a permission><code>storage-access</code></a>" permission, given a {{PermissionDescriptor}} |permissionDesc| and a {{PermissionStatus}} |status|:
 
     1. Set |status|'s {{PermissionStatus/state}} to |permissionDesc|'s [=permission state=].
     1. If |status|'s {{PermissionStatus/state}} is [=permission/denied=], set |status|'s {{PermissionStatus/state}} to [=permission/prompt=].
 
         Note: The "denied" permission state is not revealed to avoid exposing the user's decision to developers. This is done to prevent retaliation against the user and repeated prompting to the detriment of the user experience.
   </dd>
-  <dt>[=powerful feature/permission key type]</dt>
+  <dt>[=powerful feature/permission key type=]</dt>
   <dd>
-    A [=permission key] of the "<a permission><code>storage-access</code></a>" feature has the type ([=site=], [=/origin=]).
+    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and an [=/origin=] <dfn for="permission key">requester</dfn>.
+
+    ISSUE(privacycg/storage-access#147): Note that this will likely change to a (site, site) keying.
   </dd>
-  <dt>[=powerful feature/permission key generation algorithm]</dt>
+  <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
-    To generate a new [=permission key] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
+    To generate a new [=permission key=] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
 
     1. Let |topLevelSite| be |settings|' [=top-level site=].
     1. Let |embeddedOrigin| be |settings|' [=environment settings object/origin=].
     1. Return (|topLevelSite|, |embeddedOrigin|).
   </dd>
-  <dt>[=powerful feature/permission key comparison algorithm]</dt>
+  <dt>[=powerful feature/permission key comparison algorithm=]</dt>
   <dd>
-    To compare the [=permission keys] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
+    To compare the [=permission keys=] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
-    1. If |key1|[0] is not [=same site=] with |key2|[0], return false.
-    1. If |key1|[1] is not [=same origin=] with |key2|[1], return false.
+    1. If |key1|'s [=permission key/top-level=] is not [=same site=] with |key2|'s [=permission key/top-level=], return false.
+    1. If |key1|'s [=permission key/requester=] is not [=same origin=] with |key2|'s [=permission key/requester=], return false.
     1. Return true.
   </dd>
 </dl>
@@ -311,7 +328,26 @@ The Storage Access API defines a [=policy-controlled feature=] identified by the
 
 <h2 id="privacy">Privacy considerations</h2>
 
-ISSUE: Write this section.
+The Storage Access API enables the removal of cross-site cookies. Specifically, it allows the authenticated embeds use case to continue to work. As such, the API provides a way for developers to re-gain access to cross-site cookies, albeit under further constraints.
+
+A nested {{Document}} gains access to the same cookies it has as the [=active document=] of a [=top-level browsing context=] when it calls {{Document/requestStorageAccess()}} and is returned a resolving {{Promise}}. With these cookies it can authenticate itself to the server and load user-specific information.
+
+While this functionality comes with a risk of abuse by third parties for tracking purposes, it is an explicit goal of the API and a key to its design to not undermine the gains of cross-site cookie deprecation.
+Importantly, we do not degrade privacy properties when compared to pre-removal of cross-site cookies. This follows from a lack of platform-specific information used in the spec to prevent stateless tracking and the only state added being a permission scoped to the [=site|sites=] of the embedding and embedded [=Document=].
+
+Our privacy considerations are more challenging where default cross-site cookies are already deprecated. The challenge is to decide when and how to permit the Storage Access API to be used to revert a cookie-less (or cookie-partitioned) nested {{Document}} to a pre-deprecation state, giving it access to its [=unpartitioned data=].
+
+In an ideal case, a nested {{Document}} would only be able to gain access to its [=unpartitioned data=] if:
+
+1. the user interacts with the nested {{Document}}
+2. the nested {{Document}} is permitted by the embedder to use the API
+3. the nested {{Document}} is a [=secure context=]
+4. the user grants express, pairwise permission to the embeddee to use its cookies in the embedder
+5. the user is not inundated by requests for the "<code>storage-access</code>" permission so their express permission is not undermined by fatigue
+
+This specification requires the first three of implementers. This provides guarantees that the user is aware of the content of the nested {{Document}}, the embedder has not opted out of the nested {{Document}}'s authentication, and the cross-site cookies are not disclosed to network attackers, respectively.
+
+The last two points are in tension. In an ideal world, we would show a prompt to the user in every call to {{Document/requestStorageAccess()}}. But, this would allow pages to prompt the user so frequently as to put the last point at the discretion of the page– a state we find unacceptable. User agents should prevent over-prompting of the user.
 
 <figure id=example-prompt>
 <img src=images/storage-access-prompt.png
@@ -319,9 +355,29 @@ ISSUE: Write this section.
 <figcaption>An example prompt which could be shown to the user when a site calls `document.`{{Document/requestStorageAccess()}}.</figcaption>
 </figure>
 
+Thus, the last two points represent a key point of compromise. We permit [=implementation-defined=] behavior on when to grant or deny requests for [=unpartitioned data=] without requiring user choice so long as they meet all other requirements. This compromise weakens the privacy guarantees of this proposal, specifically point 4, to a degree under the control of the implementer and gives the implementer the power to render it impossible to get storage access with this API. However, this has proven necessary to enable condition 5 to be possible given our implementers' differing stances on the compromise between these two points.
+
+Developer experience suffers where user agents differ greatly in their [=implementation-defined=] behavior, and therefore user agents should aim to minimize or standardize silent grants and denies.
+
+<h3 id="site-scope">Permission scope</h3>
+
+Another tension in the design of the API is what to use to key the "<code>storage-access</code>" permission: [=/origin|origins=] or [=site|sites=]. We chose [=site|sites=] because we believe them to be acceptable boundaries for privacy while enabling existing uses of [=same site=] and cross-origin nested {{Document|Documents}} on the same page with only one user prompt.
+
 <h2 id="security">Security considerations</h2>
 
-ISSUE: Write this section.
+It is important that this spec not degrade security properties of the web platform, even when compared to post-removal of cross-site cookies. Third-party cookie removal has potential benefits for security, specifically in mitigating attacks that rely upon authenticated requests, e.g. CSRF. We do not wish the Storage Access API to be a foothold for such attacks to leverage.
+
+To this end, we limit the impact of a "<code>storage-access</code>" permission grant to only give access to [=unpartitioned data=] to the nested {{Document}} that called {{Document/requestStorageAccess()}} and only until the nested {{Document}} navigates across an [=/origin=] boundary. This ensures that only [=/origin||origins=] with a page that call {{Document/requestStorageAccess()}} will be making credentialed requests, and moreover the embedee page can control which embedder it permits via the Content Security Policy "<code>frame-ancestors</code>" directive. This retains an [=/origin=]-scoped control for security purposes by the embedee.
+
+<h3 id="reputation">Reputational attacks</h3>
+
+This also is effective at preventing another attack: one on the embedee's reputation. We consider any cross-site authenticated request to have potential reputational harm as consumers become more privacy conscious. Therefore a first-party or sibling cross-site causing an embedded resource to be requested with the user's authentication cookies would constitute an attack on the reputation of that cross-site's owner. This is also a reason we require this API to be used in a [=secure context=]: so a network adversary cannot induce an embedee to use this API.
+
+The embedder has control over which nested {{Document|Documents}} have the ability to become authenticated, or even display a permission request to the user via the Permission Policy and nested {{Document}} sandboxing.
+
+<h3 id="notification">Notification abuse</h3>
+
+Notification abuse was also considered while specifying the Storage Access API. Specifically, we require user interaction in the nested {{Document}} and consume that rejection on a denial to restrict the conditions a permission prompt will be shown to the user. This mitigates attacks such as re-requesting a permission immediately after the user denies it.
 
 <h2 id="automation">Automation</h2>
 
