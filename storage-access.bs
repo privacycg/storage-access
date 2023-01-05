@@ -291,7 +291,7 @@ ISSUE(privacycg/storage-access#137): Add links to current entry and session hist
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
-This API only impacts cookies [[!RFC6265]]. A future revision of this API might impact other client-side state.
+This API only impacts HTTP cookies. A future revision of this API might impact other client-side state. [[!RFC6265]]
 
 <h4 id="cookies">Cookies</h4>
 
