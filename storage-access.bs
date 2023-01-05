@@ -301,7 +301,7 @@ Once the cookie store allows for receiving information about storage access, we 
 
 When getting unpartitioned cookies from the [=cookie store=] with storage access, user agents will still follow applicable `SameSite` restrictions (i.e., not attach cookies marked `SameSite=Strict` or `SameSite=Lax` in [=third party contexts=]).
 
-Note: User agents could apply different default values for the `SameSite` cookie attribute. This could lead to unpartitioned cookies without a `SameSite` attribute being attached to requests in some user agents (where `SameSite=None` is the default), but not in others (where `SameSite=Lax` is the default). The authors encourage user agents to seek consistent defaults for `SameSite` to avoid interoperability issues.
+Note: User agents could apply different default values for the `SameSite` cookie attribute. This could lead to unpartitioned cookies without a `SameSite` attribute being attached to requests in some user agents (where `SameSite=None` is the default), but not in others (where `SameSite=Lax` is the default). Web developers are encouraged to set the `SameSite` attribute on their cookies to not run into issues.
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
