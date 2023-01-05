@@ -304,7 +304,7 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   </dd>
   <dt>[=powerful feature/permission key type=]</dt>
   <dd>
-    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">key site</dfn> and an [=/origin=] <dfn for="permission key">key origin</dfn>.
+    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and an [=/origin=] <dfn for="permission key">requester</dfn>.
 
     ISSUE(privacycg/storage-access#147): Note that this will likely change to a (site, site) keying.
   </dd>
@@ -320,8 +320,8 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   <dd>
     To compare the [=permission keys=] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
-    1. If |key1|'s [=permission key/key site=] is not [=same site=] with |key2|'s [=permission key/key site=], return false.
-    1. If |key1|'s [=permission key/key origin=] is not [=same origin=] with |key2|'s [=permission key/key origin=], return false.
+    1. If |key1|'s [=permission key/top-level=] is not [=same site=] with |key2|'s [=permission key/top-level=], return false.
+    1. If |key1|'s [=permission key/requester=] is not [=same origin=] with |key2|'s [=permission key/requester=], return false.
     1. Return true.
   </dd>
 </dl>
