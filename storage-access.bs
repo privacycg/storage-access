@@ -234,8 +234,9 @@ To <dfn type="abstract-op">determine the storage access policy</dfn> for {{Docum
         1. Set |global|'s [=environment/has storage access=] to true.
         1. [=/Resolve=] |p| with {{undefined}}.
     1. Return.
-1. [=Consume user activation=] given |doc|'s {{Window}} object.
-1. [=Queue a global task=] on the [=permission task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
+1. [=Queue a global task=] on the [=permission task source=] given |global| to:
+    1. [=Consume user activation=] given |doc|'s {{Window}} object.
+    1. [=/Reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
 
 <h3 id="navigation">Changes to navigation</h3>
 
