@@ -73,7 +73,7 @@ None
 13.  How does this specification distinguish between behavior in first-party and
      third-party contexts?
 
-This specification is meant to be used in third-party contexts with a default grant behavior in first-party contexts.
+This specification is meant to be used in third-party contexts, i.e. in cross-site contexts (see https://tess.oconnor.cx/2020/10/parties). While the JS API itself will be accessible in a same-site context, it will resolve successfully by default without setting a storage access permission, to inform the developer that storage should be accessible by virtue of being in a same-site context. As such, the storage-access permission is not meaningful for any storage restrictions in same-site contexts (whatever those may look like).
 
 14.  How do the features in this specification work in the context of a browser’s
      Private Browsing or Incognito mode?
