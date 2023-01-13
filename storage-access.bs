@@ -167,14 +167,14 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 <!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15512 -->
 
 1. Let |p| be [=a new promise=].
-1. If |doc| is not [=Document/fully active=], then [=reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
-1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=resolve=] |p| with false and return |p|.
+1. If |doc| is not [=Document/fully active=], then [=/reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
+1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
 1. Let |global| be |doc|'s [=relevant global object=].
-1. If |global| is not a [=secure context=], then [=resolve=] |p| with false and return |p|.
-1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=resolve=] |p| with true and return |p|.
-1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=resolve=] |p| with false and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
-1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=resolve=] |p| with true and return |p|.
-1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=resolve=] |p| with |global's| [=environment/has storage access=].
+1. If |global| is not a [=secure context=], then [=/resolve=] |p| with false and return |p|.
+1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] |p| with true and return |p|.
+1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
+1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] |p| with true and return |p|.
+1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |global's| [=environment/has storage access=].
 1. Return |p|.
 
 ISSUE: Shouldn't step 8 be [=same site=]?
@@ -186,31 +186,33 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 <!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15629 -->
 
 1. Let |p| be [=a new promise=].
-1. If |doc| is not [=Document/fully active=], then [=reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
+1. If |doc| is not [=Document/fully active=], then [=/reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
 1. Let |global| be |doc|'s [=relevant global object=].
-1. If |global| is not a [=secure context=], then [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=resolve=] and return |p|.
-1. If |doc| is not [=allowed to use=] "`storage-access`", [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
-1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=resolve=] and return |p|.
-1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |global|'s [=environment/has storage access=] is true, [=resolve=] |p| with {{undefined}} and return.
+1. If |global| is not a [=secure context=], then [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
+1. If |doc| is not [=allowed to use=] "`storage-access`", [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
+1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] and return |p|.
+1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
+1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
 1. Let |has transient activation| be whether |doc|'s {{Window}} object has [=transient activation=].
 1. Run the following steps [=in parallel=]:
     1. Let |process permission state| be an algorithm that, given a [=permission state=] |state|, runs the following steps:
         1. [=Queue a global task=] on the [=permission task source=] given |global| to:
             1. If |state| is [=permission/granted=]:
                 1. Set |global|'s [=environment/has storage access=] to true.
-                1. [=Resolve=] |p| with {{undefined}}.
+                1. [=/Resolve=] |p| with {{undefined}}.
             1. Else:
                 1. [=Queue a global task=] on the [=DOM manipulation task source=] given |global| to [=consume user activation=] given |global|.
-                1. [=Reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
+                1. [=/Reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
     1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
         1. Return.
-    1. If |has transient activation| is false, [=reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return.
+    1. If |has transient activation| is false:
+        1. [=Queue a global task=] on the [=DOM manipulation task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
+        1. Return.
     1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
     1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
     1. If |implicitly granted| is true:
@@ -235,10 +237,13 @@ When [=snapshotting source snapshot params=]:
 1. Set [=source snapshot params/has storage access=] to |sourceDocument|'s [=source snapshot params/has storage access=].
 1. Set [=source snapshot params/environment id=] to |sourceDocument|'s [=relevant settings object=]'s [=environment/id=].
 
+To the [=create navigation params by fetching=] algorithm, insert the following step as step 3:
+1. Let |originalURL| be <var ignore>entry</var>'s URL.
+
 When creating |request|'s [=reserved client=] in [=create navigation params by fetching=]:
-1. Set [=reserved client=]'s [=environment/has storage access=] to |sourceSnapshotParams|'s [=source snapshot params/has storage access=] if:
+1. Set [=reserved client=]'s [=environment/has storage access=] to |sourceSnapshotParams|'s [=source snapshot params/has storage access=] if all of the following hold:
     1. |sourceSnapshotParams|'s [=source snapshot params/environment id=] equals <var ignore>navigable</var>'s [=active document=]'s [=relevant settings object=]'s [=environment/id=].
-    1. <var ignore>entry</var>'s URL's [=url/origin=] is [=same origin=] with <var ignore>currentURL</var>'s [=url/origin=].
+    1. |originalURL|'s [=url/origin=] is [=same origin=] with <var ignore>currentURL</var>'s [=url/origin=].
     1. |response| is null or |response|'s [=response/has-cross-origin-redirects=] is false.
 1. Otherwise, set |request|'s [=reserved client=]'s [=environment/has storage access=] to false.
 
