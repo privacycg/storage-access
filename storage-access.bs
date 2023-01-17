@@ -204,23 +204,23 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
                 1. Set |global|'s [=environment/has storage access=] to true.
                 1. [=/Resolve=] |p| with {{undefined}}.
             1. Else:
-                1. [=Queue a global task=] on the [=DOM manipulation task source=] given |global| to [=consume user activation=] given |global|.
+                1. [=Consume user activation=] given |global|.
                 1. [=/Reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
     1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
-        1. Return.
+        1. Abort these steps.
     1. If |has transient activation| is false:
-        1. [=Queue a global task=] on the [=DOM manipulation task source=] given |global| to [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
-        1. Return.
+        1. Run |process permission state| with [=permission/denied=].
+        1. Abort these steps.
     1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
     1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
     1. If |implicitly granted| is true:
         1. Run |process permission state| with [=permission/granted=].
-        1. Return.
+        1. Abort these steps.
     1. If |implicitly denied| is true:
         1. Run |process permission state| with [=permission/denied=].
-        1. Return.
+        1. Abort these steps.
     1. Let |permissionState| be the result of [=requesting permission to use=] "<a permission><code>storage-access</code></a>".
     1. Run |process permission state| with |permissionState|.
 1. Return |p|.
