@@ -271,7 +271,7 @@ Note: User agents could apply different default values for the `SameSite` cookie
 
 <h3 id="sandboxing-storage-access">Sandboxing storage access</h3>
 
-A [=sandboxing flag set=] has a <dfn export>sandbox storage access by user activation flag</dfn>. This flag prevents content from requesting storage access.
+A [=/sandboxing flag set=] has a <dfn export>sandbox storage access by user activation flag</dfn>. This flag prevents content from requesting storage access.
 
 To the [=parse a sandboxing directive=] algorithm, add the following under step 3:
 
