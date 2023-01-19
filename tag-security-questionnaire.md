@@ -3,7 +3,8 @@
 
 The Storage Access API enables the removal of cross-site cookies. Specifically, it allows the authenticated embeds use case to continue to work. As such, the API provides a way for developers to re-gain access to cross-site cookies, albeit under further constraints.
 
-A nested Document gains access to the same cookies it has as the active document of a top-level browsing context when it calls `document.requestStorageAccess()` and is returned a resolving Promise. With these cookies it can authenticate itself to the server and load user-specific information.
+A nested Document gains access to the same cookies it has as the active document of a top-level browsing context when it calls `document.requestStorageAccess()` and is returned a resolving Promise (however, `SameSite` restrictions will still apply, i.e., `SameSite=Lax` or `Strict` cookies will not be available, which is important for security but doesn't affect the privacy considerations).
+With these cookies it can authenticate itself to the server and load user-specific information.
 
 While this functionality comes with a risk of abuse by third parties for tracking purposes, it is an explicit goal of the API and a key to its design to not undermine the gains of cross-site cookie deprecation.
 
