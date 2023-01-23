@@ -135,22 +135,6 @@ Modify the definition of [=source snapshot params=] in the following manner:
 1. Add a new member called <dfn for="source snapshot params">has storage access</dfn> of type [=boolean=].
 1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque [=string=].
 
-A <dfn>partitioned storage key</dfn> is a [=tuple=] consisting of a <dfn for="partitioned storage key">top-level site</dfn> (a [=site=]) and an <dfn for="partitioned storage key">embedded origin</dfn> (an [=/origin=]).
-
-<div class=example>
-
-`(("https", "news.example"), ("https", "social.example", null, null))` is a [=partitioned storage key=] whose [=top-level site=] is `("https", "news.example")` and whose [=embedded origin=] is `("https", "social.example", null, null)`.
-
-</div>
-
-To <dfn type="abstract-op">generate a partitioned storage key</dfn> for a {{Document}} |doc|, run the following steps:
-
-1. Let |settings| be |doc|'s [=relevant settings object=].
-1. Let |site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
-1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], return the [=partitioned storage key=] (|site|, |site|).
-1. Let |top-level site| be the result of [=obtain a site|obtaining a site=] from |settings|' [=top-level origin=].
-1. Return the [=partitioned storage key=] (|top-level site|, |site|).
-
 <h3 id="the-document-object">Changes to {{Document}}</h3>
 
 <pre class="idl">
@@ -213,15 +197,10 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. If |has transient activation| is false:
         1. Run |process permission state| with [=permission/denied=].
         1. Abort these steps.
-    1. Let |key| be the result of [=generate a partitioned storage key|generating a partitioned storage key=] from |doc|.
-    1. Let |implicitly granted| and |implicitly denied| (each a [=boolean=]) be the result of running an [=implementation-defined=] set of steps to determine if |key|'s [=partitioned storage key/embedded origin=]'s request for storage access on |key|'s [=partitioned storage key/top-level site=] should be granted or denied without prompting the user.
-    1. If |implicitly granted| is true:
-        1. Run |process permission state| with [=permission/granted=].
-        1. Abort these steps.
-    1. If |implicitly denied| is true:
-        1. Run |process permission state| with [=permission/denied=].
-        1. Abort these steps.
     1. Let |permissionState| be the result of [=requesting permission to use=] "<a permission><code>storage-access</code></a>".
+
+    NOTE: Note that when requesting permissions and deciding whether to show a prompt, user agents apply implementation-defined behavior to shape the end user experience. Particularly for `storage-access`, user agents are known to apply custom rules that will grant or deny a permission without showing a prompt.
+
     1. Run |process permission state| with |permissionState|.
 1. Return |p|.
 
@@ -290,24 +269,22 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   </dd>
   <dt>[=powerful feature/permission key type=]</dt>
   <dd>
-    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and an [=/origin=] <dfn for="permission key">requester</dfn>.
-
-    ISSUE(privacycg/storage-access#147): Note that this will likely change to a (site, site) keying.
+    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and a [=site=] <dfn for="permission key">requester</dfn>.
   </dd>
   <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
     To generate a new [=permission key=] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
 
-    1. Let |topLevelSite| be |settings|' [=top-level site=].
-    1. Let |embeddedOrigin| be |settings|' [=environment settings object/origin=].
-    1. Return (|topLevelSite|, |embeddedOrigin|).
+    1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment/top-level origin=].
+    1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
+    1. Return (|topLevelSite|, |embeddedSite|).
   </dd>
   <dt>[=powerful feature/permission key comparison algorithm=]</dt>
   <dd>
     To compare the [=permission keys=] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
     1. If |key1|'s [=permission key/top-level=] is not [=same site=] with |key2|'s [=permission key/top-level=], return false.
-    1. If |key1|'s [=permission key/requester=] is not [=same origin=] with |key2|'s [=permission key/requester=], return false.
+    1. If |key1|'s [=permission key/requester=] is not [=same site=] with |key2|'s [=permission key/requester=], return false.
     1. Return true.
   </dd>
 </dl>
