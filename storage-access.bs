@@ -18,17 +18,17 @@ Markup Shorthands: markdown yes, css no
 Complain About: accidental-2119 true
 </pre>
 
+<!-- The main rSA and hSA implementations live in these files: -->
+<!-- https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp -->
+<!-- https://searchfox.org/mozilla-central/source/dom/base/Document.cpp -->
+<!-- https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/dom/document.cc -->
+
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
 spec:html; type:dfn; for:site; text:same site
-spec:webidl; type:dfn; text:resolve
 </pre>
 
 <pre class="anchors">
-urlPrefix: https://tc39.github.io/ecma262/; spec: ECMASCRIPT
-    text: agent cluster; url: #sec-agent-clusters; type: dfn
-urlPrefix: https://infra.spec.whatwg.org/; spec: INFRA
-    text: implementation-defined; url: #implementation-defined; type: dfn
 urlPrefix: https://fetch.spec.whatwg.org/; spec: Fetch
     text: http-network-or-cache fetch; url: #concept-http-network-or-cache-fetch; type: dfn
 spec: RFC6265; urlPrefix: https://tools.ietf.org/html/rfc6265
@@ -147,8 +147,6 @@ partial interface Document {
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>hasStorageAccess()</code></dfn> method must run these steps:
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Document/hasStorageAccess -->
-<!-- https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp#L80 -->
-<!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15512 -->
 
 1. Let |p| be [=a new promise=].
 1. If |doc| is not [=Document/fully active=], then [=/reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
@@ -156,7 +154,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Let |global| be |doc|'s [=relevant global object=].
 1. If |global| is not a [=secure context=], then [=/resolve=] |p| with false and return |p|.
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] |p| with true and return |p|.
-1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
+1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] |p| with true and return |p|.
 1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |global's| [=environment/has storage access=].
 1. Return |p|.
@@ -166,8 +164,6 @@ ISSUE: Shouldn't step 8 be [=same site=]?
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess -->
-<!-- https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp#L123 -->
-<!-- https://hg.mozilla.org/mozilla-central/file/tip/dom/base/Document.cpp#l15629 -->
 
 1. Let |p| be [=a new promise=].
 1. If |doc| is not [=Document/fully active=], then [=/reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
@@ -176,7 +172,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
 1. If |doc| is not [=allowed to use=] "`storage-access`", [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|. <!-- https://github.com/privacycg/storage-access/issues/40 -->
+1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/origin=] is [=same origin=] with the [=top-level origin=] of |doc|'s [=relevant settings object=], [=/resolve=] and return |p|.
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
@@ -270,6 +266,14 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   <dt>[=powerful feature/permission key type=]</dt>
   <dd>
     A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and a [=site=] <dfn for="permission key">requester</dfn>.
+
+<div class=example>
+
+`(("https", "news.example"), ("https", "social.example", null, null))` is a [=permission key=] whose [=permission key/top-level=] is `("https", "news.example")` and whose [=permission key/requester=] is `("https", "social.example", null, null)`.
+
+</div>
+
+    ISSUE(privacycg/storage-access#147): Note that this will likely change to a (site, site) keying.
   </dd>
   <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
