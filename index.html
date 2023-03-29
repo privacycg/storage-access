@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
   <meta content="Bikeshed version d9bd89757, updated Thu Mar 23 10:06:53 2023 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="ceca5548e44d18c35bfced6bfdb9499aaaef0525" name="document-revision">
+  <meta content="2b901c687acfdc45516190c9773a3bee35c3d9dc" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -902,14 +902,13 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
     <dt><a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key-type" id="ref-for-dfn-permission-key-type">permission key type</a>
     <dd>
       A <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key">permission key</a> of the "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access③"><code>storage-access</code></a>" feature is a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#tuple" id="ref-for-tuple">tuple</a> consisting of a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#site" id="ref-for-site①">site</a> <dfn class="dfn-paneled" data-dfn-for="permission key" data-dfn-type="dfn" data-noexport id="permission-key-top-level">top-level</dfn> and a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#site" id="ref-for-site②">site</a> <dfn class="dfn-paneled" data-dfn-for="permission key" data-dfn-type="dfn" data-noexport id="permission-key-requester">requester</dfn>. 
-     <div class="example" id="example-7e79a5b3">
-      <a class="self-link" href="#example-7e79a5b3"></a> 
-      <p><code>(("https", "news.example"), ("https", "social.example", null, null))</code> is a <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key①">permission key</a> whose <a data-link-type="dfn" href="#permission-key-top-level" id="ref-for-permission-key-top-level">top-level</a> is <code>("https", "news.example")</code> and whose <a data-link-type="dfn" href="#permission-key-requester" id="ref-for-permission-key-requester">requester</a> is <code>("https", "social.example", null, null)</code>.</p>
+     <div class="example" id="example-82f4f666">
+      <a class="self-link" href="#example-82f4f666"></a> 
+      <p><code>(("https", "news.example"), ("https", "social.example"))</code> is a <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key①">permission key</a> for "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access④"><code>storage-access</code></a>" whose <a data-link-type="dfn" href="#permission-key-top-level" id="ref-for-permission-key-top-level">top-level</a> is <code>("https", "news.example")</code> and whose <a data-link-type="dfn" href="#permission-key-requester" id="ref-for-permission-key-requester">requester</a> is <code>("https", "social.example")</code>.</p>
      </div>
-     <p class="issue" id="issue-52d10e6c"><a class="self-link" href="#issue-52d10e6c"></a> Note that this will likely change to a (site, site) keying. <a href="https://github.com/privacycg/storage-access/issues/147">[Issue #privacycg/storage-access#147]</a></p>
     <dt><a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key-generation-algorithm" id="ref-for-dfn-permission-key-generation-algorithm">permission key generation algorithm</a>
     <dd>
-      To generate a new <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key②">permission key</a> for the "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access④"><code>storage-access</code></a>" feature, given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a> <var>settings</var>, run the following steps: 
+      To generate a new <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key②">permission key</a> for the "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access⑤"><code>storage-access</code></a>" feature, given an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#environment-settings-object" id="ref-for-environment-settings-object">environment settings object</a> <var>settings</var>, run the following steps: 
      <ol>
       <li data-md>
        <p>Let <var>topLevelSite</var> be the result of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#obtain-a-site" id="ref-for-obtain-a-site">obtaining a site</a> from <var>settings</var>’ <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin⑤">top-level origin</a>.</p>
@@ -920,7 +919,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      </ol>
     <dt><a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key-comparison-algorithm" id="ref-for-dfn-permission-key-comparison-algorithm">permission key comparison algorithm</a>
     <dd>
-      To compare the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key③">permission keys</a> <var>key1</var> and <var>key2</var> for the "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access⑤"><code>storage-access</code></a>" feature, run the following steps: 
+      To compare the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key③">permission keys</a> <var>key1</var> and <var>key2</var> for the "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access⑥"><code>storage-access</code></a>" feature, run the following steps: 
      <ol>
       <li data-md>
        <p>If <var>key1</var>’s <a data-link-type="dfn" href="#permission-key-top-level" id="ref-for-permission-key-top-level①">top-level</a> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site③">same site</a> with <var>key2</var>’s <a data-link-type="dfn" href="#permission-key-top-level" id="ref-for-permission-key-top-level②">top-level</a>, return false.</p>
@@ -930,10 +929,6 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p>Return true.</p>
      </ol>
    </dl>
-   <div class="example" id="example-82f4f666">
-    <a class="self-link" href="#example-82f4f666"></a> 
-    <p><code>(("https", "news.example"), ("https", "social.example"))</code> is a <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-key" id="ref-for-dfn-permission-key④">permission key</a> for "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access⑥"><code>storage-access</code></a>" whose <a data-link-type="dfn" href="#permission-key-top-level" id="ref-for-permission-key-top-level③">top-level</a> is <code>("https", "news.example")</code> and whose <a data-link-type="dfn" href="#permission-key-requester" id="ref-for-permission-key-requester③">requester</a> is <code>("https", "social.example")</code>.</p>
-   </div>
    <h2 class="heading settled" data-level="5" id="permissions-policy-integration"><span class="secno">5. </span><span class="content">Permissions Policy Integration</span><a class="self-link" href="#permissions-policy-integration"></a></h2>
    <p>The Storage Access API defines a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature" id="ref-for-policy-controlled-feature">policy-controlled feature</a> identified by the string <code>"storage-access"</code>. Its <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist">default allowlist</a> is <code>"*"</code>.</p>
    <p class="note" role="note"><span class="marker">Note:</span> A <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document⑧">Document</a></code>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/dom.html#concept-document-permissions-policy" id="ref-for-concept-document-permissions-policy">permissions policy</a> determines whether any content in that document is allowed to request storage access using <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess③">requestStorageAccess()</a></code>. If disabled in any document, calling <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess④">requestStorageAccess()</a></code> in that document will reject.</p>
@@ -1491,7 +1486,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside aria-labelledby="infopaneltitle-for-fbcb5ae7310f953d65cb9ae636968a9b" class="dfn-panel" data-for="fbcb5ae7310f953d65cb9ae636968a9b" id="infopanel-for-fbcb5ae7310f953d65cb9ae636968a9b">
    <span id="infopaneltitle-for-fbcb5ae7310f953d65cb9ae636968a9b" style="display:none">Info about the 'permission key' external reference.</span><a href="https://w3c.github.io/permissions/#dfn-permission-key">https://w3c.github.io/permissions/#dfn-permission-key</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dfn-permission-key">4. Permissions Integration</a> <a href="#ref-for-dfn-permission-key①">(2)</a> <a href="#ref-for-dfn-permission-key②">(3)</a> <a href="#ref-for-dfn-permission-key③">(4)</a> <a href="#ref-for-dfn-permission-key④">(5)</a>
+    <li><a href="#ref-for-dfn-permission-key">4. Permissions Integration</a> <a href="#ref-for-dfn-permission-key①">(2)</a> <a href="#ref-for-dfn-permission-key②">(3)</a> <a href="#ref-for-dfn-permission-key③">(4)</a>
    </ul>
   </aside>
   <aside aria-labelledby="infopaneltitle-for-88f0d3e39c0bd193549cad006c6dec35" class="dfn-panel" data-for="88f0d3e39c0bd193549cad006c6dec35" id="infopanel-for-88f0d3e39c0bd193549cad006c6dec35">
@@ -1874,7 +1869,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <div class="issue"> Shouldn’t step 8 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site">same site</a>? <a class="issue-return" href="#issue-d86f6386" title="Jump to section">↵</a></div>
    <div class="issue"> We shouldn’t use the permissions task source here. <a href="https://github.com/privacycg/storage-access/issues/144">[Issue #privacycg/storage-access#144]</a> <a class="issue-return" href="#issue-95c255e7" title="Jump to section">↵</a></div>
    <div class="issue"> Shouldn’t step 9 be <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site">same site</a>? <a class="issue-return" href="#issue-37b057f7" title="Jump to section">↵</a></div>
-   <div class="issue"> Note that this will likely change to a (site, site) keying. <a href="https://github.com/privacycg/storage-access/issues/147">[Issue #privacycg/storage-access#147]</a> <a class="issue-return" href="#issue-52d10e6c" title="Jump to section">↵</a></div>
   </div>
   <aside aria-labelledby="infopaneltitle-for-unpartitioned-data" class="dfn-panel" data-for="unpartitioned-data" id="infopanel-for-unpartitioned-data">
    <span id="infopaneltitle-for-unpartitioned-data" style="display:none">Info about the 'Unpartitioned data' definition.</span><b><a href="#unpartitioned-data">#unpartitioned-data</a></b><b>Referenced in:</b>
@@ -1953,13 +1947,13 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <aside aria-labelledby="infopaneltitle-for-permission-key-top-level" class="dfn-panel" data-for="permission-key-top-level" id="infopanel-for-permission-key-top-level">
    <span id="infopaneltitle-for-permission-key-top-level" style="display:none">Info about the 'top-level' definition.</span><b><a href="#permission-key-top-level">#permission-key-top-level</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-permission-key-top-level">4. Permissions Integration</a> <a href="#ref-for-permission-key-top-level①">(2)</a> <a href="#ref-for-permission-key-top-level②">(3)</a> <a href="#ref-for-permission-key-top-level③">(4)</a>
+    <li><a href="#ref-for-permission-key-top-level">4. Permissions Integration</a> <a href="#ref-for-permission-key-top-level①">(2)</a> <a href="#ref-for-permission-key-top-level②">(3)</a>
    </ul>
   </aside>
   <aside aria-labelledby="infopaneltitle-for-permission-key-requester" class="dfn-panel" data-for="permission-key-requester" id="infopanel-for-permission-key-requester">
    <span id="infopaneltitle-for-permission-key-requester" style="display:none">Info about the 'requester' definition.</span><b><a href="#permission-key-requester">#permission-key-requester</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-permission-key-requester">4. Permissions Integration</a> <a href="#ref-for-permission-key-requester①">(2)</a> <a href="#ref-for-permission-key-requester②">(3)</a> <a href="#ref-for-permission-key-requester③">(4)</a>
+    <li><a href="#ref-for-permission-key-requester">4. Permissions Integration</a> <a href="#ref-for-permission-key-requester①">(2)</a> <a href="#ref-for-permission-key-requester②">(3)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */
