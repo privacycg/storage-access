@@ -265,7 +265,7 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   </dd>
   <dt>[=powerful feature/permission key type=]</dt>
   <dd>
-    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and an [=/origin=] <dfn for="permission key">requester</dfn>.
+    A [=permission key=] of the "<a permission><code>storage-access</code></a>" feature is a [=tuple=] consisting of a [=site=] <dfn for="permission key">top-level</dfn> and a [=site=] <dfn for="permission key">requester</dfn>.
 
 <div class=example>
 
@@ -280,18 +280,24 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
     To generate a new [=permission key=] for the "<a permission><code>storage-access</code></a>" feature, given an [=environment settings object=] |settings|, run the following steps:
 
     1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment/top-level origin=].
-    1. Let |embeddedOrigin| be |settings|' [=environment settings object/origin=].
-    1. Return (|topLevelSite|, |embeddedOrigin|).
+    1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |settings|' [=environment settings object/origin=].
+    1. Return (|topLevelSite|, |embeddedSite|).
   </dd>
   <dt>[=powerful feature/permission key comparison algorithm=]</dt>
   <dd>
     To compare the [=permission keys=] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
     1. If |key1|'s [=permission key/top-level=] is not [=same site=] with |key2|'s [=permission key/top-level=], return false.
-    1. If |key1|'s [=permission key/requester=] is not [=same origin=] with |key2|'s [=permission key/requester=], return false.
+    1. If |key1|'s [=permission key/requester=] is not [=same site=] with |key2|'s [=permission key/requester=], return false.
     1. Return true.
   </dd>
 </dl>
+
+<div class=example>
+
+`(("https", "news.example"), ("https", "social.example"))` is a [=permission key=] for "<a permission><code>storage-access</code></a>" whose [=permission key/top-level=] is `("https", "news.example")` and whose [=permission key/requester=] is `("https", "social.example")`.
+
+</div>
 
 <h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
