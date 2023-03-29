@@ -269,11 +269,9 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
 
 <div class=example>
 
-`(("https", "news.example"), ("https", "social.example", null, null))` is a [=permission key=] whose [=permission key/top-level=] is `("https", "news.example")` and whose [=permission key/requester=] is `("https", "social.example", null, null)`.
+`(("https", "news.example"), ("https", "social.example"))` is a [=permission key=] for "<a permission><code>storage-access</code></a>" whose [=permission key/top-level=] is `("https", "news.example")` and whose [=permission key/requester=] is `("https", "social.example")`.
 
 </div>
-
-    ISSUE(privacycg/storage-access#147): Note that this will likely change to a (site, site) keying.
   </dd>
   <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
@@ -292,12 +290,6 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
     1. Return true.
   </dd>
 </dl>
-
-<div class=example>
-
-`(("https", "news.example"), ("https", "social.example"))` is a [=permission key=] for "<a permission><code>storage-access</code></a>" whose [=permission key/top-level=] is `("https", "news.example")` and whose [=permission key/requester=] is `("https", "social.example")`.
-
-</div>
 
 <h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
