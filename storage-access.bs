@@ -293,6 +293,12 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   </dd>
 </dl>
 
+<div class=example>
+
+`(("https", "news.example"), ("https", "social.example"))` is a [=permission key=] for "<a permission><code>storage-access</code></a>" whose [=permission key/top-level=] is `("https", "news.example")` and whose [=permission key/requester=] is `("https", "social.example")`.
+
+</div>
+
 <h2 id="permissions-policy-integration">Permissions Policy Integration</h2>
 
 The Storage Access API defines a [=policy-controlled feature=] identified by the string `"storage-access"`. Its [=default allowlist=] is `"*"`.
