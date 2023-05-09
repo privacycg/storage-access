@@ -160,7 +160,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
 1. If |doc|'s [=Document/browsing context=] is same authority with |doc|'s [=Document/browsing context=]'s [=top-level browsing context=], [=/resolve=] |p| with true and return |p|.
 
-ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). For the purpose of implementation, the user agent should use this step to determine whether the embedded document does not need to invoke {{Document/requestStorageAccess()}} to be granted storage access. This may involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
+ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). For the purpose of implementation, the user agent should use this step to determine whether the embedded document needs to invoke {{Document/requestStorageAccess()}} to be granted storage access. This might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
 
 1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |global's| [=environment/has storage access=].
 1. Return |p|.
@@ -184,7 +184,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Set |global|'s [=environment/has storage access=] to true.
     1. [=/Resolve=] and return |p|.
 
-NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess` to opt into storage access in scenarios where it might have have been restricted by default for security (not privacy) purposes.
+  NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess` to opt into storage access in scenarios where it might have have been restricted by default for security (not privacy) purposes.
 
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
