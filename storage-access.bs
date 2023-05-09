@@ -184,7 +184,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Set |global|'s [=environment/has storage access=] to true.
     1. [=/Resolve=] and return |p|.
 
-  NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess` to opt into storage access in scenarios where it might have have been restricted by default for security (not privacy) purposes.
+  NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
 
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
