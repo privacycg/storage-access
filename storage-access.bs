@@ -162,7 +162,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 
   ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
 
-1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |global's| [=environment/has storage access=].
+1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |global|'s [=environment/has storage access=].
 1. Return |p|.
 
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
@@ -346,7 +346,7 @@ Another tension in the design of the API is what to use to key the "<code>storag
 
 It is important that this spec not degrade security properties of the web platform, even when compared to post-removal of cross-site cookies. Third-party cookie removal has potential benefits for security, specifically in mitigating attacks that rely upon authenticated requests, e.g. CSRF. We do not wish the Storage Access API to be a foothold for such attacks to leverage.
 
-To this end, we limit the impact of a "<code>storage-access</code>" permission grant to only give access to [=unpartitioned data=] to the nested {{Document}} that called {{Document/requestStorageAccess()}} and only until the nested {{Document}} navigates across an [=/origin=] boundary. This ensures that only [=/origin||origins=] with a page that call {{Document/requestStorageAccess()}} will be making credentialed requests, and moreover the embedee page can control which embedder it permits via the Content Security Policy "<code>frame-ancestors</code>" directive. This retains an [=/origin=]-scoped control for security purposes by the embedee.
+To this end, we limit the impact of a "<code>storage-access</code>" permission grant to only give access to [=unpartitioned data=] to the nested {{Document}} that called {{Document/requestStorageAccess()}} and only until the nested {{Document}} navigates across an [=/origin=] boundary. This ensures that only [=/origin|origins=] with a page that call {{Document/requestStorageAccess()}} will be making credentialed requests, and moreover the embedee page can control which embedder it permits via the Content Security Policy "<code>frame-ancestors</code>" directive. This retains an [=/origin=]-scoped control for security purposes by the embedee.
 
 <h3 id="reputation">Reputational attacks</h3>
 
