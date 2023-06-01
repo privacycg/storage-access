@@ -4,9 +4,9 @@
   <title>The Storage Access API</title>
   <meta content="width=device-width" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 3383f409d, updated Fri Apr 28 15:49:22 2023 -0700" name="generator">
+  <meta content="Bikeshed version 5fcd28d6d, updated Tue May 30 13:12:11 2023 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="f6e5261172b5baa210c664936bab16f8ef80b887" name="document-revision">
+  <meta content="69042e6cbb095a2cf71e1948a0b9e3ac2861757e" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -16,7 +16,7 @@
     content: "TODO: ";
 }
 </style>
-<style>/* style-autolinks */
+<style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -77,8 +77,16 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
 </style>
-<style>/* style-colors */
+<style>/* Boilerplate: style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
@@ -187,226 +195,6 @@ pre .property::before, pre .property::after {
 
     --editedrec-bg: darkorange;
 }
-</style>
-<style>/* style-counters */
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}
-</style>
-<style>/* style-dfn-panel */
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
-}
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    width: 20em;
-    width: 300px;
-    height: auto;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-    white-space: normal; /* in case it's moved into a pre */
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
-.dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
-    max-width: calc(300px - 1.5em - 1em);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled[role="button"] { cursor: pointer; }
-</style>
-<style>/* style-issues */
-a[href].issue-return {
-    float: right;
-    float: inline-end;
-    color: var(--issueheading-text);
-    font-weight: bold;
-    text-decoration: none;
-}
-</style>
-<style>/* style-md-lists */
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}
-</style>
-<style>/* style-selflinks */
-
-:root {
-    --selflink-text: white;
-    --selflink-bg: gray;
-    --selflink-hover-text: black;
-}
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-.example > a.self-link,
-.note > a.self-link,
-.issue > a.self-link {
-    /* These blocks are overflow:auto, so positioning outside
-       doesn't work. */
-    left: auto;
-    right: 0;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: var(--selflink-bg);
-    color: var(--selflink-text);
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: var(--selflink-hover-text);
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }
-</style>
-<style>/* style-syntax-highlighting */
-
-            pre.idl.highlight {
-                background: var(--borderedblock-bg, var(--def-bg));
-            }
-            
-code.highlight { padding: .1em; border-radius: .3em; }
-pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
-
-.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
-c-[a] { color: #990055 } /* Keyword.Declaration */
-c-[b] { color: #990055 } /* Keyword.Type */
-c-[c] { color: #708090 } /* Comment */
-c-[d] { color: #708090 } /* Comment.Multiline */
-c-[e] { color: #0077aa } /* Name.Attribute */
-c-[f] { color: #669900 } /* Name.Tag */
-c-[g] { color: #222222 } /* Name.Variable */
-c-[k] { color: #990055 } /* Keyword */
-c-[l] { color: #000000 } /* Literal */
-c-[m] { color: #000000 } /* Literal.Number */
-c-[n] { color: #0077aa } /* Name */
-c-[o] { color: #999999 } /* Operator */
-c-[p] { color: #999999 } /* Punctuation */
-c-[s] { color: #a67f59 } /* Literal.String */
-c-[t] { color: #a67f59 } /* Literal.String.Single */
-c-[u] { color: #a67f59 } /* Literal.String.Double */
-c-[cp] { color: #708090 } /* Comment.Preproc */
-c-[c1] { color: #708090 } /* Comment.Single */
-c-[cs] { color: #708090 } /* Comment.Special */
-c-[kc] { color: #990055 } /* Keyword.Constant */
-c-[kn] { color: #990055 } /* Keyword.Namespace */
-c-[kp] { color: #990055 } /* Keyword.Pseudo */
-c-[kr] { color: #990055 } /* Keyword.Reserved */
-c-[ld] { color: #000000 } /* Literal.Date */
-c-[nc] { color: #0077aa } /* Name.Class */
-c-[no] { color: #0077aa } /* Name.Constant */
-c-[nd] { color: #0077aa } /* Name.Decorator */
-c-[ni] { color: #0077aa } /* Name.Entity */
-c-[ne] { color: #0077aa } /* Name.Exception */
-c-[nf] { color: #0077aa } /* Name.Function */
-c-[nl] { color: #0077aa } /* Name.Label */
-c-[nn] { color: #0077aa } /* Name.Namespace */
-c-[py] { color: #0077aa } /* Name.Property */
-c-[ow] { color: #999999 } /* Operator.Word */
-c-[mb] { color: #000000 } /* Literal.Number.Bin */
-c-[mf] { color: #000000 } /* Literal.Number.Float */
-c-[mh] { color: #000000 } /* Literal.Number.Hex */
-c-[mi] { color: #000000 } /* Literal.Number.Integer */
-c-[mo] { color: #000000 } /* Literal.Number.Oct */
-c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
-c-[sc] { color: #a67f59 } /* Literal.String.Char */
-c-[sd] { color: #a67f59 } /* Literal.String.Doc */
-c-[se] { color: #a67f59 } /* Literal.String.Escape */
-c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
-c-[si] { color: #a67f59 } /* Literal.String.Interpol */
-c-[sx] { color: #a67f59 } /* Literal.String.Other */
-c-[sr] { color: #a67f59 } /* Literal.String.Regex */
-c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
-c-[vc] { color: #0077aa } /* Name.Variable.Class */
-c-[vg] { color: #0077aa } /* Name.Variable.Global */
-c-[vi] { color: #0077aa } /* Name.Variable.Instance */
-c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
-</style>
-<style>/* style-darkmode */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -519,21 +307,287 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
        which is quite common in practice... */
     img { background: white; }
 }
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --selflink-text: black;
-        --selflink-bg: silver;
-        --selflink-hover-text: white;
-    }
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
 }
 
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
     }
 }
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* Boilerplate: style-style-syntax-highlighting */
+
+            pre.idl.highlight {
+                background: var(--borderedblock-bg, var(--def-bg));
+            }
+            
+</style>
+<style>/* Boilerplate: style-syntax-highlighting */
+
+code.highlight { padding: .1em; border-radius: .3em; }
+pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+
+.highlight:not(.idl) { background: rgba(0, 0, 0, .03); }
+c-[a] { color: #990055 } /* Keyword.Declaration */
+c-[b] { color: #990055 } /* Keyword.Type */
+c-[c] { color: #708090 } /* Comment */
+c-[d] { color: #708090 } /* Comment.Multiline */
+c-[e] { color: #0077aa } /* Name.Attribute */
+c-[f] { color: #669900 } /* Name.Tag */
+c-[g] { color: #222222 } /* Name.Variable */
+c-[k] { color: #990055 } /* Keyword */
+c-[l] { color: #000000 } /* Literal */
+c-[m] { color: #000000 } /* Literal.Number */
+c-[n] { color: #0077aa } /* Name */
+c-[o] { color: #999999 } /* Operator */
+c-[p] { color: #999999 } /* Punctuation */
+c-[s] { color: #a67f59 } /* Literal.String */
+c-[t] { color: #a67f59 } /* Literal.String.Single */
+c-[u] { color: #a67f59 } /* Literal.String.Double */
+c-[cp] { color: #708090 } /* Comment.Preproc */
+c-[c1] { color: #708090 } /* Comment.Single */
+c-[cs] { color: #708090 } /* Comment.Special */
+c-[kc] { color: #990055 } /* Keyword.Constant */
+c-[kn] { color: #990055 } /* Keyword.Namespace */
+c-[kp] { color: #990055 } /* Keyword.Pseudo */
+c-[kr] { color: #990055 } /* Keyword.Reserved */
+c-[ld] { color: #000000 } /* Literal.Date */
+c-[nc] { color: #0077aa } /* Name.Class */
+c-[no] { color: #0077aa } /* Name.Constant */
+c-[nd] { color: #0077aa } /* Name.Decorator */
+c-[ni] { color: #0077aa } /* Name.Entity */
+c-[ne] { color: #0077aa } /* Name.Exception */
+c-[nf] { color: #0077aa } /* Name.Function */
+c-[nl] { color: #0077aa } /* Name.Label */
+c-[nn] { color: #0077aa } /* Name.Namespace */
+c-[py] { color: #0077aa } /* Name.Property */
+c-[ow] { color: #999999 } /* Operator.Word */
+c-[mb] { color: #000000 } /* Literal.Number.Bin */
+c-[mf] { color: #000000 } /* Literal.Number.Float */
+c-[mh] { color: #000000 } /* Literal.Number.Hex */
+c-[mi] { color: #000000 } /* Literal.Number.Integer */
+c-[mo] { color: #000000 } /* Literal.Number.Oct */
+c-[sb] { color: #a67f59 } /* Literal.String.Backtick */
+c-[sc] { color: #a67f59 } /* Literal.String.Char */
+c-[sd] { color: #a67f59 } /* Literal.String.Doc */
+c-[se] { color: #a67f59 } /* Literal.String.Escape */
+c-[sh] { color: #a67f59 } /* Literal.String.Heredoc */
+c-[si] { color: #a67f59 } /* Literal.String.Interpol */
+c-[sx] { color: #a67f59 } /* Literal.String.Other */
+c-[sr] { color: #a67f59 } /* Literal.String.Regex */
+c-[ss] { color: #a67f59 } /* Literal.String.Symbol */
+c-[vc] { color: #0077aa } /* Name.Variable.Class */
+c-[vg] { color: #0077aa } /* Name.Variable.Global */
+c-[vi] { color: #0077aa } /* Name.Variable.Instance */
+c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
+
 
 @media (prefers-color-scheme: dark) {
     .highlight:not(.idl) { background: rgba(255, 255, 255, .05); }
@@ -602,7 +656,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2023-05-10">10 May 2023</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2023-06-01">1 June 2023</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -754,11 +808,9 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-top-level-origin" id="ref-for-concept-environment-top-level-origin①">top-level origin</a> of <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a> is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-opaque" id="ref-for-concept-origin-opaque①">opaque origin</a>, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve③">resolve</a> <var>p</var> with false and return <var>p</var>.</p>
     <li data-md>
      <p>If <var>doc</var> is same authority with <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#concept-document-bc" id="ref-for-concept-document-bc①">browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document" id="ref-for-nav-document②">active document</a>, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve④">resolve</a> <var>p</var> with true and return <var>p</var>.</p>
-   </ol>
-   <p class="issue" id="issue-396d9a1a"><a class="self-link" href="#issue-396d9a1a"></a> "same authority" here is a placeholder for a future concept that allows user agents to perform <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site①">same site</a> checks while adhering to additional security aspects such as the presence of a cross-site parent document, see <a href="https://github.com/whatwg/storage/issues/142#issuecomment-1122147159">whatwg/storage#142</a>. In practice, this might involve comparing the <a data-link-type="dfn" href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#section-5.2.1" id="ref-for-section-5.2.1">site for cookies</a> or performing a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site②">same site</a> check with the top-level document.</p>
-   <ol>
+     <p class="issue" id="issue-396d9a1a"><a class="self-link" href="#issue-396d9a1a"></a> "same authority" here is a placeholder for a future concept that allows user agents to perform <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site①">same site</a> checks while adhering to additional security aspects such as the presence of a cross-site parent document, see <a href="https://github.com/whatwg/storage/issues/142#issuecomment-1122147159">whatwg/storage#142</a>. In practice, this might involve comparing the <a data-link-type="dfn" href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#section-5.2.1" id="ref-for-section-5.2.1">site for cookies</a> or performing a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site②">same site</a> check with the top-level document.</p>
     <li data-md>
-     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permissions-task-source" id="ref-for-permissions-task-source">permissions task source</a> given <var>global</var> to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve⑤">resolve</a> <var>p</var> with |global’s| <a data-link-type="dfn" href="#environment-has-storage-access" id="ref-for-environment-has-storage-access">has storage access</a>.</p>
+     <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permissions-task-source" id="ref-for-permissions-task-source">permissions task source</a> given <var>global</var> to <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve⑤">resolve</a> <var>p</var> with <var>global</var>’s <a data-link-type="dfn" href="#environment-has-storage-access" id="ref-for-environment-has-storage-access">has storage access</a>.</p>
     <li data-md>
      <p>Return <var>p</var>.</p>
    </ol>
@@ -789,10 +841,8 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p>Set <var>global</var>’s <a data-link-type="dfn" href="#environment-has-storage-access" id="ref-for-environment-has-storage-access①">has storage access</a> to true.</p>
       <li data-md>
        <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve⑦">Resolve</a> and return <var>p</var>.</p>
+       <p class="note" role="note"><span class="marker">NOTE:</span> This check is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site④">same site</a> on purpose, to allow embedded sites to use <code>requestStorageAccess()</code> to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.</p>
      </ol>
-   </ol>
-   <p class="note" role="note"><span class="marker">NOTE:</span> This check is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site④">same site</a> on purpose, to allow embedded sites to use <code>requestStorageAccess()</code> to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.</p>
-   <ol>
     <li data-md>
      <p>If <var>doc</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-sandboxing-flag-set" id="ref-for-active-sandboxing-flag-set">active sandboxing flag set</a> has its <a data-link-type="dfn" href="#sandbox-storage-access-by-user-activation-flag" id="ref-for-sandbox-storage-access-by-user-activation-flag">sandbox storage access by user activation flag</a> set, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#reject" id="ref-for-reject⑥">reject</a> <var>p</var> with a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror④">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException⑥">DOMException</a></code> and return <var>p</var>.</p>
     <li data-md>
@@ -846,9 +896,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        </ol>
       <li data-md>
        <p>Let <var>permissionState</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-request-permission-to-use" id="ref-for-dfn-request-permission-to-use">requesting permission to use</a> "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access①"><code>storage-access</code></a>".</p>
-     </ol>
-     <p class="note" role="note"><span class="marker">NOTE:</span> Note that when requesting permissions and deciding whether to show a prompt, user agents apply implementation-defined behavior to shape the end user experience. Particularly for <code>storage-access</code>, user agents are known to apply custom rules that will grant or deny a permission without showing a prompt.</p>
-     <ol>
+       <p class="note" role="note"><span class="marker">NOTE:</span> Note that when requesting permissions and deciding whether to show a prompt, user agents apply implementation-defined behavior to shape the end user experience. Particularly for <code>storage-access</code>, user agents are known to apply custom rules that will grant or deny a permission without showing a prompt.</p>
       <li data-md>
        <p>Run <var>process permission state</var> with <var>permissionState</var>.</p>
      </ol>
@@ -980,7 +1028,7 @@ Importantly, we do not degrade privacy properties when compared to pre-removal o
    <p>Another tension in the design of the API is what to use to key the "<code>storage-access</code>" permission: <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin">origins</a> or <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#site" id="ref-for-site④">sites</a>. We chose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#site" id="ref-for-site⑤">sites</a> because we believe them to be acceptable boundaries for privacy while enabling existing uses of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site⑦">same site</a> and cross-origin nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⑦">Documents</a></code> on the same page with only one user prompt.</p>
    <h2 class="heading settled" data-level="7" id="security"><span class="secno">7. </span><span class="content">Security considerations</span><a class="self-link" href="#security"></a></h2>
    <p>It is important that this spec not degrade security properties of the web platform, even when compared to post-removal of cross-site cookies. Third-party cookie removal has potential benefits for security, specifically in mitigating attacks that rely upon authenticated requests, e.g. CSRF. We do not wish the Storage Access API to be a foothold for such attacks to leverage.</p>
-   <p>To this end, we limit the impact of a "<code>storage-access</code>" permission grant to only give access to <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑤">unpartitioned data</a> to the nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⑧">Document</a></code> that called <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess⑧">requestStorageAccess()</a></code> and only until the nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⑨">Document</a></code> navigates across an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin①">origin</a> boundary. This ensures that only <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin②">|origins</a> with a page that call <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess⑨">requestStorageAccess()</a></code> will be making credentialed requests, and moreover the embedee page can control which embedder it permits via the Content Security Policy "<code>frame-ancestors</code>" directive. This retains an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin③">origin</a>-scoped control for security purposes by the embedee.</p>
+   <p>To this end, we limit the impact of a "<code>storage-access</code>" permission grant to only give access to <a data-link-type="dfn" href="#unpartitioned-data" id="ref-for-unpartitioned-data⑤">unpartitioned data</a> to the nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⑧">Document</a></code> that called <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess⑧">requestStorageAccess()</a></code> and only until the nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document①⑨">Document</a></code> navigates across an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin①">origin</a> boundary. This ensures that only <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin②">origins</a> with a page that call <code class="idl"><a data-link-type="idl" href="#dom-document-requeststorageaccess" id="ref-for-dom-document-requeststorageaccess⑨">requestStorageAccess()</a></code> will be making credentialed requests, and moreover the embedee page can control which embedder it permits via the Content Security Policy "<code>frame-ancestors</code>" directive. This retains an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin" id="ref-for-concept-origin③">origin</a>-scoped control for security purposes by the embedee.</p>
    <h3 class="heading settled" data-level="7.1" id="reputation"><span class="secno">7.1. </span><span class="content">Reputational attacks</span><a class="self-link" href="#reputation"></a></h3>
    <p>This also is effective at preventing another attack: one on the embedee’s reputation. We consider any cross-site authenticated request to have potential reputational harm as consumers become more privacy conscious. Therefore a first-party or sibling cross-site causing an embedded resource to be requested with the user’s authentication cookies would constitute an attack on the reputation of that cross-site’s owner. This is also a reason we require this API to be used in a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#secure-context" id="ref-for-secure-context③">secure context</a>: so a network adversary cannot induce an embedee to use this API.</p>
    <p>The embedder has control over which nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②⓪">Documents</a></code> have the ability to become authenticated, or even display a permission request to the user via the Permission Policy and nested <code class="idl"><a data-link-type="idl" href="https://dom.spec.whatwg.org/#document" id="ref-for-document②①">Document</a></code> sandboxing.</p>
@@ -1326,7 +1374,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
    <div class="issue"> "same authority" here is a placeholder for a future concept that allows user agents to perform <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site">same site</a> checks while adhering to additional security aspects such as the presence of a cross-site parent document, see <a href="https://github.com/whatwg/storage/issues/142#issuecomment-1122147159">whatwg/storage#142</a>. In practice, this might involve comparing the <a data-link-type="dfn" href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#section-5.2.1">site for cookies</a> or performing a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site">same site</a> check with the top-level document. <a class="issue-return" href="#issue-396d9a1a" title="Jump to section">↵</a></div>
    <div class="issue"> We shouldn’t use the permissions task source here. <a href="https://github.com/privacycg/storage-access/issues/144">[Issue #privacycg/storage-access#144]</a> <a class="issue-return" href="#issue-95c255e7" title="Jump to section">↵</a></div>
   </div>
-<script>/* script-dfn-panel */
+<script>/* Boilerplate: script-dfn-panel */
 "use strict";
 {
     const dfnsJson = window.dfnsJson || {};
@@ -1479,7 +1527,160 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
     }
 }
 </script>
-<script>/* script-dfn-panel-json */
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
+
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel-json */
 window.dfnpanelData = {};
 window.dfnpanelData['85394472'] = {"dfnID": "85394472", "url": "https://dom.spec.whatwg.org/#document", "dfnText": "Document", "refSections": [{"refs": [{"id": "ref-for-document"}, {"id": "ref-for-document\u2460"}, {"id": "ref-for-document\u2461"}, {"id": "ref-for-document\u2462"}], "title": "3. The Storage Access API"}, {"refs": [{"id": "ref-for-document\u2463"}, {"id": "ref-for-document\u2464"}, {"id": "ref-for-document\u2465"}, {"id": "ref-for-document\u2466"}], "title": "3.2. Changes to Document"}, {"refs": [{"id": "ref-for-document\u2467"}], "title": "5. Permissions Policy Integration"}, {"refs": [{"id": "ref-for-document\u2468"}, {"id": "ref-for-document\u2460\u24ea"}, {"id": "ref-for-document\u2460\u2460"}, {"id": "ref-for-document\u2460\u2461"}, {"id": "ref-for-document\u2460\u2462"}, {"id": "ref-for-document\u2460\u2463"}, {"id": "ref-for-document\u2460\u2464"}, {"id": "ref-for-document\u2460\u2465"}], "title": "6. Privacy considerations"}, {"refs": [{"id": "ref-for-document\u2460\u2466"}], "title": "6.1. Permission scope"}, {"refs": [{"id": "ref-for-document\u2460\u2467"}, {"id": "ref-for-document\u2460\u2468"}], "title": "7. Security considerations"}, {"refs": [{"id": "ref-for-document\u2461\u24ea"}, {"id": "ref-for-document\u2461\u2460"}], "title": "7.1. Reputational attacks"}, {"refs": [{"id": "ref-for-document\u2461\u2461"}], "title": "7.2. Notification abuse"}], "external": true};
 window.dfnpanelData['a973e0fe'] = {"dfnID": "a973e0fe", "url": "https://dom.spec.whatwg.org/#concept-document", "dfnText": "document", "refSections": [{"refs": [{"id": "ref-for-concept-document"}], "title": "6. Privacy considerations"}], "external": true};
@@ -1578,8 +1779,9 @@ window.dfnpanelData['dom-document-requeststorageaccess'] = {"dfnID": "dom-docume
 window.dfnpanelData['sandbox-storage-access-by-user-activation-flag'] = {"dfnID": "sandbox-storage-access-by-user-activation-flag", "url": "#sandbox-storage-access-by-user-activation-flag", "dfnText": "sandbox storage access by user activation flag", "refSections": [{"refs": [{"id": "ref-for-sandbox-storage-access-by-user-activation-flag"}], "title": "3.2. Changes to Document"}, {"refs": [{"id": "ref-for-sandbox-storage-access-by-user-activation-flag\u2460"}], "title": "3.5. Sandboxing storage access"}], "external": false};
 window.dfnpanelData['permissiondef-storage-access'] = {"dfnID": "permissiondef-storage-access", "url": "#permissiondef-storage-access", "dfnText": "storage-access", "refSections": [{"refs": [{"id": "ref-for-permissiondef-storage-access"}, {"id": "ref-for-permissiondef-storage-access\u2460"}], "title": "3.2. Changes to Document"}, {"refs": [{"id": "ref-for-permissiondef-storage-access\u2461"}, {"id": "ref-for-permissiondef-storage-access\u2462"}, {"id": "ref-for-permissiondef-storage-access\u2463"}, {"id": "ref-for-permissiondef-storage-access\u2464"}, {"id": "ref-for-permissiondef-storage-access\u2465"}], "title": "4. Permissions Integration"}], "external": false};
 window.dfnpanelData['permission-key-top-level'] = {"dfnID": "permission-key-top-level", "url": "#permission-key-top-level", "dfnText": "top-level", "refSections": [{"refs": [{"id": "ref-for-permission-key-top-level"}, {"id": "ref-for-permission-key-top-level\u2460"}, {"id": "ref-for-permission-key-top-level\u2461"}], "title": "4. Permissions Integration"}], "external": false};
-window.dfnpanelData['permission-key-requester'] = {"dfnID": "permission-key-requester", "url": "#permission-key-requester", "dfnText": "requester", "refSections": [{"refs": [{"id": "ref-for-permission-key-requester"}, {"id": "ref-for-permission-key-requester\u2460"}, {"id": "ref-for-permission-key-requester\u2461"}], "title": "4. Permissions Integration"}], "external": false};</script>
-<script>/* script-dom-helper */
+window.dfnpanelData['permission-key-requester'] = {"dfnID": "permission-key-requester", "url": "#permission-key-requester", "dfnText": "requester", "refSections": [{"refs": [{"id": "ref-for-permission-key-requester"}, {"id": "ref-for-permission-key-requester\u2460"}, {"id": "ref-for-permission-key-requester\u2461"}], "title": "4. Permissions Integration"}], "external": false};
+</script>
+<script>/* Boilerplate: script-dom-helper */
 function query(sel) { return document.querySelector(sel); }
 
 function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
@@ -1773,4 +1975,5 @@ function parseHTML(markup) {
 		el.innerHTML = markup;
 		return el.content;
 	}
-}</script>
+}
+</script>
