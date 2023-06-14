@@ -165,12 +165,12 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Let |hasStorageAccess| be |global|'s [=environment/has storage access=].
 1. Run the following steps [=in parallel=]:
     1. Let <dfn>whether the user agent allows [=unpartitioned data=] access</dfn> be an algorithm that, given a [=boolean=] |has per-frame storage access|, runs the following steps:
-        1. If |has per-frame storage access| is false:
-            1. If user agent allows [=unpartitioned data=] access via settings, return true.
-        1. If user agent disallows [=unpartitioned data=] access via settings, return false.
-        1. Return true.
-    1. Let |has unpartitioned data access| be the result of running <a href="#whether-the-user-agent-allows-unpartitioned-data-access">whether the user agent allows unpartitioned data access</a> with |hasStorageAccess|.
-    1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |has unpartitioned data access|.
+        1. [=Queue a global task=] on the [=permission task source=] given |global| to:
+            1. If |has per-frame storage access| is false:
+                1. If user agent allows [=unpartitioned data=] access via settings, [=/resolve=] |p| with true and return |p|.
+            1. If user agent disallows [=unpartitioned data=] access via settings, [=/resolve=] |p| with false and return |p|.
+            1. [=/Resolve=] |p| with true and return |p|.
+    1. Run <a href="#whether-the-user-agent-allows-unpartitioned-data-access">whether the user agent allows unpartitioned data access</a> with |hasStorageAccess|.
 1. Return |p|.
 
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
