@@ -129,8 +129,6 @@ A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active
 
 A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first-party-site context=].
 
-<dfn>Global user settings</dfn> are user agent settings that can be modified by users.
-
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
 Modify the definition of [=environment=] in the following manner:
@@ -164,9 +162,14 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 
     ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
 
-1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with true and return |p|.
+1. Let |hasStorageAccess| be |global|'s [=environment/has storage access=].
 1. Run the following steps [=in parallel=]:
-    1. Let |has unpartitioned data access| be the result of whether the user agent allows |doc| access [=unpartitioned data=] based on [=global user settings=].
+    1. Let <dfn>whether the user agent allows [=unpartitioned data=] access</dfn> be an algorithm that, given a [=boolean=] |has per-frame storage access|, runs the following steps:
+        1. If |has per-frame storage access| is false:
+            1. If user agent allows [=unpartitioned data=] access via settings, return true.
+        1. If user agent disallows [=unpartitioned data=] access via settings, return false.
+        1. Return true.
+    1. Let |has unpartitioned data access| be the result of running <a href="#whether-the-user-agent-allows-unpartitioned-data-access">whether the user agent allows unpartitioned data access</a> with |hasStorageAccess|.
     1. [=Queue a global task=] on the [=permissions task source=] given |global| to [=/resolve=] |p| with |has unpartitioned data access|.
 1. Return |p|.
 
@@ -190,7 +193,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
         NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
 
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] and return |p|.
+1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
 1. Let |has transient activation| be whether |doc|'s {{Window}} object has [=transient activation=].
 1. Run the following steps [=in parallel=]:
     1. Let |process permission state| be an algorithm that, given a [=permission state=] |state|, runs the following steps:
