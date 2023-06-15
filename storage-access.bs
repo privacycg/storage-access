@@ -163,14 +163,14 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
     ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
 
 1. Run the following steps [=in parallel=]:
-    1. Let <dfn>whether the user agent allows unpartitioned cookie access</dfn> be an algorithm that, given a user agent's settings object |user agent settings| and a [=boolean=] |has per-frame storage access|, runs the following steps:
+    1. Let |Whether the User Agent Allows Unpartitioned Cookie Access| be an algorithm that, given a user agent's settings object |user agent settings|, runs the following steps:
         1. [=Queue a global task=] on the [=permission task source=] given |global| to:
-            1. If |has per-frame storage access| is false:
+            1. If |global|'s [=environment/has storage access=] is false:
                 1. If |user agent settings| allows unpartitioned cookie access, [=/resolve=] |p| with true and return |p|.
             1. If |user agent settings| disallows unpartitioned cookie access, [=/resolve=] |p| with false and return |p|.
             1. [=/Resolve=] |p| with true and return |p|.
     1. Let |user agent settings| be user agent's settings.
-    1. Run <a href="#whether-the-user-agent-allows-unpartitioned-cookie-access">whether the user agent allows unpartitioned cookie access</a> with |user agent settings| and |global|'s [=environment/has storage access=].
+    1. Run |Whether the User Agent Allows Unpartitioned Cookie Access| with |user agent settings|.
 1. Return |p|.
 
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
