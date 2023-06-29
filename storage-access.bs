@@ -167,7 +167,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Run the following steps [=in parallel=]:
     1. Let |Whether the User Agent Explicitly Allows Unpartitioned Cookie Access| be an algorithm that, given a [=tuple=] |tuple| consisting of [=sites=], runs the following steps. This algorithm returns "none", "allow" or "disallow".
         
-        Note: The "explicit allow" can come from user agent's per-site allow-lists or the user changing global browser settings, etc..
+        Note: A user agent's settings might explicitly allow or disallow unpartitioned cookie access through per-site allow-lists, the user changing global browser settings, or similar custom overrides.
         
         1. If user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "none".
         1. If user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "allow".
