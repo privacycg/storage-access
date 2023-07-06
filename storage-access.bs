@@ -178,7 +178,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
         1. If |explicitSetting| is "none":
             1. If |previousPermissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=] and return |p|.
                 
-                Note: The user decission to revoke the previously granted permission should overrule the cookie access without pending a reload on the iframe or similar.
+                Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
 
         1. If |explicitSetting| is "allow", [=/resolve=] |p| with true and return |p|.
         1. [=/Resolve=] |p| with false and return |p|.
