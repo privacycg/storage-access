@@ -169,7 +169,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
         
         Note: A user agent's settings might explicitly allow or disallow unpartitioned cookie access through per-site allow-lists, the user changing global browser settings, or similar custom overrides.
         
-        1. If user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "none".
+        1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "none".
         1. If user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "allow".
         1. If user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "disallow".
     1. Let |explicitSetting| be the result of determining |whether the user agent explicitly allows unpartitioned cookie access| with (|topLevelSite|, |embeddedSite|).
