@@ -173,15 +173,15 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
         1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "allow".
         1. If the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "disallow".
     1. Let |explicitSetting| be the result of determining |whether the user agent explicitly allows unpartitioned cookie access| with (|topLevelSite|, |embeddedSite|).
-    1. Let |previousPermissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
+    1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. [=Queue a global task=] on the [=permissions task source=] given |global| to:
         1. If |explicitSetting| is "none":
-            1. If |previousPermissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=] and return |p|.
+            1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
                 
                 Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
 
-        1. If |explicitSetting| is "allow", [=/resolve=] |p| with true and return |p|.
-        1. [=/Resolve=] |p| with false and return |p|.
+        1. If |explicitSetting| is "allow", [=/resolve=] |p| with true.
+        1. [=/Resolve=] |p| with false.
 1. Return |p|.
 
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
