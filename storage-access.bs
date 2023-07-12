@@ -165,21 +165,21 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the [=top-level origin=] of |doc|'s [=relevant settings object=].
 1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
 1. Run the following steps [=in parallel=]:
-    1. Let |whether the user agent explicitly allows unpartitioned cookie access| be an algorithm that, given a [=tuple=] |tuple| consisting of [=sites=], runs the following steps. This algorithm returns "none", "allow" or "disallow".
+    1. Let |whether the user agent explicitly allows unpartitioned cookie access| be an algorithm that, given a [=tuple=] |tuple| consisting of [=sites=], runs the following steps. This algorithm returns "`none`", "`allow`" or "`disallow`".
         
         Note: A user agent's settings might explicitly allow or disallow unpartitioned cookie access through per-site allow-lists, the user changing global browser settings, or similar custom overrides.
         
-        1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "none".
-        1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "allow".
-        1. If the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "disallow".
+        1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "`none`".
+        1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "`allow`".
+        1. If the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "`disallow`".
     1. Let |explicitSetting| be the result of determining |whether the user agent explicitly allows unpartitioned cookie access| with (|topLevelSite|, |embeddedSite|).
     1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. [=Queue a global task=] on the [=permissions task source=] given |global| to:
-        1. If |explicitSetting| is "none" and |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
+        1. If |explicitSetting| is "`none`" and |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
                 
                 Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
 
-        1. If |explicitSetting| is "allow", [=/resolve=] |p| with true.
+        1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true.
         1. [=/Resolve=] |p| with false.
 1. Return |p|.
 
