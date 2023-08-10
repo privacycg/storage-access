@@ -126,6 +126,14 @@ A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active
 
 A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first-party-site context=].
 
+Let <dfn export abstract-op>whether the user agent explicitly allows unpartitioned cookie access</dfn> be an algorithm that, given a [=tuple=] |tuple| consisting of two [=sites=], runs the following steps. This algorithm returns "`none`", "`allow`" or "`disallow`".
+        
+    Note: A user agent's settings might explicitly allow or disallow unpartitioned cookie access through per-site allow-lists, the user changing global browser settings, or similar custom overrides.
+        
+    1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "`none`".
+    1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "`allow`".
+    1. If the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "`disallow`".
+
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
 Modify the definition of [=environment=] in the following manner:
@@ -158,15 +166,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the [=top-level origin=] of |doc|'s [=relevant settings object=].
 1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
 1. Run the following steps [=in parallel=]:
-    1. Let |whether the user agent explicitly allows unpartitioned cookie access| be an algorithm that, given a [=tuple=] |tuple| consisting of two [=sites=], runs the following steps. This algorithm returns "`none`", "`allow`" or "`disallow`".
-
-        Note: A user agent's settings might explicitly allow or disallow unpartitioned cookie access through per-site allow-lists, the user changing global browser settings, or similar custom overrides.
-
-        1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "`none`".
-        1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "`allow`".
-        1. If the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "`disallow`".
-    1. Let |explicitSetting| be the result of determining |whether the user agent explicitly allows unpartitioned cookie access| with (|topLevelSite|, |embeddedSite|).
-    1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
+    1. Let |explicitSetting| be the result of determining <a abstract-op>whether the user agent explicitly allows unpartitioned cookie access</a> with (|topLevelSite|, |embeddedSite|).
     1. [=Queue a global task=] on the [=networking task source=] given |global| to:
         1. If |explicitSetting| is "`disallow`", [=/resolve=] |p| with false.
         1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true.
@@ -200,7 +200,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Set |global|'s [=environment/has storage access=] to true.
     1. [=/Resolve=] and return |p|.
 
-        NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
+       NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
 
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
