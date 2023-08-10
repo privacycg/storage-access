@@ -192,18 +192,13 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. Let |global| be |doc|'s [=relevant global object=].
 1. Let |settings| be |doc|'s [=relevant settings object=].
 1. If |global| is not a [=secure context=], then [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |doc|'s [=Document/browsing context=] is a [=top-level browsing context=], [=/resolve=] and return |p|.
 1. If |doc| is not [=allowed to use=] "`storage-access`", [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |settings|'s [=top-level origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |settings|'s [=top-level origin=] is [=same site=] with |settings|'s [=environment settings object/origin=]:
-    1. Set |global|'s [=environment/has storage access=] to true.
-    1. [=/Resolve=] and return |p|.
-
-       NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
-
+1. If |settings|'s [=top-level origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.    
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
-1. If |global|'s [=environment/has storage access=] is true, [=/resolve=] |p| with {{undefined}} and return.
+1. Let |browsingContext| be |doc|'s [=Document/browsing context=].
+1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the [=top-level origin=] of |doc|'s [=relevant settings object=].
+1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
 1. Let |has transient activation| be whether |doc|'s {{Window}} object has [=transient activation=].
 1. Run the following steps [=in parallel=]:
     1. Let |process permission state| be an algorithm that, given a [=permission state=] |state|, runs the following steps:
@@ -214,6 +209,23 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
             1. Else:
                 1. [=Consume user activation=] given |global|.
                 1. [=/Reject=] |p| with a "{{NotAllowedError}}" {{DOMException}}.
+    1. Let |explicitSetting| be the result of determining <a abstract-op>whether the user agent explicitly allows unpartitioned cookie access</a> with (|topLevelSite|, |embeddedSite|).
+    1. If |explicitSetting| is "`disallow`":
+        1. Run |process permission state| with [=permission/denied=].
+        1. Abort these steps.
+    1. If |explicitSetting| is "`allow`":
+        1. Run |process permission state| with [=permission/granted=].
+        1. Abort these steps.
+    1. If |explicitSetting| is "`none`":
+        1. If |browsingContext| is a [=top-level browsing context=]:
+            1. Run |process permission state| with [=permission/granted=].
+            1. Abort these steps.
+        1. If |embeddedSite| is [=same site=] with |topLevelSite|:
+            
+            NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
+
+            1. Run |process permission state| with [=permission/granted=].
+            1. Abort these steps.
     1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
