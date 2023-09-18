@@ -132,7 +132,7 @@ To <dfn>determine whether the user agent explicitly allows unpartitioned cookie 
         
     1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "`none`".
     1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "`allow`".
-    1. If the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|, return "`disallow`".
+    1. Assert: the user agent's settings explicitly disallow unpartitioned cookie access for |tuple| and return "`disallow`".
 
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
@@ -170,7 +170,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
     1. [=Queue a global task=] on the [=networking task source=] given |global| to:
         1. If |explicitSetting| is "`disallow`", [=/resolve=] |p| with false.
         1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true.
-        1. If |explicitSetting| is "`none`":
+        1. Assert: |explicitSetting| is "`none`":
             1. If |browsingContext| is a [=top-level browsing context=], [=/resolve=] |p| with true.
             1. If |browsingContext| is same authority with |browsingContext|'s [=top-level browsing context=]'s [=active document=], [=/resolve=] |p| with true.
 
@@ -216,7 +216,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. If |explicitSetting| is "`allow`":
         1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
-    1. If |explicitSetting| is "`none`":
+    1. Assert: |explicitSetting| is "`none`":
         1. If |browsingContext| is a [=top-level browsing context=]:
             1. Run |process permission state| with [=permission/granted=].
             1. Abort these steps.
