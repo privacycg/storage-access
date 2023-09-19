@@ -132,7 +132,8 @@ To <dfn>determine whether the user agent explicitly allows unpartitioned cookie 
         
     1. If the user agent does not have explicit settings for unpartitioned cookie access for |tuple|, return "`none`".
     1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "`allow`".
-    1. Assert: the user agent's settings explicitly disallow unpartitioned cookie access for |tuple| and return "`disallow`".
+    1. [=Assert=]: the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|.
+    1. Return "`disallow`".
 
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
@@ -167,18 +168,19 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
 1. Run the following steps [=in parallel=]:
     1. Let |explicitSetting| be the result of [=determine whether the user agent explicitly allows unpartitioned cookie access|determining whether the user agent explicitly allows unpartitioned cookie access=] with (|topLevelSite|, |embeddedSite|).
+    1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. [=Queue a global task=] on the [=networking task source=] given |global| to:
         1. If |explicitSetting| is "`disallow`", [=/resolve=] |p| with false.
         1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true.
-        1. Assert: |explicitSetting| is "`none`":
-            1. If |browsingContext| is a [=top-level browsing context=], [=/resolve=] |p| with true.
-            1. If |browsingContext| is same authority with |browsingContext|'s [=top-level browsing context=]'s [=active document=], [=/resolve=] |p| with true.
+        1. [=Assert=]: |explicitSetting| is "`none`".
+        1. If |browsingContext| is a [=top-level browsing context=], [=/resolve=] |p| with true.
+        1. If |browsingContext| is same authority with |browsingContext|'s [=top-level browsing context=]'s [=active document=], [=/resolve=] |p| with true.
 
-                ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
-
-            1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
-
-                Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
+            ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
+            
+        1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
+                
+            Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
 
         1. [=/Resolve=] |p| with false.
 1. Return |p|.
@@ -216,16 +218,16 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. If |explicitSetting| is "`allow`":
         1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
-    1. Assert: |explicitSetting| is "`none`":
-        1. If |browsingContext| is a [=top-level browsing context=]:
-            1. Run |process permission state| with [=permission/granted=].
-            1. Abort these steps.
-        1. If |embeddedSite| is [=same site=] with |topLevelSite|:
+    1. [=Assert=]: |explicitSetting| is "`none`".
+    1. If |browsingContext| is a [=top-level browsing context=]:
+        1. Run |process permission state| with [=permission/granted=].
+        1. Abort these steps.
+    1. If |embeddedSite| is [=same site=] with |topLevelSite|:
             
-            NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
+        NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
 
-            1. Run |process permission state| with [=permission/granted=].
-            1. Abort these steps.
+        1. Run |process permission state| with [=permission/granted=].
+        1. Abort these steps.
     1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
