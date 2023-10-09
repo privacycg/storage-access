@@ -4,9 +4,9 @@
   <title>The Storage Access API</title>
   <meta content="width=device-width" name="viewport">
   <link href="https://www.w3.org/StyleSheets/TR/2021/cg-draft" rel="stylesheet">
-  <meta content="Bikeshed version 6edc88947, updated Thu Aug 17 11:18:09 2023 -0700" name="generator">
+  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
-  <meta content="139ef584ce6999d05dde282977b10307fe941cca" name="document-revision">
+  <meta content="71a6071b8f380680c73a10668af1cb6abfe69224" name="document-revision">
 <style>
 .XXX {
     color: #E50000;
@@ -656,7 +656,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <header>
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2023-08-21">21 August 2023</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2023-10-09">9 October 2023</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -827,7 +827,9 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
       <li data-md>
        <p>Let <var>explicitSetting</var> be the result of determining <var>whether the user agent explicitly allows unpartitioned cookie access</var> with (<var>topLevelSite</var>, <var>embeddedSite</var>).</p>
       <li data-md>
-       <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permissions-task-source" id="ref-for-permissions-task-source">permissions task source</a> given <var>global</var> to:</p>
+       <p>Let <var>permissionState</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-getting-the-current-permission-state" id="ref-for-dfn-getting-the-current-permission-state">getting the current permission state</a> given "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access"><code>storage-access</code></a>" and <var>global</var>.</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task">Queue a global task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> given <var>global</var> to:</p>
        <ol>
         <li data-md>
          <p>If <var>explicitSetting</var> is "<code>disallow</code>", <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve③">resolve</a> <var>p</var> with false.</p>
@@ -841,8 +843,6 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
           <li data-md>
            <p>If <var>browsingContext</var> is same authority with <var>browsingContext</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-browsing-context" id="ref-for-top-level-browsing-context②">top-level browsing context</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document" id="ref-for-nav-document②">active document</a>, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve⑥">resolve</a> <var>p</var> with true.</p>
            <p class="issue" id="issue-396d9a1a"><a class="self-link" href="#issue-396d9a1a"></a> "same authority" here is a placeholder for a future concept that allows user agents to perform <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site①">same site</a> checks while adhering to additional security aspects such as the presence of a cross-site parent document, see <a href="https://github.com/whatwg/storage/issues/142#issuecomment-1122147159">whatwg/storage#142</a>. In practice, this might involve comparing the <a data-link-type="dfn" href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#section-5.2.1" id="ref-for-section-5.2.1">site for cookies</a> or performing a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site" id="ref-for-concept-site-same-site②">same site</a> check with the top-level document.</p>
-          <li data-md>
-           <p>Let <var>permissionState</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-getting-the-current-permission-state" id="ref-for-dfn-getting-the-current-permission-state">getting the current permission state</a> given "<a class="idl-code" data-link-type="permission" href="#permissiondef-storage-access" id="ref-for-permissiondef-storage-access"><code>storage-access</code></a>" and <var>global</var>.</p>
           <li data-md>
            <p>If <var>permissionState</var> is <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-granted" id="ref-for-dfn-granted">granted</a>, <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve⑦">resolve</a> <var>p</var> with <var>global</var>’s <a data-link-type="dfn" href="#environment-has-storage-access" id="ref-for-environment-has-storage-access">has storage access</a>.</p>
            <p class="note" role="note"><span class="marker">Note:</span> The global storage access permission state takes precedence over the local <a data-link-type="dfn" href="#environment-has-storage-access" id="ref-for-environment-has-storage-access①">has storage access</a> flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.</p>
@@ -896,7 +896,7 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
        <p>Let <var>process permission state</var> be an algorithm that, given a <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-permission-state" id="ref-for-dfn-permission-state">permission state</a> <var>state</var>, runs the following steps:</p>
        <ol>
         <li data-md>
-         <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task①">Queue a global task</a> on the <a data-link-type="dfn" href="https://w3c.github.io/permissions/#permissions-task-source" id="ref-for-permissions-task-source①">permission task source</a> given <var>global</var> to:</p>
+         <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-global-task" id="ref-for-queue-a-global-task①">Queue a global task</a> on the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source①">networking task source</a> given <var>global</var> to:</p>
          <ol>
           <li data-md>
            <p>If <var>state</var> is <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-granted" id="ref-for-dfn-granted①">granted</a>:</p>
@@ -944,7 +944,6 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
      <p>Return <var>p</var>.</p>
    </ol>
    <p class="note" role="note"><span class="marker">NOTE:</span> The intent of this algorithm is to always require user activation before a storage-access permission will be set. Though it is within the means of user agents to set storage-access permissions based on custom heuristics without prior user activation, this specification strongly discourages such behavior, as it could lead to interoperability issues.</p>
-   <p class="issue" id="issue-95c255e7"><a class="self-link" href="#issue-95c255e7"></a> We shouldn’t use the permissions task source here. <a href="https://github.com/privacycg/storage-access/issues/144">[Issue #privacycg/storage-access#144]</a></p>
    <h3 class="heading settled" data-level="3.3" id="navigation"><span class="secno">3.3. </span><span class="content">Changes to navigation</span><a class="self-link" href="#navigation"></a></h3>
    <p>When <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#snapshotting-source-snapshot-params" id="ref-for-snapshotting-source-snapshot-params">snapshotting source snapshot params</a>:</p>
    <ol>
@@ -1269,6 +1268,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="73a186aa">id</span>
      <li><span class="dfn-paneled" id="87fcd40c">iframe</span>
      <li><span class="dfn-paneled" id="a72449dd">in parallel</span>
+     <li><span class="dfn-paneled" id="b6ae4501">networking task source</span>
      <li><span class="dfn-paneled" id="602b1a68">obtain a site</span>
      <li><span class="dfn-paneled" id="b01b1359">opaque origin</span>
      <li><span class="dfn-paneled" id="086e3aff">origin</span>
@@ -1313,7 +1313,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
      <li><span class="dfn-paneled" id="79bfe9df">permission key type</span>
      <li><span class="dfn-paneled" id="7ee1f942">permission query algorithm</span>
      <li><span class="dfn-paneled" id="d124397f">permission state</span>
-     <li><span class="dfn-paneled" id="03af1875">permissions task source</span>
      <li><span class="dfn-paneled" id="6c2d7879">powerful feature</span>
      <li><span class="dfn-paneled" id="b2915302">prompt</span>
      <li><span class="dfn-paneled" id="d357c753">requesting permission to use</span>
@@ -1412,7 +1411,6 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> "same authority" here is a placeholder for a future concept that allows user agents to perform <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site">same site</a> checks while adhering to additional security aspects such as the presence of a cross-site parent document, see <a href="https://github.com/whatwg/storage/issues/142#issuecomment-1122147159">whatwg/storage#142</a>. In practice, this might involve comparing the <a data-link-type="dfn" href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#section-5.2.1">site for cookies</a> or performing a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-site-same-site">same site</a> check with the top-level document. <a class="issue-return" href="#issue-396d9a1a" title="Jump to section">↵</a></div>
-   <div class="issue"> We shouldn’t use the permissions task source here. <a href="https://github.com/privacycg/storage-access/issues/144">[Issue #privacycg/storage-access#144]</a> <a class="issue-return" href="#issue-95c255e7" title="Jump to section">↵</a></div>
   </div>
 <script>/* Boilerplate: script-dfn-panel */
 "use strict";
@@ -1742,6 +1740,7 @@ window.dfnpanelData['0e3ba9f8'] = {"dfnID": "0e3ba9f8", "url": "https://html.spe
 window.dfnpanelData['73a186aa'] = {"dfnID": "73a186aa", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-environment-id", "dfnText": "id", "refSections": [{"refs": [{"id": "ref-for-concept-environment-id"}, {"id": "ref-for-concept-environment-id\u2460"}], "title": "3.3. Changes to navigation"}], "external": true};
 window.dfnpanelData['87fcd40c'] = {"dfnID": "87fcd40c", "url": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element", "dfnText": "iframe", "refSections": [{"refs": [{"id": "ref-for-the-iframe-element"}, {"id": "ref-for-the-iframe-element\u2460"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-the-iframe-element\u2461"}, {"id": "ref-for-the-iframe-element\u2462"}], "title": "3. The Storage Access API"}], "external": true};
 window.dfnpanelData['a72449dd'] = {"dfnID": "a72449dd", "url": "https://html.spec.whatwg.org/multipage/infrastructure.html#in-parallel", "dfnText": "in parallel", "refSections": [{"refs": [{"id": "ref-for-in-parallel"}, {"id": "ref-for-in-parallel\u2460"}], "title": "3.2. Changes to Document"}], "external": true};
+window.dfnpanelData['b6ae4501'] = {"dfnID": "b6ae4501", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source", "dfnText": "networking task source", "refSections": [{"refs": [{"id": "ref-for-networking-task-source"}, {"id": "ref-for-networking-task-source\u2460"}], "title": "3.2. Changes to Document"}], "external": true};
 window.dfnpanelData['602b1a68'] = {"dfnID": "602b1a68", "url": "https://html.spec.whatwg.org/multipage/browsers.html#obtain-a-site", "dfnText": "obtain a site", "refSections": [{"refs": [{"id": "ref-for-obtain-a-site"}, {"id": "ref-for-obtain-a-site\u2460"}], "title": "3.2. Changes to Document"}, {"refs": [{"id": "ref-for-obtain-a-site\u2461"}, {"id": "ref-for-obtain-a-site\u2462"}], "title": "4. Permissions Integration"}, {"refs": [{"id": "ref-for-obtain-a-site\u2463"}], "title": "8.1. Set Storage Access"}], "external": true};
 window.dfnpanelData['b01b1359'] = {"dfnID": "b01b1359", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-opaque", "dfnText": "opaque origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin-opaque"}, {"id": "ref-for-concept-origin-opaque\u2460"}, {"id": "ref-for-concept-origin-opaque\u2461"}, {"id": "ref-for-concept-origin-opaque\u2462"}], "title": "3.2. Changes to Document"}], "external": true};
 window.dfnpanelData['086e3aff'] = {"dfnID": "086e3aff", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin"}], "title": "6.1. Permission scope"}, {"refs": [{"id": "ref-for-concept-origin\u2460"}, {"id": "ref-for-concept-origin\u2461"}, {"id": "ref-for-concept-origin\u2462"}], "title": "7. Security considerations"}], "external": true};
@@ -1778,7 +1777,6 @@ window.dfnpanelData['951ae231'] = {"dfnID": "951ae231", "url": "https://w3c.gith
 window.dfnpanelData['79bfe9df'] = {"dfnID": "79bfe9df", "url": "https://w3c.github.io/permissions/#dfn-permission-key-type", "dfnText": "permission key type", "refSections": [{"refs": [{"id": "ref-for-dfn-permission-key-type"}], "title": "4. Permissions Integration"}], "external": true};
 window.dfnpanelData['7ee1f942'] = {"dfnID": "7ee1f942", "url": "https://w3c.github.io/permissions/#dfn-permission-query-algorithm", "dfnText": "permission query algorithm", "refSections": [{"refs": [{"id": "ref-for-dfn-permission-query-algorithm"}], "title": "4. Permissions Integration"}], "external": true};
 window.dfnpanelData['d124397f'] = {"dfnID": "d124397f", "url": "https://w3c.github.io/permissions/#dfn-permission-state", "dfnText": "permission state", "refSections": [{"refs": [{"id": "ref-for-dfn-permission-state"}], "title": "3.2. Changes to Document"}, {"refs": [{"id": "ref-for-dfn-permission-state\u2460"}], "title": "4. Permissions Integration"}], "external": true};
-window.dfnpanelData['03af1875'] = {"dfnID": "03af1875", "url": "https://w3c.github.io/permissions/#permissions-task-source", "dfnText": "permissions task source", "refSections": [{"refs": [{"id": "ref-for-permissions-task-source"}, {"id": "ref-for-permissions-task-source\u2460"}], "title": "3.2. Changes to Document"}], "external": true};
 window.dfnpanelData['6c2d7879'] = {"dfnID": "6c2d7879", "url": "https://w3c.github.io/permissions/#dfn-powerful-feature", "dfnText": "powerful feature", "refSections": [{"refs": [{"id": "ref-for-dfn-powerful-feature"}], "title": "4. Permissions Integration"}], "external": true};
 window.dfnpanelData['b2915302'] = {"dfnID": "b2915302", "url": "https://w3c.github.io/permissions/#dfn-prompt", "dfnText": "prompt", "refSections": [{"refs": [{"id": "ref-for-dfn-prompt"}], "title": "3.2. Changes to Document"}, {"refs": [{"id": "ref-for-dfn-prompt\u2460"}], "title": "4. Permissions Integration"}], "external": true};
 window.dfnpanelData['d357c753'] = {"dfnID": "d357c753", "url": "https://w3c.github.io/permissions/#dfn-request-permission-to-use", "dfnText": "requesting permission to use", "refSections": [{"refs": [{"id": "ref-for-dfn-request-permission-to-use"}], "title": "3.2. Changes to Document"}], "external": true};
