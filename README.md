@@ -1,3 +1,12 @@
+var promise = document.hasStorageAccess();
+promise.then(
+  function (hasAccess) {
+    // Boolean hasAccess says whether the document has access or not.
+  },
+  function (reason) {
+    // Promise was rejected for some reason.
+  }
+);
 # The Storage Access API
 
 A [Work Item](https://privacycg.github.io/charter.html#work-items) of
