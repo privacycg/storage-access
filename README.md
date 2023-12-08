@@ -216,7 +216,7 @@ for instance through invisible overlay iframes à la Clickjacking or through ifr
 - Firefox : Shipping
 - Edge : Implementing
 - Brave : Positive
-- Chrome : Implementing
+- Chrome : Shipping
 
 ## References & Acknowledgements
 
