@@ -26,6 +26,7 @@ Complain About: accidental-2119 true
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
 spec:html; type:dfn; for:site; text:same site
+spec:infra; type:dfn; text:user agent
 </pre>
 
 <pre class="anchors">
@@ -65,6 +66,20 @@ spec: fetch; urlPrefix: https://fetch.spec.whatwg.org/
     type: dfn
         for: response
             text: has-cross-origin-redirects; url: #response-has-cross-origin-redirects
+
+spec: fedcm; urlPrefix: https://w3c-fedid.github.io/FedCM/
+    type: dfn
+        text: connected accounts set; url: browser-connected-accounts-set
+        text: IDP; url: idp
+        text: RP; url: rp
+
+spec: credential-management-1; urlPrefix: https://w3c.github.io/webappsec-credential-management/
+    type: dfn
+        text: prevent silent access flag; url: origin-prevent-silent-access-flag
+
+spec: permissions-policy; urlPrefix: https://w3c.github.io/webappsec-permissions-policy/
+    type: dfn
+        text: is feature enabled; url: algo-is-feature-enabled
 </pre>
 
 <pre class=biblio>
@@ -135,6 +150,25 @@ To <dfn>determine whether the user agent explicitly allows unpartitioned cookie 
     1. [=Assert=]: the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|.
     1. Return "`disallow`".
 
+To <dfn>determine the site connection status</dfn> given a [=site=] |embedder| and [=site=] |identityProvider|, run the following steps. This algorithm returns a [=boolean=].
+1. [=list/iterate|For each=] |item| of [=connected accounts set=]:
+    1. Let (|rp|, |idp|, <var ignore=''>account</var>) be |item|.
+    1. Let |rpSite| be the result of [=obtain a site|obtaining a site=] given |rp|.
+    1. Let |idpSite| be the result of [=obtain a site|obtaining a site=] given |idp|.
+    1. If |identityProvider| and |idpSite| are [=same site=], and |embedder| and |rpSite| are [=same site=], return true.
+1. Return false.
+
+To <dfn>determine the effective connection status</dfn> given a [=/origin=] |embedder|, a [=/origin=] |identityProvider|, a {{Document}} |doc|, run the following steps. This algorithm returns a [=boolean=].
+1. Let |policyStatus| be the result of computing [=is feature enabled=] given the [=policy-controlled feature=] "identity-credentials-get", |doc|, and |embedder|.
+1. If |policyStatus| is "Disabled", return false.
+1. Let |embedderSite| be the result of [=obtain a site|obtaining a site=] given |embedder|.
+1. Let |identityProviderSite| be the result of [=obtain a site|obtaining a site=] given |identityProvider|.
+1. Let |connected| be the result of [=determine the site connection status|determining the site connection status=] given |embedderSite| and |identityProviderSite|.
+1. If |connected| is false, return false.
+1. Let |preventSilentAccess| be [=user agent=]'s [=credential store=]'s [=prevent silent access flag=] for |embedder|.
+1. If |preventSilentAccess|, return false.
+1. Return true.
+
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
 Modify the definition of [=environment=] in the following manner:
@@ -143,6 +177,8 @@ Modify the definition of [=environment=] in the following manner:
 Modify the definition of [=source snapshot params=] in the following manner:
 1. Add a new member called <dfn for="source snapshot params">has storage access</dfn> of type [=boolean=].
 1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque [=string=].
+
+Add a new global <dfn for="storage access eligible connections set">storage access eligible connections set</dfn> of type [=ordered set=] on the [=user agent=]. Its [=list/items=] are [=tuples=] of the form (|embedder site|, |identity provider site|) where |embedder site| and |identity provider site| are [=site|sites=]. It represents the set of (|embedder site|, |identity provider site|) tuples for which |identity provider site| invoked {{Document/requestStorageAccess}} while embedded under |embedder site|, where the browser allowed the invocation to resolve due to |embedder site| and |identity provider site| being present in the [=connected accounts set=].
 
 <h3 id="the-document-object">Changes to {{Document}}</h3>
 
@@ -199,8 +235,10 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If |settings|'s [=top-level origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.    
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |browsingContext| be |doc|'s [=Document/browsing context=].
-1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the [=top-level origin=] of |doc|'s [=relevant settings object=].
-1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
+1. Let |topLevelOrigin| be the [=top-level origin=] of |doc|'s [=relevant settings object=].
+1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from |topLevelOrigin|.
+1. Let |embeddedOrigin| be |doc|'s [=Document/origin=].
+1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |embeddedOrigin|.  
 1. Let |has transient activation| be whether |doc|'s {{Window}} object has [=transient activation=].
 1. Run the following steps [=in parallel=]:
     1. Let |process permission state| be an algorithm that, given a [=permission state=] |state|, runs the following steps:
@@ -231,6 +269,11 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
+        1. Abort these steps.
+    1. Let |connected| be the result of [=Determine the effective connection status|determining the effective connection status=] given |topLevelOrigin|, |embeddedOrigin|, |doc|.
+    1. If |connected|:
+        1. [=list/append|Append=] (|topLevelSite|, |embeddedSite|) to [=storage access eligible connections set=].
+        1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
     1. If |has transient activation| is false:
         1. Run |process permission state| with [=permission/denied=].
@@ -269,9 +312,11 @@ This API only impacts HTTP cookies. A future revision of this API might impact o
 
 <h4 id="cookies">Cookies</h4>
 
-This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request (to determine whether to attach cross-site, partitioned, or no cookies) as well as whether the request was made for a document that has storage access, through accessing the [=environment=]'s [=environment/has storage access=] that is defined in this specification.
+This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request and any other information needed to determine whether the request should include unpartitioned cookies.
 
-Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and {{Document/cookie}} to pass the [=environment=]'s [=environment/has storage access=] to the [=cookie store=] when retrieving cookies.
+Once the cookie store allows for receiving information about storage access, we will update [=HTTP-network-or-cache fetch=] and {{Document/cookie}} to pass the [=user agent=]'s [=storage access eligible connections set=], [=connected accounts set=], and [=permission store=], and the [=environment=]'s [=environment/has storage access=] to the [=cookie store=] when retrieving cookies.
+
+Note: The [=cookie store=] MAY include cookies based on the [=permission store|permission store's=] [=permission store entry|entries=] and/or on the [=connected accounts set=] and [=storage access eligible connections set=].
 
 When getting unpartitioned cookies from the [=cookie store=] with storage access, user agents will still follow applicable `SameSite` restrictions (i.e., not attach cookies marked `SameSite=Strict` or `SameSite=Lax` in [=third party contexts=]).
 
