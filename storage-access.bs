@@ -25,7 +25,7 @@ Complain About: accidental-2119 true
 
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
-spec:html; type:dfn; for:site; text:same site
+spec:infra; type:dfn; text:user agent
 </pre>
 
 <pre class="anchors">
@@ -65,6 +65,20 @@ spec: fetch; urlPrefix: https://fetch.spec.whatwg.org/
     type: dfn
         for: response
             text: has-cross-origin-redirects; url: #response-has-cross-origin-redirects
+
+spec: fedcm; urlPrefix: https://w3c-fedid.github.io/FedCM/
+    type: dfn
+        text: connected accounts set; url: browser-connected-accounts-set
+        text: IDP; url: idp
+        text: RP; url: rp
+
+spec: credential-management-1; urlPrefix: https://w3c.github.io/webappsec-credential-management/
+    type: dfn
+        text: prevent silent access flag; url: origin-prevent-silent-access-flag
+
+spec: permissions-policy; urlPrefix: https://w3c.github.io/webappsec-permissions-policy/
+    type: dfn
+        text: is feature enabled; url: algo-is-feature-enabled
 </pre>
 
 <pre class=biblio>
@@ -122,7 +136,7 @@ Script in the <{iframe}> can call |doc|`.`{{Document/hasStorageAccess()}} to det
 
 <dfn>Unpartitioned data</dfn> is client-side storage that would be available to a [=site=] were it loaded in a [=first-party-site context=].
 
-A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active document=] of a [=top-level browsing context=]. Otherwise, it is in a [=first-party-site context=] if it is an [=active document=] and the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=same site=] with one another.
+A {{Document}} is in a <dfn>first-party-site context</dfn> if it is the [=active document=] of a [=top-level browsing context=]. Otherwise, it is in a [=first-party-site context=] if it is an [=active document=] and the [=environment settings object/origin=] and [=top-level origin=] of its [=relevant settings object=] are [=/same site=] with one another.
 
 A {{Document}} is in a <dfn>third party context</dfn> if it is not in a [=first-party-site context=].
 
@@ -134,6 +148,21 @@ To <dfn>determine whether the user agent explicitly allows unpartitioned cookie 
     1. If the user agent's settings explicitly allow unpartitioned cookie access for |tuple|, return "`allow`".
     1. [=Assert=]: the user agent's settings explicitly disallow unpartitioned cookie access for |tuple|.
     1. Return "`disallow`".
+
+To <dfn>determine the FedCM site connection status</dfn> given a [=/origin=] |embedder| and [=/origin=] |identityProvider|, run the following steps. This algorithm returns a [=boolean=].
+1. [=list/iterate|For each=] |item| of [=connected accounts set=]:
+    1. Let (|rp|, |idp|, <var ignore=''>account</var>) be |item|.
+    1. If |rp| and |embedder| are [=/same site=], and |idp| and |identityProvider| are [=/same site=], return true.
+1. Return false.
+
+To <dfn>determine the effective FedCM connection status</dfn> given a [=/origin=] |embedder|, a [=/origin=] |identityProvider|, a {{Document}} |doc|, run the following steps. This algorithm returns a [=boolean=].
+1. Let |policyStatus| be whether |doc| is [=allowed to use=] "`identity-credentials-get`".
+1. If |policyStatus| is "Disabled", return false.
+1. Let |connected| be the result of [=determine the FedCM site connection status|determining the site connection status=] given |embedder| and |identityProvider|.
+1. If |connected| is false, return false.
+1. Let |preventSilentAccess| be [=user agent=]'s [=credential store=]'s [=prevent silent access flag=] for |embedder|.
+1. If |preventSilentAccess|, return false.
+1. Return true.
 
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
@@ -176,7 +205,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
         1. If |browsingContext| is a [=top-level browsing context=], [=/resolve=] |p| with true.
         1. If |browsingContext| is same authority with |browsingContext|'s [=top-level browsing context=]'s [=active document=], [=/resolve=] |p| with true.
 
-            ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=same site=] check with the top-level document.
+            ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=/same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=/same site=] check with the top-level document.
             
         1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
                 
@@ -199,8 +228,10 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. If |settings|'s [=top-level origin=] is an [=opaque origin=], [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.    
 1. If |doc|'s [=active sandboxing flag set=] has its [=sandbox storage access by user activation flag=] set, [=/reject=] |p| with a "{{NotAllowedError}}" {{DOMException}} and return |p|.
 1. Let |browsingContext| be |doc|'s [=Document/browsing context=].
-1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the [=top-level origin=] of |doc|'s [=relevant settings object=].
-1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
+1. Let |topLevelOrigin| be the [=top-level origin=] of |doc|'s [=relevant settings object=].
+1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from |topLevelOrigin|.
+1. Let |embeddedOrigin| be |doc|'s [=Document/origin=].
+1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |embeddedOrigin|.  
 1. Let |has transient activation| be whether |doc|'s {{Window}} object has [=transient activation=].
 1. Run the following steps [=in parallel=]:
     1. Let |process permission state| be an algorithm that, given a [=permission state=] |state|, runs the following steps:
@@ -222,15 +253,22 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. If |browsingContext| is a [=top-level browsing context=]:
         1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
-    1. If |embeddedSite| is [=same site=] with |topLevelSite|:
+    1. If |embeddedSite| is [=site/same site=] with |topLevelSite|:
             
-        NOTE: This check is [=same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
+        NOTE: This check is [=site/same site=] on purpose, to allow embedded sites to use `requestStorageAccess()` to opt into storage access without involvement from the end user in scenarios where storage access is restricted for security and not privacy purposes.
 
         1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
     1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
+        1. Abort these steps.
+    1. Let |connected| be the result of [=Determine the effective FedCM connection status|determining the effective FedCM connection status=] given |topLevelOrigin|, |embeddedOrigin|, |doc|.
+    1. If |connected|:
+
+        NOTE: User agents are encouraged to keep track of which (site, site) tuples have been allowed to access storage due to existing FedCM connections, and double-check that list when accessing cookies to catch malicious attackers that have tricked an [=environment=] into using an incorrect [=environment/has storage access=] bit.
+
+        1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
     1. If |has transient activation| is false:
         1. Run |process permission state| with [=permission/denied=].
@@ -323,8 +361,8 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   <dd>
     To compare the [=permission keys=] |key1| and |key2| for the "<a permission><code>storage-access</code></a>" feature, run the following steps:
 
-    1. If |key1|'s [=permission key/top-level=] is not [=same site=] with |key2|'s [=permission key/top-level=], return false.
-    1. If |key1|'s [=permission key/requester=] is not [=same site=] with |key2|'s [=permission key/requester=], return false.
+    1. If |key1|'s [=permission key/top-level=] is not [=site/same site=] with |key2|'s [=permission key/top-level=], return false.
+    1. If |key1|'s [=permission key/requester=] is not [=site/same site=] with |key2|'s [=permission key/requester=], return false.
     1. Return true.
   </dd>
 </dl>
@@ -370,7 +408,7 @@ Developer experience suffers where user agents differ greatly in their [=impleme
 
 <h3 id="site-scope">Permission scope</h3>
 
-Another tension in the design of the API is what to use to key the "<code>storage-access</code>" permission: [=/origin|origins=] or [=site|sites=]. We chose [=site|sites=] because we believe them to be acceptable boundaries for privacy while enabling existing uses of [=same site=] and cross-origin nested {{Document|Documents}} on the same page with only one user prompt.
+Another tension in the design of the API is what to use to key the "<code>storage-access</code>" permission: [=/origin|origins=] or [=site|sites=]. We chose [=site|sites=] because we believe them to be acceptable boundaries for privacy while enabling existing uses of [=site/same site=] and cross-origin nested {{Document|Documents}} on the same page with only one user prompt.
 
 <h2 id="security">Security considerations</h2>
 
@@ -428,7 +466,7 @@ The [=remote end steps=] are:
     1. Otherwise, if |blocked| is `false`, then:
         1. Run an [=implementation-defined=] set of steps to ensure that any site has access to its [=unpartitioned data=] when loaded in a [=third party context=] on |top-level site|.
 1. Otherwise:
-    1. If |embedded origin| is [=same site=] with |top-level site| return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
+    1. If |embedded origin| is [=/same site=] with |settings|'s [=environment settings object/origin=] return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
     1. If |blocked| is `true`, then:
         1. Run an [=implementation-defined=] set of steps to ensure that |embedded origin| does not have access to its [=unpartitioned data=] when loaded in a [=third party context=] on |top-level site|.
     1. Otherwise, if |blocked| is `false`, then:
