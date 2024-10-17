@@ -21,7 +21,7 @@ Complain About: accidental-2119 true
 <!-- The main rSA and hSA implementations live in these files: -->
 <!-- https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/dom/DocumentStorageAccess.cpp -->
 <!-- https://searchfox.org/mozilla-central/source/dom/base/Document.cpp -->
-<!-- https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/dom/document.cc -->
+<!-- https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/modules/storage_access/document_storage_access.cc -->
 
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
