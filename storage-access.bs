@@ -25,12 +25,15 @@ Complain About: accidental-2119 true
 
 <!-- File issues on HTML to export each of these -->
 <pre class=link-defaults>
+spec:html; type:dfn; text:allowed to use
 spec:infra; type:dfn; text:user agent
+spec:fetch; type:dfn; for:/; text:request
 </pre>
 
 <pre class="anchors">
 urlPrefix: https://fetch.spec.whatwg.org/; spec: Fetch
     text: http-network-or-cache fetch; url: #concept-http-network-or-cache-fetch; type: dfn
+    text: http-redirect fetch; url: #concept-http-redirect-fetch; type: dfn
 spec: RFC6265; urlPrefix: https://tools.ietf.org/html/rfc6265
     type: dfn
         text: cookie store; url: section-5.3
@@ -60,6 +63,8 @@ spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
         text: create navigation params by fetching; url: browsing-the-web.html#create-navigation-params-by-fetching
         text: set up a window environment settings object; url: nav-history-apis.html#set-up-a-window-environment-settings-object
         text: environment
+        <!-- TODO: pending HTML changes- ancestor enum (https://github.com/whatwg/html/pull/10559) -->
+        text: ancestry; for: environment; url: TODO
 
 spec: fetch; urlPrefix: https://fetch.spec.whatwg.org/
     type: dfn
@@ -172,6 +177,23 @@ Modify the definition of [=environment=] in the following manner:
 Modify the definition of [=source snapshot params=] in the following manner:
 1. Add a new member called <dfn for="source snapshot params">has storage access</dfn> of type [=boolean=].
 1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque [=string=].
+
+A <dfn>storage access eligibility</dfn> is one of "<dfn for="storage access eligibility">unset</dfn>", "<dfn for="storage access eligibility">ineligible</dfn>", or "<dfn for="storage access eligibility">eligible</dfn>".
+
+A [=request=] has a [=storage access eligibility=] <dfn for="request">eligible for storage-access</dfn>. It is initially "<code>[=storage access eligibility/unset=]</code>".
+
+<div algorithm>
+To <dfn>determine the initial storage-access eligibility</dfn>, given a [=request=] |request|, run the following steps:
+
+    1. If |request|'s [=request/client=] is null, return "<code>[=storage access eligibility/unset=]</code>".
+    1. If |request|'s [=request/client=]'s [=environment/ancestry=] is not "<code>cross-site</code>", return "<code>[=storage access eligibility/unset=]</code>"
+    1. If |request|'s [=request/client=]'s [=environment/has storage access=] is false, return "<code>[=storage access eligibility/ineligible=]</code>".
+    1. If |request|'s [=url/origin=] is not [=/same site=] with |request|'s [=request/url=]'s [=url/origin=], return "<code>[=storage access eligibility/ineligible=]</code>".
+    1. Let |allowed| be the result of running [$Should request be allowed to use feature?$] given "<a permission><code>storage-access</code></a>" and |request|.
+    1. If |allowed| is false, return "<code>[=storage access eligibility/ineligible=]</code>".
+    1. Return "<code>[=storage access eligibility/eligible=]</code>".
+
+</div>
 
 <h3 id="the-document-object">Changes to {{Document}}</h3>
 
@@ -301,15 +323,33 @@ When creating |request|'s [=reserved client=] in [=create navigation params by f
 When [=set up a window environment settings object|setting up a window environment settings object=]:
 1. Set <var ignore>settings object</var>'s [=environment/has storage access=] to <var ignore>reserved environment</var>'s [=environment/has storage access=].
 
+<h3 id="fetch-integration">Integration with Fetch</h3>
+
+<h4 id="fetching">Fetching</h4>
+
+Insert a new step after step 14 of [=fetch=]:
+
+<div algorithm="modified fetching">
+    15. Set |request|'s [=request/eligible for storage-access=] to the result of [=determining the initial storage-access eligibility=] given |request|.
+</div>
+
+<h4 id="http-redirect-fetch">HTTP-redirect-fetch</h4>
+
+Insert a new step after step 17 of [=HTTP-redirect fetch=]:
+
+<div algorithm="modified HTTP-redirect fetch">
+    18. If |request|'s [=request/eligible for storage-access=] is not "<code>[=storage access eligibility/unset=]</code>" and <var ignore>locationURL</var>'s [=url/origin=] is not [=/same site=] with |request|'s [=request/current URL=]'s [=url/origin=], set |request|'s [=request/eligible for storage-access=] to "<code>[=storage access eligibility/ineligible=]</code>".
+</div>
+
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
 
 This API only impacts HTTP cookies. A future revision of this API might impact other client-side state. [[!RFC6265]]
 
 <h4 id="cookies">Cookies</h4>
 
-This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request (to determine whether to attach cross-site, partitioned, or no cookies) as well as whether the request was made for a document that has storage access, through accessing the [=environment=]'s [=environment/has storage access=] that is defined in this specification.
+This API is intended to be used with environments and user agent configurations that block access to unpartitioned cookies in a [=third party context=]. At the time of this writing, this concept has not yet been integrated into the [=HTTP-network-or-cache fetch=] and {{Document/cookie}} algorithms. To allow for such an integration, the [=cookie store=] will need to be modified to receive information about the top-level and embedded site of the request (to determine whether to attach cross-site, partitioned, or no cookies) as well as whether the [=request=] was made for a document that has storage access, through accessing the [=request=]'s [=request/eligible for storage-access=] that is defined in this specification.
 
-Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and {{Document/cookie}} to pass the [=environment=]'s [=environment/has storage access=] to the [=cookie store=] when retrieving cookies.
+Once the cookie store allows for receiving information about storage access, we would update [=HTTP-network-or-cache fetch=] and {{Document/cookie}} to pass the [=request=]'s [=request/eligible for storage-access=] to the [=cookie store=] when retrieving cookies.
 
 When getting unpartitioned cookies from the [=cookie store=] with storage access, user agents will still follow applicable `SameSite` restrictions (i.e., not attach cookies marked `SameSite=Strict` or `SameSite=Lax` in [=third party contexts=]).
 
@@ -380,7 +420,7 @@ The Storage Access API enables the removal of cross-site cookies. Specifically, 
 A nested {{Document}} gains access to the same cookies it has as the [=active document=] of a [=top-level browsing context=] when it calls {{Document/requestStorageAccess()}} and is returned a resolving {{Promise}}. With these cookies it can authenticate itself to the server and load user-specific information.
 
 While this functionality comes with a risk of abuse by third parties for tracking purposes, it is an explicit goal of the API and a key to its design to not undermine the gains of cross-site cookie deprecation.
-Importantly, we do not degrade privacy properties when compared to pre-removal of cross-site cookies. This follows from a lack of platform-specific information used in the spec to prevent stateless tracking and the only state added being a permission scoped to the [=site|sites=] of the embedding and embedded [=Document=].
+Importantly, we do not degrade privacy properties when compared to pre-removal of cross-site cookies. This follows from a lack of platform-specific information used in the spec to prevent stateless tracking and the only state added being a permission scoped to the [=site|sites=] of the embedding and embedded {{Document}}.
 
 Our privacy considerations are more challenging where default cross-site cookies are already deprecated. The challenge is to decide when and how to permit the Storage Access API to be used to revert a cookie-less (or cookie-partitioned) nested {{Document}} to a pre-deprecation state, giving it access to its [=unpartitioned data=].
 
