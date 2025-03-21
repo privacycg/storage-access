@@ -182,6 +182,11 @@ A <dfn>storage access eligibility</dfn> is one of "<dfn for="storage access elig
 
 A [=request=] has a [=storage access eligibility=] <dfn for="request">eligible for storage-access</dfn>. It is initially "<code>[=storage access eligibility/unset=]</code>".
 
+Note: a [=request=]'s [=storage access eligibility=] indicates whether previously-granted "<a permission><code>storage-access</code></a>" permissions ought to be considered when evaluating which cookies to include on the [=request=]. In particular, note that after {{Document/requestStorageAccess}} has resolved and the [=environment=]'s [=environment/has storage access=] is set to true, not all of the [=request=]s issued by that [=environment=] ought to carry unpartitioned cookies.
+<br>
+<br>
+For example, suppose the user is visiting a page on https://top.com which embeds an <{iframe}> served from https://embed.com, and a script in that iframe has called {{Document/requestStorageAccess}} and the promise resolved. If the iframe subsequently fetches a resource from https://3p.com, that request will not include cookies via the Storage Access API.
+
 <div algorithm>
 To <dfn>determine the initial storage-access eligibility</dfn>, given a [=request=] |request|, run the following steps:
 
