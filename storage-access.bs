@@ -193,7 +193,7 @@ To <dfn>determine the initial storage-access eligibility</dfn>, given a [=reques
     1. If |request|'s [=request/client=] is null, return "<code>[=storage access eligibility/unset=]</code>".
     1. If |request|'s [=request/client=]'s [=environment/ancestry=] is not "<code>cross-site</code>", return "<code>[=storage access eligibility/unset=]</code>"
     1. If |request|'s [=request/client=]'s [=environment/has storage access=] is false, return "<code>[=storage access eligibility/ineligible=]</code>".
-    1. If |request|'s [=url/origin=] is not [=/same site=] with |request|'s [=request/url=]'s [=url/origin=], return "<code>[=storage access eligibility/ineligible=]</code>".
+    1. If |request|'s [=url/origin=] is not [=/same origin=] with |request|'s [=request/url=]'s [=url/origin=], return "<code>[=storage access eligibility/ineligible=]</code>".
     1. Let |allowed| be the result of running [$Should request be allowed to use feature?$] given "<a permission><code>storage-access</code></a>" and |request|.
     1. If |allowed| is false, return "<code>[=storage access eligibility/ineligible=]</code>".
     1. Return "<code>[=storage access eligibility/eligible=]</code>".
@@ -343,7 +343,7 @@ Insert a new step after step 14 of [=fetch=]:
 Insert a new step after step 17 of [=HTTP-redirect fetch=]:
 
 <div algorithm="modified HTTP-redirect fetch">
-    18. If |request|'s [=request/eligible for storage-access=] is not "<code>[=storage access eligibility/unset=]</code>" and <var ignore>locationURL</var>'s [=url/origin=] is not [=/same site=] with |request|'s [=request/current URL=]'s [=url/origin=], set |request|'s [=request/eligible for storage-access=] to "<code>[=storage access eligibility/ineligible=]</code>".
+    18. If |request|'s [=request/eligible for storage-access=] is not "<code>[=storage access eligibility/unset=]</code>" and <var ignore>locationURL</var>'s [=url/origin=] is not [=/same origin=] with |request|'s [=request/current URL=]'s [=url/origin=], set |request|'s [=request/eligible for storage-access=] to "<code>[=storage access eligibility/ineligible=]</code>".
 </div>
 
 <h3 id="storage">Changes to various client-side storage mechanisms</h3>
