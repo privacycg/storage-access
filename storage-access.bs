@@ -63,7 +63,7 @@ spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/
         text: create navigation params by fetching; url: browsing-the-web.html#create-navigation-params-by-fetching
         text: set up a window environment settings object; url: nav-history-apis.html#set-up-a-window-environment-settings-object
         text: environment
-        <!-- TODO: pending HTML changes- ancestor enum (https://github.com/whatwg/html/pull/10559) -->
+        <!-- TODO: pending HTML changes- ancestor enum (https://github.com/whatwg/html/pull/11133) -->
         text: ancestry; for: environment; url: TODO
 
 spec: fetch; urlPrefix: https://fetch.spec.whatwg.org/
@@ -192,6 +192,9 @@ To <dfn>determine the initial storage-access eligibility</dfn>, given a [=reques
 
     1. If |request|'s [=request/client=] is null, return "<code>[=storage access eligibility/unset=]</code>".
     1. If |request|'s [=request/client=]'s [=environment/ancestry=] is not "<code>cross-site</code>", return "<code>[=storage access eligibility/unset=]</code>"
+
+ISSUE: The concept of "ancestry" is being added to HTML in <a href="https://github.com/whatwg/html/pull/11133">https://github.com/whatwg/html/pull/11133</a>
+
     1. If |request|'s [=request/client=]'s [=environment/has storage access=] is false, return "<code>[=storage access eligibility/ineligible=]</code>".
     1. If |request|'s [=url/origin=] is not [=/same site=] with |request|'s [=request/url=]'s [=url/origin=], return "<code>[=storage access eligibility/ineligible=]</code>".
     1. Let |allowed| be the result of running [$Should request be allowed to use feature?$] given "<a permission><code>storage-access</code></a>" and |request|.
