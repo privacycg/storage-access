@@ -7,7 +7,7 @@
   <meta content="Bikeshed version b25686b9f, updated Fri Mar 14 14:15:20 2025 -0700" name="generator">
   <link href="https://privacycg.github.io/storage-access/" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="8b80aa2670ff1dc78c3a7371dcc93cdd4bbc6ca5" name="revision">
+  <meta content="bd73be09b18c0a54aa1a4ac6da34811744be3aee" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>
@@ -745,9 +745,8 @@ var[data-var-color="6"] { --var-vg: #FFBCF2; }
 </style>
  <body>
   <header>
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="no-ref" id="title">The Storage Access API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2025-03-26">26 March 2025</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time datetime="2025-04-01">1 April 2025</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -933,6 +932,9 @@ Learn more about <a href="http://www.w3.org/community/">W3C Community and Busine
       <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client">client</a> is null, return "<code><a data-link-type="dfn" href="#storage-access-eligibility-unset" id="ref-for-storage-access-eligibility-unset①">unset</a></code>".</p>
      <li data-md>
       <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client①">client</a>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/#TODO" id="ref-for-TODO">ancestry</a> is not "<code>cross-site</code>", return "<code><a data-link-type="dfn" href="#storage-access-eligibility-unset" id="ref-for-storage-access-eligibility-unset②">unset</a></code>"</p>
+    </ol>
+    <p class="issue" id="issue-ad55531e"><a class="self-link" href="#issue-ad55531e"></a> The concept of "ancestry" is being added to HTML in <a href="https://github.com/whatwg/html/pull/11133">https://github.com/whatwg/html/pull/11133</a></p>
+    <ol>
      <li data-md>
       <p>If <var>request</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-client" id="ref-for-concept-request-client②">client</a>’s <a data-link-type="dfn" href="#environment-has-storage-access" id="ref-for-environment-has-storage-access①">has storage access</a> is false, return "<code><a data-link-type="dfn" href="#storage-access-eligibility-ineligible" id="ref-for-storage-access-eligibility-ineligible">ineligible</a></code>".</p>
      <li data-md>
@@ -1655,6 +1657,7 @@ and everyone who commented on <a href="https://github.com/whatwg/html/issues/333
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
+   <div class="issue"> The concept of "ancestry" is being added to HTML in <a href="https://github.com/whatwg/html/pull/11133">https://github.com/whatwg/html/pull/11133</a> <a class="issue-return" href="#issue-ad55531e" title="Jump to section">↵</a></div>
    <div class="issue"> "same authority" here is a placeholder for a future concept that allows user agents to perform <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#same-site">same site</a> checks while adhering to additional security aspects such as the presence of a cross-site parent document, see <a href="https://github.com/whatwg/storage/issues/142#issuecomment-1122147159">whatwg/storage#142</a>. In practice, this might involve comparing the <a data-link-type="dfn" href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis-11#section-5.2.1">site for cookies</a> or performing a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#same-site">same site</a> check with the top-level document. <a class="issue-return" href="#issue-396d9a1a" title="Jump to section">↵</a></div>
   </div>
 <script>/* Boilerplate: script-dom-helper */
