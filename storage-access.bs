@@ -399,10 +399,10 @@ The Storage Access API defines a [=powerful feature=] identified by the [=powerf
   </dd>
   <dt>[=powerful feature/permission key generation algorithm=]</dt>
   <dd>
-    To generate a new [=permission key=] for the "<a permission><code>storage-access</code></a>" feature, given an [=/origin=] |origin| and [=/origin=] |embedded origin|, run the following steps:
+    To generate a new [=permission key=] for the "<a permission><code>storage-access</code></a>" feature, given an [=/origin=] |origin| and [=/origin=] |embeddedOrigin|, run the following steps:
 
     1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from |origin|.
-    1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |embedded origin|.
+    1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |embeddedOrigin|.
     1. Return (|topLevelSite|, |embeddedSite|).
   </dd>
   <dt>[=powerful feature/permission key comparison algorithm=]</dt>
