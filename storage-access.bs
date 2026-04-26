@@ -212,6 +212,7 @@ partial interface Document {
 };
 </pre>
 
+<div algorithm>
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>hasStorageAccess()</code></dfn> method must run these steps:
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Document/hasStorageAccess -->
@@ -237,6 +238,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 
             ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=/same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=/same site=] check with the top-level document.
             
+        1. If |embeddedSite| is [=site/same site=] with |topLevelSite|, [=/resolve=] |p| with |global|'s [=environment/has storage access=].
         1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
                 
             Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
@@ -244,6 +246,9 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
         1. [=/Resolve=] |p| with false.
 1. Return |p|.
 
+</div>
+
+<div algorithm>
 When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>requestStorageAccess()</code></dfn> method must run these steps:
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess -->
@@ -311,6 +316,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 1. Return |p|.
 
 NOTE: The intent of this algorithm is to always require user activation before a storage-access permission will be set. Though it is within the means of user agents to set storage-access permissions based on custom heuristics without prior user activation, this specification strongly discourages such behavior, as it could lead to interoperability issues.
+</div>
 
 <h3 id="navigation">Changes to navigation</h3>
 
