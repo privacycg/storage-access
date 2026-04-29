@@ -230,16 +230,16 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
     1. Let |explicitSetting| be the result of [=determine whether the user agent explicitly allows unpartitioned cookie access|determining whether the user agent explicitly allows unpartitioned cookie access=] with (|topLevelSite|, |embeddedSite|).
     1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
     1. [=Queue a global task=] on the [=networking task source=] given |global| to:
-        1. If |explicitSetting| is "`disallow`", [=/resolve=] |p| with false.
-        1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true.
+        1. If |explicitSetting| is "`disallow`", [=/resolve=] |p| with false and abort these steps.
+        1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true and abort these steps.
         1. [=Assert=]: |explicitSetting| is "`none`".
-        1. If |browsingContext| is a [=top-level browsing context=], [=/resolve=] |p| with true.
-        1. If |browsingContext| is same authority with |browsingContext|'s [=top-level browsing context=]'s [=active document=], [=/resolve=] |p| with true.
+        1. If |browsingContext| is a [=top-level browsing context=], [=/resolve=] |p| with true and abort these steps.
+        1. If |browsingContext| is same authority with |browsingContext|'s [=top-level browsing context=]'s [=active document=], [=/resolve=] |p| with true and abort these steps.
 
             ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=/same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=/same site=] check with the top-level document.
             
-        1. If |embeddedSite| is [=site/same site=] with |topLevelSite|, [=/resolve=] |p| with |global|'s [=environment/has storage access=].
-        1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=].
+        1. If |embeddedSite| is [=site/same site=] with |topLevelSite|, [=/resolve=] |p| with |global|'s [=environment/has storage access=] and abort these steps.
+        1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=] and abort these steps.
                 
             Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
 
