@@ -171,9 +171,6 @@ To <dfn>determine the effective FedCM connection status</dfn> given a [=/origin=
 
 <h3 id="ua-state">Changes to user agent state related to storage access</h3>
 
-Modify the definition of [=environment=] in the following manner:
-1. Add a new member called <dfn for="environment">has storage access</dfn> of type [=boolean=].
-
 Modify the definition of [=source snapshot params=] in the following manner:
 1. Add a new member called <dfn for="source snapshot params">has storage access</dfn> of type [=boolean=].
 1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque [=string=].
