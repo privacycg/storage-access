@@ -507,7 +507,7 @@ The [=remote end steps=] are:
 1. If |blocked| is not a [=boolean=] return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
 1. Let |embedded origin| be the result of [=getting a property=] from |parameters| named `origin`.
 1. If |embedded origin| is not a single U+002A ASTERISK character (*), then:
-    1. Let |parsedURL| be the the result of running the [=URL parser=] on |embedded origin|.
+    1. Let |parsedURL| be the result of running the [=URL parser=] on |embedded origin|.
     1. If |parsedURL| is failure, then return a [=WebDriver error=] with [=WebDriver error code=] [=invalid argument=].
     1. Set |embedded origin| to |parsedURL|'s [=url/origin=].
 1. If the [=current browsing context=] is not a [=top-level browsing context=] return a [=WebDriver error=] with [=WebDriver error code=] [=unsupported operation=].
