@@ -225,7 +225,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |global| is not a [=secure context=], then [=/resolve=] |p| with false and return |p|.
 1. If |settings|'s [=top-level origin=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
 1. Let |browsingContext| be |doc|'s [=Document/browsing context=].
-1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the |settings|'s [=top-level origin=].
+1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from |settings|'s [=top-level origin=].
 1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
 1. Run the following steps [=in parallel=]:
     1. Let |explicitSetting| be the result of [=determine whether the user agent explicitly allows unpartitioned cookie access|determining whether the user agent explicitly allows unpartitioned cookie access=] with (|topLevelSite|, |embeddedSite|).
