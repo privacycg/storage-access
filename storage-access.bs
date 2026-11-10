@@ -176,7 +176,7 @@ Modify the definition of [=environment=] in the following manner:
 
 Modify the definition of [=source snapshot params=] in the following manner:
 1. Add a new member called <dfn for="source snapshot params">has storage access</dfn> of type [=boolean=].
-1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque [=string=].
+1. Add a new member called <dfn for="source snapshot params">environment id</dfn> of type opaque [=string=] or null.
 
 A <dfn>storage access eligibility</dfn> is one of "<dfn for="storage access eligibility">unset</dfn>", "<dfn for="storage access eligibility">ineligible</dfn>", or "<dfn for="storage access eligibility">eligible</dfn>".
 
@@ -320,9 +320,12 @@ NOTE: The intent of this algorithm is to always require user activation before a
 
 <h3 id="navigation">Changes to navigation</h3>
 
-When [=snapshotting source snapshot params=]:
-1. Set [=source snapshot params/has storage access=] to |sourceDocument|'s [=source snapshot params/has storage access=].
-1. Set [=source snapshot params/environment id=] to |sourceDocument|'s [=relevant settings object=]'s [=environment/id=].
+When constructing the [=source snapshot params=] to return from [=snapshotting source snapshot params=]:
+1. If |sourceDocument| is null, then initialize [=source snapshot params/has storage access=] to false and [=source snapshot params/environment id=] to null.
+1. Otherwise:
+    1. Let |sourceSettings| be |sourceDocument|'s [=relevant settings object=].
+    1. Initialize [=source snapshot params/has storage access=] to |sourceSettings|'s [=environment/has storage access=].
+    1. Initialize [=source snapshot params/environment id=] to |sourceSettings|'s [=environment/id=].
 
 To the [=create navigation params by fetching=] algorithm, insert the following step as step 3:
 1. Let |originalURL| be <var ignore>entry</var>'s URL.
@@ -335,7 +338,7 @@ When creating |request|'s [=reserved client=] in [=create navigation params by f
 1. Otherwise, set |request|'s [=reserved client=]'s [=environment/has storage access=] to false.
 
 When [=set up a window environment settings object|setting up a window environment settings object=]:
-1. Set <var ignore>settings object</var>'s [=environment/has storage access=] to <var ignore>reserved environment</var>'s [=environment/has storage access=].
+1. Set <var ignore>settings object</var>'s [=environment/has storage access=] to false if <var ignore>reserved environment</var> is null. Otherwise, set it to <var ignore>reserved environment</var>'s [=environment/has storage access=].
 
 <h3 id="fetch-integration">Integration with Fetch</h3>
 
