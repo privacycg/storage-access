@@ -221,14 +221,15 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 1. If |doc| is not [=Document/fully active=], then [=/reject=] |p| with an "{{InvalidStateError}}" {{DOMException}} and return |p|.
 1. If |doc|'s [=Document/origin=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
 1. Let |global| be |doc|'s [=relevant global object=].
+1. Let |settings| be |doc|'s [=relevant settings object=].
 1. If |global| is not a [=secure context=], then [=/resolve=] |p| with false and return |p|.
-1. If the [=top-level origin=] of |doc|'s [=relevant settings object=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
+1. If |settings|'s [=top-level origin=] is an [=opaque origin=], [=/resolve=] |p| with false and return |p|.
 1. Let |browsingContext| be |doc|'s [=Document/browsing context=].
-1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the [=top-level origin=] of |doc|'s [=relevant settings object=].
+1. Let |topLevelSite| be the result of [=obtain a site|obtaining a site=] from the |settings|'s [=top-level origin=].
 1. Let |embeddedSite| be the result of [=obtain a site|obtaining a site=] from |doc|'s [=Document/origin=].
 1. Run the following steps [=in parallel=]:
     1. Let |explicitSetting| be the result of [=determine whether the user agent explicitly allows unpartitioned cookie access|determining whether the user agent explicitly allows unpartitioned cookie access=] with (|topLevelSite|, |embeddedSite|).
-    1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
+    1. Let |permissionState| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |settings|.
     1. [=Queue a global task=] on the [=networking task source=] given |global| to:
         1. If |explicitSetting| is "`disallow`", [=/resolve=] |p| with false and abort these steps.
         1. If |explicitSetting| is "`allow`", [=/resolve=] |p| with true and abort these steps.
@@ -238,8 +239,8 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>ha
 
             ISSUE: "same authority" here is a placeholder for a future concept that allows user agents to perform [=/same site=] checks while adhering to additional security aspects such as the presence of a cross-site parent document, see [whatwg/storage#142](https://github.com/whatwg/storage/issues/142#issuecomment-1122147159). In practice, this might involve comparing the [=site for cookies=] or performing a [=/same site=] check with the top-level document.
             
-        1. If |embeddedSite| is [=site/same site=] with |topLevelSite|, [=/resolve=] |p| with |global|'s [=environment/has storage access=] and abort these steps.
-        1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |global|'s [=environment/has storage access=] and abort these steps.
+        1. If |embeddedSite| is [=site/same site=] with |topLevelSite|, [=/resolve=] |p| with |settings|'s [=environment/has storage access=] and abort these steps.
+        1. If |permissionState| is [=permission/granted=], [=/resolve=] |p| with |settings|'s [=environment/has storage access=] and abort these steps.
                 
             Note: The global storage access permission state takes precedence over the local [=environment/has storage access=] flag here, in order to immediately reflect a possible user choice to revoke the permission in their settings.
 
@@ -272,7 +273,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
     1. Let |process permission state| be an algorithm that, given a [=permission state=] |state|, runs the following steps:
         1. [=Queue a global task=] on the [=networking task source=] given |global| to:
             1. If |state| is [=permission/granted=]:
-                1. Set |global|'s [=environment/has storage access=] to true.
+                1. Set |settings|'s [=environment/has storage access=] to true.
                 1. [=/Resolve=] |p| with {{undefined}}.
             1. Else:
                 1. [=Consume user activation=] given |global|.
@@ -294,7 +295,7 @@ When invoked on {{Document}} |doc|, the <dfn export method for=Document><code>re
 
         1. Run |process permission state| with [=permission/granted=].
         1. Abort these steps.
-    1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |global|.
+    1. Let |previous permission state| be the result of [=getting the current permission state=] given "<a permission><code>storage-access</code></a>" and |settings|.
     1. If |previous permission state| is not [=permission/prompt=]:
         1. Run |process permission state| with |previous permission state|.
         1. Abort these steps.
