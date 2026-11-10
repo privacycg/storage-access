@@ -161,8 +161,7 @@ To <dfn>determine the FedCM site connection status</dfn> given a [=/origin=] |em
 1. Return false.
 
 To <dfn>determine the effective FedCM connection status</dfn> given a [=/origin=] |embedder|, a [=/origin=] |identityProvider|, a {{Document}} |doc|, run the following steps. This algorithm returns a [=boolean=].
-1. Let |policyStatus| be whether |doc| is [=allowed to use=] "`identity-credentials-get`".
-1. If |policyStatus| is "Disabled", return false.
+1. If |doc| is not [=allowed to use=] "`identity-credentials-get`", return false.
 1. Let |connected| be the result of [=determine the FedCM site connection status|determining the site connection status=] given |embedder| and |identityProvider|.
 1. If |connected| is false, return false.
 1. Let |preventSilentAccess| be [=user agent=]'s [=credential store=]'s [=prevent silent access flag=] for |embedder|.
